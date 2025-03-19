@@ -1,4 +1,3 @@
 # Netflix
 Netflix Clone
-Ron & Yehonatan 
-Hi
+Ron & Yehonatan & Elad
