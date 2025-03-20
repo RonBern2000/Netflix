@@ -1,0 +1,67 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.9-management
+    container_name: rabbitmqnetflix
+    restart: unless-stopped
+    ports:
+      - "5672:5672"   # RabbitMQ message broker port
+      - "15672:15672" # Management UI port
+    networks:
+      - netflix_network
+    environment:
+      RABBITMQ_DEFAULT_USER: guest 
+      RABBITMQ_DEFAULT_PASS: guest
+  userservice:
+    build:
+      context: ../BackendUserService/
+    container_name: userservice
+    ports:
+      - "3000:3000"
+    environment:
+      - JWT_KEY=fsafsdljfdlbfdhgfklvcb
+      - DB_URL=mysql://root:diSuwrcNKnrBNdysBlZQumRbKZrrFxWT@interchange.proxy.rlwy.net:16654/users # DB URL
+    networks:
+      - netflix_network
+    restart: always
+    # depends_on: ASK
+    #   - serviceName
+  paymentservice:
+    build:
+      context: ../BackendPaymentService/
+    container_name: paymentservice
+    ports:
+      - "3001:3001"
+    environment:
+      - DB_URL=mysql://root:ayHFbpCxqADYeeqGeUhOykRYvNzSwbvh@shinkansen.proxy.rlwy.net:51662/payments # DB URL
+    networks:
+      - netflix_network
+    restart: always
+    depends_on:
+      - userservice
+  movieservice:
+    build:
+      context: ../BackendMoviesService/
+    container_name: movieservice
+    ports:
+      - "3002:3002"
+    environment:
+      - DB_URL=redis's something # DB URL
+    networks:
+      - netflix_network
+    restart: always
+  proxy:
+    build:
+      context: ../Proxy/
+    container_name: proxy
+    ports:
+      - "5000:5000"
+    depends_on:
+      - userservice
+      - paymentservice
+      - movieservice
+    networks:
+      - netflix_network
+
+networks:
+  netflix_network:
+    driver: bridge
