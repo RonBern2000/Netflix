@@ -1,3 +1,4 @@
+# TODO: Docker secrets file
 services:
   rabbitmq:
     image: rabbitmq:3.9-management
@@ -45,10 +46,21 @@ services:
     ports:
       - "4002:4002"
     environment:
-      - DB_URL=redis's something # DB URL
+      - DB_URL=redis
+      - REDIS_PORT=6379
     networks:
       - netflix_network
     restart: always
+    depends_on:
+      - redis
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
   proxy:
     build:
       context: ../Proxy/
@@ -69,6 +81,9 @@ services:
       - "3000:3000"
     networks:
       - netflix_network
+
+volumes:
+  redis_data:
 
 networks:
   netflix_network:
