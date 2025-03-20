@@ -18,12 +18,8 @@
     "typescript": "^5.8.2"
   },
   "devDependencies": {
-<<<<<<< HEAD
-        "nodemon": "^3.1.9"
-=======
+    "nodemon": "^3.1.9",
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.1",
-    "nodemon": "^3.1.9"
->>>>>>> 582408609e91d0ab1d89dfa466af5e4370bfe45a
+    "@types/express": "^5.0.1"
   }
 }
