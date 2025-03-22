@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import userRouter from "./routes/user-routes";
 import { errorHandler } from "./middleware/error-handler";
 import { connectRabbitMQ } from "./utils/rabbitmq";
+import notFoundHandler from "./middleware/not-found-hadler";
 
 const app: Application = express();
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use("/api/users", userRouter);
 
 app.use(errorHandler);
+app.use(notFoundHandler);
 
 connectRabbitMQ().catch(console.error);
 
