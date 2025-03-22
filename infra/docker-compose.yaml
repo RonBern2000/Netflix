@@ -20,7 +20,7 @@ services:
       - "4000:4000"
     environment:
       - JWT_KEY=fsafsdljfdlbfdhgfklvcb
-      - DB_URL=mysql://root:diSuwrcNKnrBNdysBlZQumRbKZrrFxWT@interchange.proxy.rlwy.net:16654/users # DB URL
+      - DB_URI=mysql://root:diSuwrcNKnrBNdysBlZQumRbKZrrFxWT@interchange.proxy.rlwy.net:16654/users # DB URL
     networks:
       - netflix_network
     restart: always
@@ -33,7 +33,7 @@ services:
     ports:
       - "4001:4001"
     environment:
-      - DB_URL=mysql://root:ayHFbpCxqADYeeqGeUhOykRYvNzSwbvh@shinkansen.proxy.rlwy.net:51662/payments # DB URL
+      - DB_URI=mysql://root:ayHFbpCxqADYeeqGeUhOykRYvNzSwbvh@shinkansen.proxy.rlwy.net:51662/payments # DB URL
     networks:
       - netflix_network
     restart: always
@@ -46,7 +46,7 @@ services:
     ports:
       - "4002:4002"
     environment:
-      - DB_URL=redis
+      - DB_URI=redis
       - REDIS_PORT=6379
     networks:
       - netflix_network

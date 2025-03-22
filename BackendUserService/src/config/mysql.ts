@@ -10,7 +10,7 @@ export class MySqlConnection{
 
     public static async getInstance(): Promise<Sequelize> {
         if(!MySqlConnection.instance){
-            const sequelize = new Sequelize(process.env.DB_URL as string, {
+            const sequelize = new Sequelize(process.env.DB_URI as string, {
                 dialect: "mysql",
                 logging: false,
                 models: [User],
