@@ -12,6 +12,11 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest 
       RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   userservice:
     build:
       context: ../BackendUserService/
@@ -21,11 +26,15 @@ services:
     environment:
       - JWT_KEY=fsafsdljfdlbfdhgfklvcb
       - DB_URI=mysql://root:diSuwrcNKnrBNdysBlZQumRbKZrrFxWT@interchange.proxy.rlwy.net:16654/users # DB URL
+      - RABBITMQ_URL=amqp://rabbitmq
     networks:
       - netflix_network
     restart: always
-    # depends_on: ASK
-    #   - serviceName
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+        restart: true
+      
   paymentservice:
     build:
       context: ../BackendPaymentService/
@@ -39,6 +48,7 @@ services:
     restart: always
     depends_on:
       - userservice
+      - rabbitmq
   movieservice:
     build:
       context: ../BackendMoviesService/
@@ -53,6 +63,7 @@ services:
     restart: always
     depends_on:
       - redis
+      - rabbitmq
   redis:
     image: redis
     container_name: redis

@@ -3,7 +3,7 @@ import { config } from "dotenv";
 
 config();
 
-const RABBITMQ_URL = process.env.RABBITMQ_URL || "amqp://localhost";
+const RABBITMQ_URL = process.env.RABBITMQ_URL || "amqp://rabbitmq";
 
 let connection: ChannelModel;
 let channel: Channel;
