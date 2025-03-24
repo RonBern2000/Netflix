@@ -1,4 +1,4 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { Column, DataType, Default, Model, Table } from "sequelize-typescript";
 
 @Table({tableName: "users", modelName: "User", timestamps: false})
 export class User extends Model{
@@ -29,4 +29,10 @@ export class User extends Model{
         allowNull: false,
     })
     password!: string;
+
+    @Default(false)
+    @Column({
+        type: DataType.BOOLEAN,
+    })
+    active!: boolean;
 }
