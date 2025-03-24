@@ -1,6 +1,5 @@
 import { LoginRequestDTO } from "../DTOs/login-dto";
 import { SignupRequestDTO } from "../DTOs/signup-dto";
-import { IUser } from "./IUser";
 
 export interface IUserService{
     login(data: LoginRequestDTO): Promise<string>;

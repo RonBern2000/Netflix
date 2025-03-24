@@ -18,7 +18,7 @@ export class UserController{
             const token: string = await this.userService.login(data);
 
             res.cookie(TOKENS.Token, token, {
-                httpOnly: true 
+                httpOnly: true
             });
             res.status(200),json({message: "Login Successful", token});
         } catch (error) {

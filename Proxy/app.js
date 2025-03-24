@@ -4,6 +4,7 @@ import rateLimit from "express-rate-limit";
 
 const app = express();
 
+//TODO: put in envs also in other servies
 const TARGET_URLS = ["http://localhost:4000", "http://localhost:4001", "http://localhost:4002"];
 
 const limiter = rateLimit({
