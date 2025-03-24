@@ -18,7 +18,7 @@ app.use(
 
 app.use(cookieParser());
 
-app.use("/api/users", userRouter);
+app.use("/api/v1/users", userRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);

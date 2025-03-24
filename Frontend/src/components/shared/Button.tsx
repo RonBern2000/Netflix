@@ -10,7 +10,7 @@ type ButtonProps = {
 const Button = ({ onClick, children, type = 'button', className = '' }: ButtonProps) => {
     return (
         <button
-            className={`rounded-full ${className}`}
+            className={`rounded-sm ${className}`}
             type={type}
             onClick={onClick}>
             {children}

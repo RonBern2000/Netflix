@@ -16,7 +16,7 @@ const LanguageDropDown = () => {
         <>
             <img src="/language.png" alt="lang" className="w-5 absolute" />
             <select
-                className="font-bold text-center text-sm rounded-full w-30 h-8 bg-[rgba(0,0,0,0.55)] text-white"
+                className="font-bold text-center text-sm rounded-sm w-30 h-8 bg-[rgba(0,0,0,0.55)] text-white"
                 value={selectedLanguage}
                 onChange={handleLanguageChange}>
                 {languages.map((l) => (<option key={l} value={l}>
