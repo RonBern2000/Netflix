@@ -24,7 +24,7 @@ services:
     ports:
       - "4000:4000"
     env_file:
-      - .env
+      - ../BackendUserService/.env
     networks:
       - netflix_network
     restart: always
@@ -40,7 +40,7 @@ services:
     ports:
       - "4001:4001"
     env_file:
-      - .env
+      - ../BackendPaymentService/.env
     networks:
       - netflix_network
     restart: always
@@ -54,7 +54,7 @@ services:
     ports:
       - "4002:4002"
     env_file:
-      - .env
+      - ../BackendPaymentService/.env
     networks:
       - netflix_network
     restart: always
@@ -81,6 +81,8 @@ services:
       - userservice
       - paymentservice
       - movieservice
+    env_file:
+      - ../Proxy/.env
     networks:
       - netflix_network
   client:

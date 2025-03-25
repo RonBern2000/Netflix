@@ -1,6 +1,8 @@
 import { app } from "./app";
 import { config } from "dotenv";
 import { dbConnection } from "./config/db";
+import fs from 'fs';
+import https from 'https';
 
 config();
 
@@ -17,9 +19,15 @@ const start = async () => {
 
     await dbConnection();
 
-    app.listen(PORT, () => {
-        console.log("User service listening on port 4000...");
-    });
+    const options = {
+        key: fs.readFileSync("certs/server.key"),
+        cert: fs.readFileSync("certs/server.cert"),
+    };
+
+    https.createServer(options, app)
+        .listen(PORT, () => {
+            console.log("User service listening on port 4000...");
+        });
 };
 
 start();

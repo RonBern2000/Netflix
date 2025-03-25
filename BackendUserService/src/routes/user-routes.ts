@@ -7,7 +7,9 @@ const router: Router = Router();
 
 const userController = container.get<UserController>(TOKENS.UserController);
 
+//REMEMBER TO REMOVE
 router.get("/hi", (req: Request, res: Response) => {
+    console.log("Here we are");
     res.status(200).json({ message: "Hello from User-Router" });
 });
 

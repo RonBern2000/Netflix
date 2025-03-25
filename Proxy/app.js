@@ -5,20 +5,23 @@ import { config } from "dotenv";
 import cors from 'cors';
 import fs from 'fs';
 import https from 'https';
+import { errorHandler } from "./middleware/errorHandler.js";
 
 config();
 
 const app = express();
 
-const TARGET_URLS = process.env.ALLOWED_ORIGINS.split(',');
-
+//TODO: validations
 const CLIENT_URL = process.env.CLIENT_URL;
+const USERS_URL = process.env.USERS_URL;
+const PAYMENT_URL = process.env.PAYMENT_URL;
+const MOVIES_URL = process.env.MOVIES_URL;
 
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
     credentials: true,
-    origin: [...TARGET_URLS, CLIENT_URL]
+    origin: [USERS_URL, PAYMENT_URL, MOVIES_URL, CLIENT_URL]
 }));
 
 const limiter = rateLimit({
@@ -29,14 +32,40 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-TARGET_URLS.forEach(r => {
-    app.use(r, 
-        createProxyMiddleware({
-            target: r,
-            changeOrigin: true
-        })
-    )
-});
+app.use('/users',(req, res, next) => {
+    console.log('Original Path:', req.originalUrl);
+    next();
+},
+    createProxyMiddleware({
+        target: 'https://localhost:4000',
+        changeOrigin: true,
+        pathRewrite:{
+            '^/users': '',
+        },
+    })
+)
+
+app.use('/payment', 
+    createProxyMiddleware({
+        target: PAYMENT_URL,
+        changeOrigin: true,
+        pathRewrite:{
+            '^/payment': '',
+        },
+    })
+)
+
+app.use('/movies', 
+    createProxyMiddleware({
+        target: MOVIES_URL,
+        changeOrigin: true,
+        pathRewrite:{
+            '^/movies': '',
+        },
+    })
+)
+
+app.use(errorHandler)
 
 const options = {
     key: fs.readFileSync("certs/server.key"),

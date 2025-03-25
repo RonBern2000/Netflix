@@ -10,6 +10,7 @@ import Swiper from '../components/shared/Swiper';
 import H2 from '../components/shared/H2';
 
 const LandingPage = () => {
+
     return (
         <Container className='flex-col w-screen h-screen'>
             <Container className="relative h-4/5 backdrop-blur-xs flex-col bg-[url('/LandingPage.jpg')] w-screen bg-cover bg-center z-0">
