@@ -1,11 +1,25 @@
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import rateLimit from "express-rate-limit";
+import { config } from "dotenv";
+import cors from 'cors';
+import fs from 'fs';
+import https from 'https';
+
+config();
 
 const app = express();
 
-//TODO: put in envs also in other servies
-const TARGET_URLS = ["http://localhost:4000", "http://localhost:4001", "http://localhost:4002"];
+const TARGET_URLS = process.env.ALLOWED_ORIGINS.split(',');
+
+const CLIENT_URL = process.env.CLIENT_URL;
+
+const PORT = process.env.PORT || 5000;
+
+app.use(cors({
+    credentials: true,
+    origin: [...TARGET_URLS, CLIENT_URL]
+}));
 
 const limiter = rateLimit({
     windowMs: 60000,
@@ -24,14 +38,12 @@ TARGET_URLS.forEach(r => {
     )
 });
 
-// app.use("/", 
-//     // createProxyMiddleware({
-//     //     target: TARGET_URLS,
-//     //     changeOrigin: true
-//     // })
-// );
+const options = {
+    key: fs.readFileSync("certs/server.key"),
+    cert: fs.readFileSync("certs/server.cert"),
+};
 
-const PORT = 5000;
-app.listen(PORT, () => {
-    console.log("Proxy server");
-});
+https.createServer(options, app)
+    .listen(PORT, () => {
+        console.log("Proxy server listening on port 5000");
+    });
