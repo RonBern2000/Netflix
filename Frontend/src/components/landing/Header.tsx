@@ -15,7 +15,7 @@ const Header = ({ className = '' }: HeaderProps) => {
       <Logo />
       <Container className="gap-3 items-center max-sm:my-5">
         <LanguageDropDown />
-        <Button className="p-1 h-7.5 w-18 text-sm text-white bg-[rgba(229,8,20,0.9)]" onClick={() => navigate("/authentication")} children={strings.landing.signin} />
+        <Button className="rounded-sm p-1 h-7.5 w-18 text-sm text-white bg-[rgba(229,8,20,0.9)]" onClick={() => navigate("/authentication")} children={strings.landing.signin} />
       </Container>
     </Container>
   )

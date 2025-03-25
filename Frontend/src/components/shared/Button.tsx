@@ -1,16 +1,17 @@
 import React from 'react';
 
-type ButtonProps = {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     onClick?: () => void;
     children: React.ReactNode;
     type?: "submit" | "button";
     className?: string;
 }
 
-const Button = ({ onClick, children, type = 'button', className = '' }: ButtonProps) => {
+const Button = ({ onClick, children, type = 'button', className = '', ...props }: ButtonProps) => {
     return (
         <button
-            className={`rounded-sm ${className}`}
+            {...props}
+            className={`${className}`}
             type={type}
             onClick={onClick}>
             {children}
