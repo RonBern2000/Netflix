@@ -4,7 +4,7 @@ import { LoginRequestDTO } from "../DTOs/login-dto";
 import { TOKENS } from "../tokens";
 import { IUserService } from "../interfaces/IUserService";
 import { json } from "sequelize";
-import { generateCustomError } from "../middleware/error-handler";
+import { generateCustomError } from '../../../shared/middleware/error-handler';
 import { SignupRequestDTO } from "../DTOs/signup-dto";
 
 @injectable()
