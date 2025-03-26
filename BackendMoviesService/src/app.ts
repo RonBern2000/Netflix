@@ -21,6 +21,6 @@ app.use("/api/movies", moviesRouter);
 app.use(errorHandler);
 app.use(notFoundHandler);
 
-connectRabbitMQ().catch(console.error);
+// connectRabbitMQ().catch(console.error);
 
 export { app };
