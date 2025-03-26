@@ -6,8 +6,8 @@ import { config } from "dotenv";
 import cors from 'cors';
 import fs from 'fs';
 import https from 'https';
-import { errorHandler } from "../middleware/error-handler.js";
-import notFoundHandler from "../middleware/not-found-hadler.js";
+import { errorHandler } from '../../shared/middleware/error-handler';
+import notFoundHandler from "../../shared/middleware/not-found-hadler";
 
 config();
 

@@ -2,9 +2,9 @@ import express, { Application } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user-routes";
-import { errorHandler } from "./middleware/error-handler";
 import { connectRabbitMQ } from "./utils/rabbitmq";
-import notFoundHandler from "./middleware/not-found-hadler";
+import { errorHandler } from '../../shared/middleware/error-handler';
+import notFoundHandler from "../../shared/middleware/not-found-hadler";
 
 const app: Application = express();
 
