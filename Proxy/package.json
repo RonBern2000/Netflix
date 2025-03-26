@@ -2,10 +2,9 @@
   "name": "proxy",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node src/index.ts"
+    "dev": "nodemon --exec tsx src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +17,7 @@
     "express-rate-limit": "^7.5.0",
     "http-proxy-middleware": "^3.0.3",
     "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
   "devDependencies": {

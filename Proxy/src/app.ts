@@ -1,29 +1,30 @@
-import express from "express";
-import { Request, Response, Application, NextFunction } from "express";
+import { Application} from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import rateLimit, { RateLimitRequestHandler } from "express-rate-limit";
 import { config } from "dotenv";
-import cors from 'cors';
-import fs from 'fs';
-import https from 'https';
 import { errorHandler } from '../../shared/middleware/error-handler';
 import notFoundHandler from "../../shared/middleware/not-found-hadler";
+import basicApp from "../../shared/utils/basic-app";
 
 config();
 
-const app: Application = express();
-app.use(express.json());
-
-//TODO: validations
 const CLIENT_URL: string = process.env.CLIENT_URL!;
 const USERS_URL: string = process.env.USERS_URL!;
 const PAYMENT_URL: string = process.env.PAYMENT_URL!;
 const MOVIES_URL: string = process.env.MOVIES_URL!;
 
-app.use(cors({
-    credentials: true,
-    origin: [USERS_URL, PAYMENT_URL, MOVIES_URL, CLIENT_URL]
-}));
+const app: Application = basicApp([USERS_URL, PAYMENT_URL, MOVIES_URL, CLIENT_URL]);
+
+// const app: Application = express();
+
+// app.use(json());
+
+// app.use(urlencoded({ extended: true }));
+
+// app.use(cors({
+//     credentials: true,
+//     origin: [USERS_URL, PAYMENT_URL, MOVIES_URL, CLIENT_URL]
+// }));
 
 const limiter: RateLimitRequestHandler = rateLimit({
     windowMs: 60000,
