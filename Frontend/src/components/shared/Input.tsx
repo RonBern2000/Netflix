@@ -20,7 +20,7 @@ const Input = ({ className = '', error, ...props }: InputProps) => {
   return (
     <>
       <input
-        className={`peer rounded-lg p-3 text-white ${className} ${error ? "border-red-400" : ""}`} {...props}
+        className={`peer rounded-lg pt-4 p-3 text-white ${className} ${error ? "border-red-400" : ""}`} {...props}
         onBlur={handleOnBlur} />
       <label
         ref={lableRef}

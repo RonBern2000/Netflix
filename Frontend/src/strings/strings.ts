@@ -5,7 +5,7 @@ export const strings = {
         h1: " Unlimited movies, \nTV shows, and\nmore",
         startatprice: "Starts at $15.90. Cancel anytime.",
         readytowatch: "Ready to watch? Enter your email to create or restart your membership.",
-        getStarted: "Get Started >",
+        getStarted: "Get Started",
         h2Trending: "Trending Now",
         emailAddress: "Email address",
         h2Reasons: "More Reasons to Join",
