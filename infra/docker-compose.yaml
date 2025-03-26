@@ -45,10 +45,11 @@ services:
       - netflix_network
     restart: always
     depends_on:
-      - userservice
-      - rabbitmq:
-          condition: service_healthy
-          restart: true
+      userservice:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+        restart: true
   movieservice:
     build:
       context: ../BackendMoviesService/
@@ -61,10 +62,11 @@ services:
       - netflix_network
     restart: always
     depends_on:
-      - redis
-      - rabbitmq:
-          condition: service_healthy
-          restart: true
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+        restart: true
   redis:
     image: redis
     container_name: redis
