@@ -32,20 +32,20 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-app.use('/users',(req, res, next) => {
-    console.log('Original Path:', req.originalUrl);
-    next();
-},
+app.use('/api/v1/users',
     createProxyMiddleware({
-        target: 'https://localhost:4000',
+        target: USERS_URL,
         changeOrigin: true,
-        pathRewrite:{
-            '^/users': '',
-        },
+        secure: false,
+        on:{
+            error: (error, req, res, target) => {
+                console.error(error);
+            }
+        }
     })
-)
+);
 
-app.use('/payment', 
+app.use('/payment',
     createProxyMiddleware({
         target: PAYMENT_URL,
         changeOrigin: true,
@@ -53,7 +53,7 @@ app.use('/payment',
             '^/payment': '',
         },
     })
-)
+);
 
 app.use('/movies', 
     createProxyMiddleware({
@@ -63,9 +63,9 @@ app.use('/movies',
             '^/movies': '',
         },
     })
-)
+);
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 const options = {
     key: fs.readFileSync("certs/server.key"),

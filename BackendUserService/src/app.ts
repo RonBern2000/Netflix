@@ -9,11 +9,11 @@ import notFoundHandler from "./middleware/not-found-hadler";
 const app: Application = express();
 
 app.use(express.json());
-app.use(cors()
-    // cors({
-    //     credentials: true,
-    //     origin: ["https://localhost:5000", "http://localhost:5672"]
-    // })
+app.use(
+    cors({
+        credentials: true,
+        origin: ["https://proxy:5000", "http://rabbitmq:5672"]
+    })
 );
 
 app.use(cookieParser());

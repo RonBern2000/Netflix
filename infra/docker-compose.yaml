@@ -2,7 +2,7 @@
 services:
   rabbitmq:
     image: rabbitmq:3.9-management
-    container_name: rabbitmqnetflix
+    container_name: rabbitmq
     restart: unless-stopped
     ports:
       - "5672:5672"   # RabbitMQ message broker port
