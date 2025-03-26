@@ -10,7 +10,6 @@ import { SignupRequestDTO } from "../DTOs/signup-dto";
 @injectable()
 export class UserController{
     constructor(@inject(TOKENS.IUserService) private userService: IUserService){}
-
     async login(req: Request, res: Response, next: NextFunction){
         try {
             const data: LoginRequestDTO = req.body;

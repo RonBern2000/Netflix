@@ -1,6 +1,6 @@
 #root {
   margin: 0;
-  text-align: center;
+  text-align: start;
 }
 
 #curveDiv{
@@ -9,4 +9,8 @@
   border-top-right-radius: 50% 100%;
   box-shadow: inset 0px 20px 20px -30px rgba(51, 51, 225, 0.746);
   background-color: black;
+}
+
+.reasonCard{
+  box-shadow: inset 1px 2px 50px 1px rgba(168, 114, 152, 0.746);
 }

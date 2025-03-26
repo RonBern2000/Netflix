@@ -16,7 +16,6 @@ export class UserService implements IUserService{
     async signup(data: SignupRequestDTO): Promise<string> {
         const { email, password, name} = data;
         const existingUser: IUser | null = await this.userRepository.findUserByEmail(email);
-
         if(existingUser){
             throw new Error("User already exists");
         }
@@ -26,7 +25,7 @@ export class UserService implements IUserService{
         const newUser : IUser | null = await this.userRepository.create({
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
         });
 
         if(!newUser){

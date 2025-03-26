@@ -35,7 +35,7 @@ const Swiper = () => {
 
     const scroll = (direction: "left" | "right") => {
         if (swiperRef.current) {
-            const scrollAmount = swiperRef.current.offsetWidth - 300;
+            const scrollAmount = swiperRef.current.offsetWidth - 550;
             swiperRef.current.scrollBy({
                 left: direction === "right" ? scrollAmount : -scrollAmount,
                 behavior: "smooth",
@@ -44,7 +44,7 @@ const Swiper = () => {
     };
 
     return (
-        <Container className="flex-col relative w-full max-w-4xl mx-auto">
+        <Container className="flex-col relative w-full mx-auto">
             {!atLeft ? (
                 <Button
                     className="absolute flex items-center justify-center -left-8 top-1/2 -translate-y-1/2 h-30 w-6 bg-[rgba(255,255,255,0.1)] text-white p-2 rounded-full shadow-md hover:bg-gray-600 transition z-2"
@@ -67,7 +67,7 @@ const Swiper = () => {
                 className="flex scrollbar-hide overflow-x-hidden scroll-smooth gap-3 py-4 px-4">
                 {items.map((item, index) => (
                     <div key={index}
-                        className="w-40 h-50 flex-shrink-0 bg-[rgba(255,255,255,0.1)] text-white flex items-center justify-center rounded-md transition ease-in-out hover:scale-107 duration-300">
+                        className="w-50 h-65 flex-shrink-0 bg-[rgba(255,255,255,0.1)] text-white flex items-center justify-center rounded-md transition ease-in-out hover:scale-107 duration-300">
                         {item}
                     </div>
                 ))}

@@ -11,7 +11,7 @@ type HeaderProps = {
 const Header = ({ className = '' }: HeaderProps) => {
   const navigate = useNavigate();
   return (
-    <Container className={`flex-wrap h-fit justify-between items-center w-screen px-40 py-5 ${className}`}>
+    <Container className={`flex-wrap h-fit justify-between items-center w-full px-40 py-5 ${className}`}>
       <Logo />
       <Container className="gap-3 items-center max-sm:my-5">
         <LanguageDropDown />
