@@ -1,20 +1,11 @@
-import express, { Application } from "express";
-import cors from "cors";
+import { Application } from "express";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user-routes";
 import { connectRabbitMQ } from "./utils/rabbitmq";
-import { errorHandler } from '../../shared/middleware/error-handler';
-import notFoundHandler from "../../shared/middleware/not-found-hadler";
+import { basicApp, notFoundHandler, errorHandler } from "@netflix-utils/shared";
+import { PROXY_URL, RABBITMQ_URL } from "./config/env";
 
-const app: Application = express();
-
-app.use(express.json());
-app.use(
-    cors({
-        credentials: true,
-        origin: ["https://proxy:5000", "http://rabbitmq:5672"]
-    })
-);
+const app: Application = basicApp([PROXY_URL!, RABBITMQ_URL!]);
 
 app.use(cookieParser());
 

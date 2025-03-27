@@ -8,6 +8,7 @@ import { sign } from "../utils/jwt";
 import { SignupRequestDTO } from "../DTOs/signup-dto";
 import { IUser } from "../interfaces/IUser";
 import { publishMessage } from "../utils/rabbitmq";
+import {BadRequestError} from '../../../shared/src/errors/bad-request-error';
 
 @injectable()
 export class UserService implements IUserService{
@@ -17,7 +18,7 @@ export class UserService implements IUserService{
         const { email, password, name} = data;
         const existingUser: IUser | null = await this.userRepository.findUserByEmail(email);
         if(existingUser){
-            throw new Error("User already exists");
+            throw new BadRequestError("User already exists");
         }
 
         const hashedPassword = await hash(password);

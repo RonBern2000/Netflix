@@ -1,18 +1,9 @@
-import express, { Application } from "express";
-import cors from "cors";
+import { Application } from "express";
 import paymentRounter from "./routes/payment-routes";
-import dotenv from "dotenv";
-dotenv.config();
+import { basicApp } from "@netflix-utils/shared";
+import { PROXY_URL, RABBITMQ_URL } from "./config/env";
 
-const app: Application = express();
-
-app.use(express.json())
-app.use(
-  cors({
-    credentials: true,
-    origin: ["http://localhost:5000","http://localhost:5672"],
-  })
-);
+const app: Application = basicApp([PROXY_URL!, RABBITMQ_URL!]);
 
 app.use("/api/payments", paymentRounter);
 

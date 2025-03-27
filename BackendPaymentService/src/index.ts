@@ -1,26 +1,24 @@
 import { app } from "./app";
-import dotenv from "dotenv";
-dotenv.config();
+import fs from "fs";
+import { NODE_ENV, PORT } from "./config/env";
+import https from "https";
 
 const start = async () => {
-    app.listen(4001, () => {
-        console.log("Server is listening on port 4001");
+  //TODO: Validations for env variables
+  if (NODE_ENV === "dev") {
+    const options = {
+      key: fs.readFileSync("certs/server.key"),
+      cert: fs.readFileSync("certs/server.cert"),
+    };
+
+    https.createServer(options, app).listen(PORT, () => {
+      console.log(`Payment service listening on port ${PORT}...`);
     });
-}
-
-//import { dbConnection } from "./config/db";
-// 
-
-//     if (!process.env.DB_URL) {
-//         throw new Error("Missing db url")
-//     }
-//     if(!process.env.JWT_KEY) {
-//         throw new Error("Missing jwt key")
-//     }
-
-//     await dbConnection();
-
-   
-//};
+  } else {
+    app.listen(PORT, () => {
+      console.log(`Payment service listening on port ${PORT}...`);
+    });
+  }
+};
 
 start();

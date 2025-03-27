@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "cors": "^2.8.5",
+    "del-cli": "^6.0.0",
     "express": "^4.21.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
@@ -8,5 +9,25 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1"
-  }
+  },
+  "name": "@netflix-utils/shared",
+  "version": "1.0.4",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RonBern2000/netflix-utilities.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "del-cli ./build/*",
+    "build": "npm run clean && tsc",
+    "pub": "git add . && git commit -m 'publish' && npm version patch && npm run build && npm publish"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

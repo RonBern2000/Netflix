@@ -2,7 +2,7 @@ import express from 'express';
 import { Application, json, urlencoded } from 'express';
 import cors from 'cors';
 
-const basicApp = (origins: string[]): Application => {
+export const basicApp = (origins: string[]): Application => {
     const app: Application = express();
     
     app.use(json());
@@ -16,4 +16,3 @@ const basicApp = (origins: string[]): Application => {
 
     return app;
 };
-export default basicApp;

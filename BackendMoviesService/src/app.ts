@@ -1,20 +1,10 @@
-import express, { Application, Request, Response } from "express";
-import cors from "cors";
+import { Application, Request, Response } from "express";
 import moviesRouter from "./routes/movies-routes";
+import { basicApp, notFoundHandler, errorHandler } from "@netflix-utils/shared";
+import { PROXY_URL, RABBITMQ_URL } from "./config/env";
 import { connectRabbitMQ } from "./utils/rabbitmq";
-import { errorHandler } from '../../shared/middleware/error-handler';
-import notFoundHandler from '../../shared/middleware/not-found-hadler';
 
-
-const app: Application = express();
-
-app.use(express.json());
-app.use(
-    cors({
-        credentials: true,
-        origin: ["https://proxy:5000", "http://rabbitmq:5672"]
-    })
-);
+const app: Application = basicApp([PROXY_URL!, RABBITMQ_URL!]);
 
 app.use("/api/movies", moviesRouter);
 

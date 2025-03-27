@@ -4,7 +4,6 @@ import { LoginRequestDTO } from "../DTOs/login-dto";
 import { TOKENS } from "../tokens";
 import { IUserService } from "../interfaces/IUserService";
 import { json } from "sequelize";
-import { generateCustomError } from '../../../shared/middleware/error-handler';
 import { SignupRequestDTO } from "../DTOs/signup-dto";
 
 @injectable()
@@ -21,7 +20,7 @@ export class UserController{
             });
             res.status(200),json({message: "Login Successful", token});
         } catch (error) {
-            return next(generateCustomError(error, 401));
+            return next(error);
         }
     }
     async signup(req: Request, res: Response, next: NextFunction){
