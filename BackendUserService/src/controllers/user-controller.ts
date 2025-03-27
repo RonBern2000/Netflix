@@ -28,8 +28,13 @@ export class UserController{
             const data: SignupRequestDTO = req.body;
 
             const token: string = await this.userService.signup(data);
+
+             res.cookie(TOKENS.Token, token, {
+                httpOnly: true
+            });
+            res.status(200),json({message: "Signup Successful", token});
         } catch (error) {
-            
+            return next(error);
         }
     }
 }
