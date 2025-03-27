@@ -1,30 +1,25 @@
 import axios from 'axios'
-import { config } from 'dotenv';
-import { generateCustomError } from '../../../shared/middleware/error-handler';
-import { NextFunction } from 'express';
+import { BadRequestError } from '@netflix-utils/shared'
+import { API_READ_ACCESS_TOKEN } from "../config/env";
 
-config();
+const apiReadAccessToken:string = API_READ_ACCESS_TOKEN!;
 
-const API_READ_ACCESS_TOKEN:string = process.env.API_READ_ACCESS_TOKEN!;
-function apifetch(route: string, next: NextFunction) {
+export const apifetch = (route: string) => {
     const options = {
         method: 'GET',
         url: `https://api.themoviedb.org/3/movie/11${route}`,
         headers: {
         accept: 'application/json',
-        Authorization: `Bearer ${API_READ_ACCESS_TOKEN}`
+        Authorization: `Bearer ${apiReadAccessToken}`
         }
     };
-    
     try{
-        axios
+        const response = axios
             .request(options)
             .then(res => console.log(res.data))
             .catch(err => console.error(err));
+        return response;
     } catch (error) {
-        console.error('Error fetching movie data:', error);
-        next(generateCustomError({ message: 'Error fetching data from the API' }, 500))
+        throw new BadRequestError("Error in fetching movies");
     }
 }
-
-export default apifetch;
