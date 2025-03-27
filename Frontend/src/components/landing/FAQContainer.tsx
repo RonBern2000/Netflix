@@ -1,7 +1,7 @@
 import { strings } from "../../strings/strings";
 import Container from "../shared/Container";
 import H2 from "../shared/H2";
-import FAQ from "./FAQ";
+import FAQ from "./Faq";
 
 const FAQContainer = () => {
     return (
@@ -9,7 +9,7 @@ const FAQContainer = () => {
             <H2 className="text-white mb-4">{strings.landing.h2Faq}</H2>
             <Container className="flex-col gap-2">
                 {new Array(6).fill(null).map((_, index) => (
-                    <FAQ key={index} h3={strings.landing.faqs.h3s[index]}></FAQ>
+                    <FAQ key={index} h3={strings.landing.faqs.h3s[index]} answer={strings.landing.faqs.answers[index]}></FAQ>
                 ))}
             </Container>
         </Container>
