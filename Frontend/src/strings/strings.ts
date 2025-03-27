@@ -10,18 +10,29 @@ export const strings = {
         emailAddress: "Email address",
         h2Reasons: "More Reasons to Join",
         reasoncards:{
-            reasonsHeaders: {
-                reason1: "Enjoy on your TV",
-                reason2: "Download your shows to watch offline",
-                reason3: "Watch everywhere",
-                reason4: "Create profiles for kids",
-            },
-            reasonTypos: {
-                type1:"Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.",
-                type2: "Save your favorites easily and always have something to watch.",
-                type3: "Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.",
-                type4: "Send kids on adventures with their favorite characters in a space made just for them — free with your membership.",
-            }
+            reasonsHeaders: [
+                "Enjoy on your TV",
+                "Download your shows to watch offline",
+                "Watch everywhere",
+                "Create profiles for kids",
+            ],
+            reasonTypos: [
+                "Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.",
+                "Save your favorites easily and always have something to watch.",
+                "Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.",
+                "Send kids on adventures with their favorite characters in a space made just for them — free with your membership.",
+            ]
+        },
+        h2Faq: "Frequently Asked Questions",
+        faqs: {
+            h3s : [
+                "What is Netflix?",
+                "How much does Netflix cost?",
+                "Where can I watch?",
+                "How do I cancel?",
+                "What can I watch on Netflix?",
+                "Is Netflix good for kids?",
+            ] 
         },
     }
 }
