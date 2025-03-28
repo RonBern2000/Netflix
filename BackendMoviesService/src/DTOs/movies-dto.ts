@@ -1,6 +1,6 @@
 export interface MoviesRequestDTO{
     name:string;
-    ganre: string;
+    genre: string;
     trailer: string;
     summery: string;
 }

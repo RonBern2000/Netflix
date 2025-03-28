@@ -1,6 +1,8 @@
 import { IMovie } from "./IMovie";
 
 export interface IMoviesRepository{
-    findMoviesByEmail(name: string): Promise<IMovie | null>;
-    findMoviesByGanre(ganre: string): Promise<IMovie[] | null>;
+    getPopularMovies(): Promise<IMovie[] | null>;
+    getMoviesByQuery(query: string):Promise<string | null>;
+    setPopularMovies(movies: IMovie[]): Promise<void>;
+    setAllMovies(): Promise<void>
 }

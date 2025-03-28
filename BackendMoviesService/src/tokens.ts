@@ -4,4 +4,5 @@ export const TOKENS = {
     IMoviesRepository: "IMoviesRepository",
     IMoviesService: "IMoviesService",
     Token:"Token",
+    popularMovies: "popularMovies"
 };
