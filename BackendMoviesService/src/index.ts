@@ -1,16 +1,12 @@
 import { app } from "./app";
 import fs from "fs";
 import https from "https";
-import { DB_URI, NODE_ENV, REDIS_PORT } from "./config/env";
-
-const PORT: string = process.env.PORT || "4002";
+import { DB_URI, NODE_ENV, REDIS_PORT, PORT } from "./config/env";
 
 const start = async () => {
   if (!DB_URI || !PORT || !REDIS_PORT) {
     throw new Error("Missing required env variable");
   }
-
-  //TODO: connection to redis
 
   if (NODE_ENV === "dev") {
     const options = {

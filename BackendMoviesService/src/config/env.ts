@@ -1,7 +1,6 @@
 import "dotenv/config";
 
 export const {
-  PORT,
   DB_URI,
   REDIS_PORT,
   API_READ_ACCESS_TOKEN,
@@ -9,4 +8,5 @@ export const {
   RABBITMQ_URL,
   PROXY_URL,
   NODE_ENV,
+  PORT
 } = process.env;

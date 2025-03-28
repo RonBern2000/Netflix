@@ -8,7 +8,7 @@ import { sign } from "../utils/jwt";
 import { SignupRequestDTO } from "../DTOs/signup-dto";
 import { IUser } from "../interfaces/IUser";
 import { publishMessage } from "../utils/rabbitmq";
-import {BadRequestError} from '../../../shared/src/errors/bad-request-error';
+import { BadRequestError } from "@netflix-utils/shared";
 
 @injectable()
 export class UserService implements IUserService{

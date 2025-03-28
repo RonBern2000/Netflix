@@ -57,7 +57,7 @@ services:
     ports:
       - "4002:4002"
     env_file:
-      - ../BackendPaymentService/.env
+      - ../BackendMoviesService/.env
     networks:
       - netflix_network
     restart: always
