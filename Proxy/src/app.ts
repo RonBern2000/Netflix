@@ -20,7 +20,7 @@ const limiter: RateLimitRequestHandler = rateLimit({
 app.use(limiter);
 
 app.use(
-  "/api/v1/users",
+  "/users",
   createProxyMiddleware({
     target: USERS_URL,
     changeOrigin: true,
@@ -30,11 +30,14 @@ app.use(
         console.error(error);
       },
     },
+    pathRewrite: {
+      '^/users': '',
+    },
   })
 );
 
 app.use(
-  "/api/v1/payment",
+  "/payment",
   createProxyMiddleware({
     target: PAYMENT_URL,
     changeOrigin: true,
@@ -44,11 +47,14 @@ app.use(
         console.error(error);
       },
     },
+    pathRewrite: {
+      '^/payment': '',
+    },
   })
 );
 
 app.use(
-  "/api/v1/movies",
+  "/movies",
   createProxyMiddleware({
     target: MOVIES_URL,
     changeOrigin: true,
@@ -57,6 +63,9 @@ app.use(
       error: (error, req, res, target) => {
         console.error(error);
       },
+    },
+    pathRewrite: {
+      '^/movies': '',
     },
   })
 );
