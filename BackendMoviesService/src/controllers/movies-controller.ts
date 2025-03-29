@@ -10,7 +10,7 @@ export class MoviesController{
     async getPopularMovies(req: Request, res: Response, next: NextFunction){
         try {
             const popularMovies: IMovie[] | null = await this.moviesService.getPopularMovies();
-            res.status(200).json({message: "Popular Movies loaded successfully", popularMovies});
+            res.status(200).json({popularMovies});
         } catch (error) {
             return next(error);
         }

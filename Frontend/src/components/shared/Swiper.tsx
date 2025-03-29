@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import Container from "./Container";
 import Button from "./Button";
-// import { useAppSelector } from "../../store/store";
-// import { IMovie } from "../../dto/IMovie";
+import { IMovie } from "../../dto/IMovie";
 
 // const items = Array.from({ length: 10 }, (_, i) => `Item ${i + 1}`); Only for testing the swiper offline
 
-const Swiper = () => {
+type swiperProps = {
+    movies: IMovie[] | undefined;
+}
+
+const Swiper = ({ movies }: swiperProps) => {
+    console.log(movies);
     const swiperRef = useRef<HTMLDivElement | null>(null);
     const [atLeft, setAtLeft] = useState(true);
     const [atRight, setAtRight] = useState(false);
-
-    // const popMovies: IMovie[] = useAppSelector((state) => state.popMovies.popMovies);
-    // console.log(popMovies);
 
     const updateButtonVisibility = (): void => {
         if (swiperRef.current) {
@@ -67,15 +68,15 @@ const Swiper = () => {
                 </Button>
             )}
 
-            {/* <div ref={swiperRef}
+            <div ref={swiperRef}
                 className="flex scrollbar-hide overflow-x-hidden scroll-smooth gap-3 py-4 px-4">
-                {popMovies.map((movie) => (
+                {movies?.map((movie) => (
                     <div key={movie.id}
                         className="w-50 h-65 flex-shrink-0 bg-[rgba(255,255,255,0.1)] text-white flex items-center justify-center rounded-md transition ease-in-out hover:scale-107 duration-300">
                         {movie.title}
                     </div>
                 ))}
-            </div> */}
+            </div>
 
             {!atRight ? (
                 <Button

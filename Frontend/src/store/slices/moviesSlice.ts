@@ -1,31 +1,31 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PopMoviesResponse } from "../../api/api";
-import { IMovie } from "../../dto/IMovie";
+// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// import { PopMoviesResponse } from "../../api/api";
+// import { IMovie } from "../../dto/IMovie";
 
-interface MoviesState{
-    message: string;
-    popMovies: IMovie[];
-}
+// interface MoviesState{
+//     message: string;
+//     popMovies: IMovie[];
+// }
 
-const initialState: MoviesState = {
-    message: '',
-    popMovies: [],
-}
+// const initialState: MoviesState = {
+//     message: '',
+//     popMovies: [],
+// }
 
-const moviesSlice = createSlice({
-  name: "movies",
-  initialState,
-  reducers: {
-    loadPopMovies: (state, action: PayloadAction<PopMoviesResponse>) => {
-      state.popMovies = action.payload.popMovies;
-      state.message = action.payload.message;
-    },
-  },
-  extraReducers: () => {}
-});
+// const moviesSlice = createSlice({
+//   name: "movies",
+//   initialState,
+//   reducers: {
+//     loadPopMovies: (state, action: PayloadAction<PopMoviesResponse>) => {
+//       state.popMovies = action.payload.popMovies;
+//       state.message = action.payload.message;
+//     },
+//   },
+//   extraReducers: () => {}
+// });
 
-export const { loadPopMovies } = moviesSlice.actions;
-export default moviesSlice.reducer;
+// export const { loadPopMovies } = moviesSlice.actions;
+// export default moviesSlice.reducer;
 
 // export const loadPopMovies = createAsyncThunk(
 //     "movies/loadPopMovies",

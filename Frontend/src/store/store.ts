@@ -1,10 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import moviesReducer from "./slices/moviesSlice";
+import { moviesApiSlice } from "./slices/moviesApiSlice";
 
 const store = configureStore({
     reducer: {
-        popMovies: moviesReducer
+        [moviesApiSlice.reducerPath]: moviesApiSlice.reducer,
+    },
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat(moviesApiSlice.middleware);
     }
 });
 

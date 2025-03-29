@@ -1,10 +1,9 @@
-import GetpopularMovies from "../../features/GetPopularMovies";
+import PopSwiperContainer from "../../features/PopSwiperContainer";
 import { strings } from "../../strings/strings";
 import Button from "../shared/Button";
 import Container from "../shared/Container";
 import H2 from "../shared/H2";
 import Input from "../shared/Input";
-import Swiper from "../shared/Swiper";
 import Typography from "../shared/Typography";
 import FAQContainer from "./FAQContainer";
 import ReasonsContainer from "./ReasonsContainer";
@@ -17,8 +16,7 @@ const MidSection = () => {
                     <H2 className='text-white w-full text-left mb-0'>
                         {strings.landing.h2Trending}
                     </H2>
-                    <GetpopularMovies />
-                    <Swiper />
+                    <PopSwiperContainer />
                 </Container>
                 <Container className='flex-col w-full mb-16'>
                     <H2 className='text-white w-full text-left mb-4'>
