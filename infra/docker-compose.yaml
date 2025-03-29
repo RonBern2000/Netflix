@@ -99,6 +99,10 @@ services:
       - "3000:3000"
     networks:
       - netflix_network
+    # environment:
+    #   - VITE_HTTPS=true
+    #   - NODE_ENV=development
+    
 
 volumes:
   redis_data:

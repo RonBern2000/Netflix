@@ -12,7 +12,7 @@ export class MoviesRepository implements IMoviesRepository{
         throw new Error("Method not implemented.");
     }
     async setPopularMovies(movies: IMovie[]): Promise<void> {
-        await redis.set(TOKENS.popularMovies, JSON.stringify(movies));
+        await redis.set(TOKENS.popularMovies, JSON.stringify(movies), {EX: 30});
     }
     async setAllMovies(): Promise<void> {
         throw new Error("Method not implemented.");

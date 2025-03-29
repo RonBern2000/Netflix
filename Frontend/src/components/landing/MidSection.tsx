@@ -1,3 +1,4 @@
+import GetpopularMovies from "../../features/GetPopularMovies";
 import { strings } from "../../strings/strings";
 import Button from "../shared/Button";
 import Container from "../shared/Container";
@@ -16,6 +17,7 @@ const MidSection = () => {
                     <H2 className='text-white w-full text-left mb-0'>
                         {strings.landing.h2Trending}
                     </H2>
+                    <GetpopularMovies />
                     <Swiper />
                 </Container>
                 <Container className='flex-col w-full mb-16'>

@@ -25,11 +25,11 @@ const start = async () => {
     };
 
     https.createServer(options, app).listen(PORT, () => {
-      console.log(`Payment service listening on port ${PORT}...`);
+      console.log(`User service listening on port ${PORT}...`);
     });
   } else {
     app.listen(PORT, () => {
-      console.log(`Payment service listening on port ${PORT}...`);
+      console.log(`User service listening on port ${PORT}...`);
     });
   }
 };

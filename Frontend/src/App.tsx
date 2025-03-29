@@ -1,16 +1,16 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
     <>
-      <Router>
+      <BrowserRouter>
         <Routes>
           <Route path='/landing' element={<LandingPage />} />
           <Route path='*' element={<Navigate to='/landing' />} />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </>
   )
 }

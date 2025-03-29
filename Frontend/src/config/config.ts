@@ -1,1 +1,1 @@
-export const apiBaseUrl: string = import.meta.env.VITE_PUBLIC_API_BASE_URL ?? "https://proxy:5000"
+export const apiBaseUrl: string = import.meta.env.VITE_PUBLIC_API_BASE_URL ?? "http://proxy:5000"
