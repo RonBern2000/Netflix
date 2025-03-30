@@ -2,14 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import Container from "./Container";
 import Button from "./Button";
 import { IMovie } from "../../dto/IMovie";
+import PopMovieCard from "../landing/PopMovieCard";
 
 // const items = Array.from({ length: 10 }, (_, i) => `Item ${i + 1}`); Only for testing the swiper offline
 
-type swiperProps = {
+type SwiperProps = {
     movies: IMovie[] | undefined;
 }
 
-const Swiper = ({ movies }: swiperProps) => {
+const Swiper = ({ movies }: SwiperProps) => {
     console.log(movies);
     const swiperRef = useRef<HTMLDivElement | null>(null);
     const [atLeft, setAtLeft] = useState(true);
@@ -69,12 +70,9 @@ const Swiper = ({ movies }: swiperProps) => {
             )}
 
             <div ref={swiperRef}
-                className="flex scrollbar-hide overflow-x-hidden scroll-smooth gap-3 py-4 px-4">
-                {movies?.map((movie) => (
-                    <div key={movie.id}
-                        className="w-50 h-65 flex-shrink-0 bg-[rgba(255,255,255,0.1)] text-white flex items-center justify-center rounded-md transition ease-in-out hover:scale-107 duration-300">
-                        {movie.title}
-                    </div>
+                className="flex scrollbar-hide overflow-hidden scroll-smooth gap-5 py-4 px-4">
+                {movies?.map((movie, index) => (
+                    <PopMovieCard movieId={movie.id} movieBannerUrl={movie.poster_path} index={index} />
                 ))}
             </div>
 

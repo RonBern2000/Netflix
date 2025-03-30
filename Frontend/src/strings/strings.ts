@@ -1,4 +1,8 @@
 export const strings = {
+    auth:{
+        token: "token",
+        temp: "temp",
+    },
     landing: {
         title: "Landing Page",
         signin: "Sign In",
@@ -6,6 +10,7 @@ export const strings = {
         startatprice: "Starts at $15.90. Cancel anytime.",
         readytowatch: "Ready to watch? Enter your email to create or restart your membership.",
         getStarted: "Get Started",
+        checking: "Checking",
         h2Trending: "Trending Now",
         emailAddress: "Email address",
         h2Reasons: "More Reasons to Join",

@@ -3,5 +3,6 @@ export const TOKENS = {
     UserController: "UserController",
     IUserRepository: "IUserRepository",
     IUserService: "IUserService",
-    Token:"Token",
+    token:"token",
+    temp: "temp"
 };

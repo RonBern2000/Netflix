@@ -1,9 +1,8 @@
+import CheckEmailForm from "../../features/CheckEmailForm";
 import PopSwiperContainer from "../../features/PopSwiperContainer";
 import { strings } from "../../strings/strings";
-import Button from "../shared/Button";
 import Container from "../shared/Container";
 import H2 from "../shared/H2";
-import Input from "../shared/Input";
 import Typography from "../shared/Typography";
 import FAQContainer from "./FAQContainer";
 import ReasonsContainer from "./ReasonsContainer";
@@ -33,12 +32,7 @@ const MidSection = () => {
                 <Container className='flex-col items-center justify-center mx-auto w-3/4'>
                     <Typography className='w-full text-center' size='text-sm'>{strings.landing.readytowatch}</Typography>
                     <Container className='relative pt-4 w-full justify-center gap-1.5'>
-                        <Input className='w-full bg-[rgba(31,31,31,0.7)] border-1' type='email' />
-                        <Button className='relative rounded-sm max-md:text-sm text-white bg-[rgba(229,8,20,0.9)] px-6 py-3'>{strings.landing.getStarted}<img
-                            className="absolute right-2 top-1/2 -translate-y-1/2"
-                            src="/ArrowLeft.svg"
-                            alt="arrowLeft" />
-                        </Button>
+                        <CheckEmailForm className='w-full justify-center' />
                     </Container>
                 </Container>
             </Container>
@@ -47,3 +41,10 @@ const MidSection = () => {
 }
 
 export default MidSection;
+
+{/* <Input className='w-full bg-[rgba(31,31,31,0.7)] border-1' type='email' />
+                        <Button className='relative rounded-sm max-md:text-sm text-white bg-[rgba(229,8,20,0.9)] px-6 py-3'>{strings.landing.getStarted}<img
+                            className="absolute right-2 top-1/2 -translate-y-1/2"
+                            src="/ArrowLeft.svg"
+                            alt="arrowLeft" />
+                        </Button> */}

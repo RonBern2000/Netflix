@@ -37,7 +37,7 @@ app.use(
 );
 
 app.use(
-  "/payment",
+  "/payments",
   createProxyMiddleware({
     target: PAYMENT_URL,
     changeOrigin: true,

@@ -9,11 +9,19 @@ import { SignupRequestDTO } from "../DTOs/signup-dto";
 import { IUser } from "../interfaces/IUser";
 import { publishMessage } from "../utils/rabbitmq";
 import { BadRequestError } from "@netflix-utils/shared";
+import { IUserPayload } from "../interfaces/IUserPayload";
 
 @injectable()
 export class UserService implements IUserService{
 
     constructor(@inject(TOKENS.IUserRepository) private userRepository: IUserRepository){}
+
+    async checkUserExist(email: string): Promise<boolean> {
+        const existingUser: IUser | null = await this.userRepository.findUserByEmail(email);
+        return existingUser ? true : false;
+    }
+
+    //TODO: we check here and above keep or only check above?
     async signup(data: SignupRequestDTO): Promise<string> {
         const { email, password, name} = data;
         const existingUser: IUser | null = await this.userRepository.findUserByEmail(email);
@@ -33,9 +41,9 @@ export class UserService implements IUserService{
             throw new Error("Error in user creation");
         }
 
-        await publishMessage("user.singup", { id: newUser.id, name: newUser.name, email: newUser.email });
+        await publishMessage("user.singup", { id: newUser.id, email: newUser.email, active: newUser.active });
 
-        return sign({ id: newUser.id, name: newUser.name});
+        return sign({ id: newUser.id, email: newUser.email, active: newUser.active} as IUserPayload);
     }
     
     async login(data: LoginRequestDTO): Promise<string> {
@@ -52,8 +60,8 @@ export class UserService implements IUserService{
             throw new Error("Invalid password");
         }
 
-        await publishMessage("user.login", { id: existingUser.id, name: existingUser.name, email: existingUser.email });
+        await publishMessage("user.login", { id: existingUser.id, email: existingUser.email, active: existingUser.active });
 
-        return sign({ id: existingUser.id, name: existingUser.name});
+        return sign({ id: existingUser.id, email: existingUser.email, active: existingUser.active} as IUserPayload);
     }
 }

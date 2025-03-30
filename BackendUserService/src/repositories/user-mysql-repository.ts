@@ -8,9 +8,9 @@ import { SignupRequestDTO } from "../DTOs/signup-dto";
 export class UserSqlRepository implements IUserRepository{
     async create(data: SignupRequestDTO): Promise<IUser | null> {
         return await User.create({
-            name: data.name,
             email: data.email,
-            password: data.password
+            password: data.password,
+            active: false
         });
     }
     async findUserByEmail(email: string): Promise<IUser | null> {

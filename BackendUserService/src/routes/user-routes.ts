@@ -7,6 +7,10 @@ const router: Router = Router();
 
 const userController = container.get<UserController>(TOKENS.UserController);
 
+router.post("/checkEmail", (req: Request, res: Response, next: NextFunction) => {
+    userController.checkEmailExist(req, res, next);
+});
+
 router.post("/login", (req: Request, res: Response, next: NextFunction) => {
     userController.login(req, res, next);
 });
