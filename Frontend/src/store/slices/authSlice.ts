@@ -43,6 +43,12 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.isActive = false;
     },
+    pay: (state) => {
+      state.token = "";
+      state.message = null;
+       state.isAuthenticated = false;
+      state.isActive = false;
+    },
     setEmail: (state, action: PayloadAction<EmailResponse>) => {
       state.email = action.payload.email;
     },

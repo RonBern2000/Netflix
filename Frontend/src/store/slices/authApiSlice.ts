@@ -23,8 +23,15 @@ export const usersApiSlice = createApi({
                     body: newUser,
                 }),
             }),
+            payAndActivateUser: builder.mutation<void, void>({ // TODO: Actual logic interms what we send and receive
+                query: (_) => ({
+                    url: "/payments/api/v1/payments/payAndActivate",
+                    method: "POST",
+                    body: _,
+                }),
+            })
         };
     }
 });
 
-export const { useCreateUserMutation, useCheckEmailMutation } = usersApiSlice;
+export const { useCreateUserMutation, useCheckEmailMutation , usePayAndActivateUserMutation } = usersApiSlice;
