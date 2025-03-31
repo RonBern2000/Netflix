@@ -4,5 +4,5 @@ export const TOKENS = {
     IUserRepository: "IUserRepository",
     IUserService: "IUserService",
     token:"token",
-    temp: "temp"
+    tempToken: "tempToken"
 };

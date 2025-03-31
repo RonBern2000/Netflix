@@ -1,11 +1,11 @@
 import { app } from "./app";
 import fs from "fs";
 import https from "https";
-import { DB_URI, NODE_ENV, REDIS_PORT, PORT } from "./config/env";
+import { DB_URI, NODE_ENV, REDIS_PORT, PORT, API_READ_ACCESS_TOKEN, API_KEY, RABBITMQ_URL, PROXY_URL } from "./config/env";
 
 const start = async () => {
-  if (!DB_URI || !PORT || !REDIS_PORT) {
-    throw new Error("Missing required env variable");
+  if (!DB_URI || !PORT || !REDIS_PORT || !API_READ_ACCESS_TOKEN || !API_KEY || !RABBITMQ_URL || !PROXY_URL || !NODE_ENV) {
+    throw new Error("Missing required movie env variable");
   }
 
   if (NODE_ENV === "dev") {

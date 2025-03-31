@@ -16,7 +16,7 @@ export class UserService implements IUserService{
 
     constructor(@inject(TOKENS.IUserRepository) private userRepository: IUserRepository){}
 
-    async checkUserExist(email: string): Promise<boolean> {
+    async checkUserExist(email: string): Promise<boolean> { // מיותר?
         const existingUser: IUser | null = await this.userRepository.findUserByEmail(email);
         return existingUser ? true : false;
     }
