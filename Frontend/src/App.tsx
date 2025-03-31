@@ -12,17 +12,25 @@ import Login from './pages/Login';
 function App() {
 
   //TODO: Check the user that entered our site => isAuthenticated or active or nor
-  const { isAuthenticated, isActive } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, isActive, email } = useAppSelector((state) => state.auth);
 
   return (
     <>
       <BrowserRouter>
         <Routes>
           {/* Unauthenticated Users */}
-          {!isAuthenticated && !isActive ? (
+          {!isAuthenticated && !isActive && !email ? (
             <>
               <Route path='/landing' element={<LandingPage />} />
               <Route path='/login' element={<Login />} />
+              <Route path='*' element={<Navigate to='/landing' />} />
+            </>
+          ) : null}
+
+          {/* Signup Flow: Only if an email exists */}
+          {!isAuthenticated && !isActive && email ? (
+            <>
+              <Route path='/landing' element={<LandingPage />} />
               <Route path='/signup/registration' element={<Registration />} />
               <Route path='/signup/regform' element={<Regform />} />
               <Route path='*' element={<Navigate to='/landing' />} />
@@ -32,7 +40,7 @@ function App() {
           {/* Authenticated but Not Active Users */}
           {isAuthenticated && !isActive ? (
             <>
-              <Route path='/landing' element={<LandingPage />} /> {/* TODO: if a user is logged in but not active then the propmt for the email wont appear but a continue to signup */}
+              <Route path='/landing' element={<LandingPage />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/signup/payment' element={<Payment />} />
               <Route path='*' element={<Navigate to='/signup' />} />
