@@ -11,8 +11,8 @@ type SwiperProps = {
 }
 
 const Swiper = ({ movies }: SwiperProps) => {
-    console.log(movies);
     const swiperRef = useRef<HTMLDivElement | null>(null);
+    //TODO: grouping enum:
     const [atLeft, setAtLeft] = useState(true);
     const [atRight, setAtRight] = useState(false);
 

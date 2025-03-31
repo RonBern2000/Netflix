@@ -13,11 +13,11 @@ const TopSection = () => {
             <Header className='h-30 z-2' />
             <Container className='min-w-min z-2 flex-1 flex-col justify-center items-center px-8 pb-8'>
                 <Container className='flex-col items-center justify-center mx-auto'>
-                    <H1 className='text-white mb-3 w-full'>
+                    <H1 className='text-white mb-3 w-full text-6xl'>
                         {strings.landing.h1}
                     </H1>
-                    <Typography className='w-full mb-6' size='text-xl'>{strings.landing.startatprice}</Typography>
-                    <Typography className='w-full' size='text-sm'>{strings.landing.readytowatch}</Typography>
+                    <Typography className='w-full mb-6 text-white' size='text-xl'>{strings.landing.startatprice}</Typography>
+                    <Typography className='w-full text-white' size='text-sm'>{strings.landing.readytowatch}</Typography>
                     <Container className='relative pt-4 w-full justify-center'>
                         <CheckEmailForm className='w-full justify-center' />
                     </Container>

@@ -11,7 +11,7 @@ const Button = ({ onClick, children, type = 'button', className = '', ...props }
     return (
         <button
             {...props}
-            className={`${className}`}
+            className={`cursor-pointer ${className}`}
             type={type}
             onClick={onClick}>
             {children}

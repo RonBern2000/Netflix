@@ -2,10 +2,37 @@ export const strings = {
     auth:{
         token: "token",
         temp: "temp",
+        signin: "Sign In",
+        signout: "Sign Out",
+        next: "Next",
+        signup: {
+            step2of3: "STEP 2 OF 3",
+            h1: "Choose your plan",
+            typos: [
+                { text: "No commitments, cancel anytime" , id: 1},
+                { text: "Everything on Netflix for one low price.", id: 2 },
+                { text: "Unlimited viewing on all your devices.", id: 3 },
+            ],
+        },
+        registration:{
+            step1of3: "STEP 1 OF 3",
+            h1: "Finish setting up your account",
+            typo: "Netflix is personalized for you. Create a password to start watching Netflix."
+        },
+        regform: {
+            step1of3: "STEP 1 OF 3",
+            h1: "Create a password to start your membership",
+            typo: "Just a few more steps and you're done! \nWe hate paperwork, too.",
+            creating: "Creating...",
+            email: "Email Address",
+            password: "Password"
+        }
     },
     landing: {
         title: "Landing Page",
         signin: "Sign In",
+        signout: "Sign Out",
+        finishSignUp: "Finish Sign-Up",
         h1: " Unlimited movies, \nTV shows, and\nmore",
         startatprice: "Starts at $15.90. Cancel anytime.",
         readytowatch: "Ready to watch? Enter your email to create or restart your membership.",
@@ -47,5 +74,5 @@ export const strings = {
                 "The Netflix Kids experience is included in your membership to give parents control while kids enjoy family-friendly TV shows and movies in their own space.\n\nKids profiles come with PIN-protected parental controls that let you restrict the maturity rating of content kids can watch and block specific titles you don’t want kids to see."
             ]
         },
-    }
+    },
 }

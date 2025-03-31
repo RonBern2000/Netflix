@@ -8,7 +8,7 @@ export const moviesApiSlice = createApi({
     }),
     endpoints: (builder) => {
         return {
-            getPopMovies: builder.query<IMovie[],void>({
+            getPopMovies: builder.query<IMovie[], void>({
                 query: () => "/movies/api/v1/movies/popular",
                 transformResponse: (response: { popularMovies: IMovie[] }) => response.popularMovies,
             }),

@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AuthResponse } from "../../dto/AuthResponse";
-import { checkWhatToken } from "../../utils/checkWhatToken";
+import { AuthResponse, EmailResponse } from "../../dto/AuthResponse";
+import { checkTokenCookie} from "../../utils/checkWhatToken";
 
 interface AuthState {
     token: string;
     isAuthenticated: boolean;
+    isActive: boolean,
+    email: string;
     error: string | null;
     message: string | null;
 }
@@ -12,6 +14,8 @@ interface AuthState {
 const initialState: AuthState = {
     token: "",
     isAuthenticated: false,
+    isActive: false,
+    email: "",
     error: null,
     message: null,
 }
@@ -23,23 +27,28 @@ const authSlice = createSlice({
     login: (state, action: PayloadAction<AuthResponse>) => {
       state.token = action.payload.token;
       state.message = action.payload.message;
-      const active = checkWhatToken();
-      state.isAuthenticated = active;
+      state.isAuthenticated = true;
+      state.isActive = checkTokenCookie();
     },
     signup: (state, action: PayloadAction<AuthResponse>) => {
       state.token = action.payload.token;
       state.message = action.payload.message;
-      const active = checkWhatToken();
-      state.isAuthenticated = active;
+      state.isAuthenticated = true;
+      state.isActive = false;
     },
     logout: (state) => {
       state.token = "";
+      state.email = "";
       state.message = null;
       state.isAuthenticated = false;
+      state.isActive = false;
+    },
+    setEmail: (state, action: PayloadAction<EmailResponse>) => {
+      state.email = action.payload.email;
     },
   },
   extraReducers: () => {}
 });
 
-export const { login, signup, logout } = authSlice.actions;
+export const { login, signup, logout, setEmail } = authSlice.actions;
 export default authSlice.reducer;

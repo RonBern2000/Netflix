@@ -5,8 +5,14 @@ export const emailSchema = z.object({
 });
 
 export const authSchema = z.object({
-  email: z.string().email("Invalid Email"),
-  password: z.string().min(6, "Password must be a least 6 characters"),
+  email: z.string()
+    .nonempty("Email is required")
+    .email("Invalid email address"),
+   password: z
+    .string()
+    .nonempty("Password is required")
+    .min(6, "Password must be at least 6 characters long")
+    .max(20, "Password cannot exceed 20 characters"),
 });
 
 export type EmailFormData = z.infer<typeof emailSchema>;

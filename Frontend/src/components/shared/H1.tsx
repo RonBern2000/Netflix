@@ -7,7 +7,7 @@ type H1Props = {
 
 const H1 = ({ className = '', children }: H1Props) => {
     return (
-        <h1 className={`text-6xl font-extrabold whitespace-pre-wrap ${className}`}>{children}</h1>
+        <h1 className={`font-extrabold whitespace-pre-wrap ${className}`}>{children}</h1>
     )
 }
 

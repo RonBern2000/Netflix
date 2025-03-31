@@ -31,7 +31,7 @@
 //     "movies/loadPopMovies",
 //     async (popMoviesResponse: PopMoviesResponse , { rejectWithValue }) => {
 //         try {
-//             return popMoviesResponse;
+//             return popMoviesResponse = await loadPopMoviesRequest(data);
 //         } catch (error) {
 //             const errorMessage: string = getErrorMessage(error);
 //             return rejectWithValue(errorMessage);
