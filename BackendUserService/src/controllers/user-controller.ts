@@ -4,8 +4,7 @@ import { LoginRequestDTO } from "../DTOs/login-dto";
 import { TOKENS } from "../tokens";
 import { IUserService } from "../interfaces/IUserService";
 import { SignupRequestDTO } from "../DTOs/signup-dto";
-import jwt, { JwtPayload } from 'jsonwebtoken'
-import { JWT_KEY } from "../config/env";
+import { verify } from '../utils/jwt'
 
 @injectable()
 export class UserController{
@@ -25,9 +24,9 @@ export class UserController{
             const data: LoginRequestDTO = req.body;
             
             const token: string = await this.userService.login(data);
-            const decoded = jwt.verify(token, JWT_KEY!);
+            const decoded = verify(token);
 
-            if (typeof decoded === 'object' && decoded !== null && 'active' in decoded) {
+            if (decoded) {
                 if (decoded.active === true)
                 {
                     console.log(`User active status: ${decoded.active}`);

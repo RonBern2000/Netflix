@@ -33,6 +33,91 @@ export const tmdbGetPopular = async (): Promise<IMovie[] | null> => {
     }
 }
 
+export const tmdbGetNowPlaying = async (): Promise<IMovie[] | null> => {
+    const options = {
+        method: 'GET',
+        url: `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1`,
+        headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${apiReadAccessToken}`
+        }
+    };
+    try{
+        const res = await axios.request(options);
+        const movies: IMovie[] = res.data.results.map((movie: any) => ({
+            genre_ids: movie.genre_ids,
+            id: movie.id,
+            overview: movie.overview,
+            popularity: movie.popularity,
+            poster_path: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+            release_date: movie.release_date,
+            title: movie.title,
+            vote_average: movie.vote_average,
+            vote_count: movie.vote_count
+        }));
+        return movies;
+    } catch (error) {
+        throw new BadRequestError("Error in fetching movies");
+    }
+}
+
+export const tmdbGetMoviesByTitle = async (title: string): Promise<IMovie[] | null> => {
+    const options = {
+        method: 'GET',
+        url: `https://api.themoviedb.org/3/movie?query=${title}`,
+        headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${apiReadAccessToken}`
+        }
+    };
+    try{
+        const res = await axios.request(options);
+        const movies: IMovie[] = res.data.results.map((movie: any) => ({
+            genre_ids: movie.genre_ids,
+            id: movie.id,
+            overview: movie.overview,
+            popularity: movie.popularity,
+            poster_path: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+            release_date: movie.release_date,
+            title: movie.title,
+            vote_average: movie.vote_average,
+            vote_count: movie.vote_count
+        }));
+        return movies;
+    } catch (error) {
+        throw new BadRequestError("Error in fetching movies");
+    }
+}
+
+// TODO: blend with tmdbGetMoviesByTitle cause year can't be standalone, have to include title.
+export const tmdbGetMoviesByYear = async (path: string): Promise<IMovie[] | null> => {
+    const options = {
+        method: 'GET',
+        url: `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1`,
+        headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${apiReadAccessToken}`
+        }
+    };
+    try{
+        const res = await axios.request(options);
+        const movies: IMovie[] = res.data.results.map((movie: any) => ({
+            genre_ids: movie.genre_ids,
+            id: movie.id,
+            overview: movie.overview,
+            popularity: movie.popularity,
+            poster_path: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+            release_date: movie.release_date,
+            title: movie.title,
+            vote_average: movie.vote_average,
+            vote_count: movie.vote_count
+        }));
+        return movies;
+    } catch (error) {
+        throw new BadRequestError("Error in fetching movies");
+    }
+}
+
 export const tmdbGetAllMovies = (route: string): any => {
     const options = {
         method: 'GET',

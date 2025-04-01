@@ -8,6 +8,7 @@ import {
   USERS_URL,
   PORT,
   NODE_ENV,
+  JWT_KEY,
 } from "./config/env";
 
 const start = async () => {
@@ -17,9 +18,10 @@ const start = async () => {
     !MOVIES_URL ||
     !CLIENT_URL ||
     !NODE_ENV ||
-    !PORT
+    !PORT ||
+    !JWT_KEY
   ) {
-    throw new Error("Missing required env variable");
+    throw new Error("Missing required proxy env variable");
   }
 
   if (NODE_ENV === "dev") {

@@ -15,4 +15,28 @@ export class MoviesController{
             return next(error);
         }
     }
+    async getNowPlayingMovies(req: Request, res: Response, next: NextFunction){
+        try {
+            const nowPlayingMovies: IMovie[] | null = await this.moviesService.getNowPlayingMovies();
+            res.status(200).json({nowPlayingMovies});
+        } catch (error) {
+            return next(error);
+        }
+    }
+    async getMoviesByTitle(req: Request, res: Response, next: NextFunction){
+        try {
+            const moviesByTitle: IMovie[] | null = await this.moviesService.getMoviesByTitle(req.query);
+            res.status(200).json({moviesByTitle});
+        } catch (error) {
+            return next(error);
+        }
+    }
+    async getMoviesByYear(req: Request, res: Response, next: NextFunction){
+        try {
+            const moviesByYear: IMovie[] | null = await this.moviesService.getMoviesByYear(req.query);
+            res.status(200).json({moviesByYear});
+        } catch (error) {
+            return next(error);
+        }
+    }
 }

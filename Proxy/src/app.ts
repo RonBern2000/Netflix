@@ -3,6 +3,7 @@ import { createProxyMiddleware } from "http-proxy-middleware";
 import rateLimit, { RateLimitRequestHandler } from "express-rate-limit";
 import { basicApp, notFoundHandler, errorHandler } from "@netflix-utils/shared";
 import { CLIENT_URL, MOVIES_URL, PAYMENT_URL, USERS_URL } from "./config/env";
+import { Authenticate } from "../middleware/authenticate";
 
 const app: Application = basicApp([
   USERS_URL!,
@@ -54,7 +55,7 @@ app.use(
 );
 
 app.use(
-  "/movies",
+  "/movies",Authenticate ,
   createProxyMiddleware({
     target: MOVIES_URL,
     changeOrigin: true,
