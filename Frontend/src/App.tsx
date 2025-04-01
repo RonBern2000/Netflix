@@ -8,6 +8,7 @@ import Payment from './pages/Payment';
 import Signup from './pages/Signup';
 import Browse from './pages/Browse';
 import Login from './pages/Login';
+import Mylist from './pages/Mylist';
 
 function App() {
 
@@ -50,10 +51,12 @@ function App() {
           {/* Fully Authenticated and Active Users */}
           {isAuthenticated && isActive ? (
             <>
-              <Route path='/browse' element={<Browse />} />
               <Route path='*' element={<Navigate to='/browse' />} />
+
             </>
           ) : null}
+          <Route path='/browse' element={<Browse />} /> {/* Move it up, here just for testing */}
+          <Route path='/browse/mylist' element={<Mylist />} />
         </Routes>
       </BrowserRouter>
     </>

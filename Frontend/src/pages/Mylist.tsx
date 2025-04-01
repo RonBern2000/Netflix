@@ -1,8 +1,9 @@
-import MidSection from "../components/browse/MidSection";
-import TopSection from "../components/browse/TopSection";
+import MidSection from "../components/mylist/MidSection";
+import TopSection from "../components/mylist/TopSection";
 import Container from "../components/shared/Container";
 
-const Browse = () => {
+
+const Mylist = () => {
     return (
         <Container className='flex-col w-full h-screen bg-black'> {/* TODO: temp bg color */}
             <TopSection />
@@ -11,4 +12,4 @@ const Browse = () => {
     )
 }
 
-export default Browse;
+export default Mylist;
