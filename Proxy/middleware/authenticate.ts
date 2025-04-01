@@ -6,6 +6,8 @@ import { BadRequestError } from '@netflix-utils/shared';
 export const Authenticate = (req: Request, res: Response, next: NextFunction) => {
     const { path, header } = req;
 
+    //TODO: check that Bearer is inside the token
+
     if (path.startsWith('/movies/api/v1/movies/popular'))
         next();
 
@@ -13,7 +15,7 @@ export const Authenticate = (req: Request, res: Response, next: NextFunction) =>
         const token = header('token');
 
         if (token){
-        const verified = jwt.verify(token, JWT_KEY!);
+        const verified = jwt.verify(token, JWT_KEY!); //TODO: move to utils
         if (verified) {
             next()
         } else {

@@ -5,7 +5,6 @@ import { IMoviesRepository } from "../interfaces/IMovieRepository";
 import { IMovie } from "../interfaces/IMovie";
 import { tmdbGetMoviesByTitle, tmdbGetMoviesByYear, tmdbGetNowPlaying, tmdbGetPopular } from "../utils/tmdb-api";
 import { BadRequestError } from "@netflix-utils/shared";
-import redis from "../config/redis-client";
 import { ParsedQs } from "qs";
 
 @injectable()

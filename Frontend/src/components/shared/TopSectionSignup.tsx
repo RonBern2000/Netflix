@@ -3,11 +3,28 @@ import Container from "./Container";
 import Logo from "./Logo";
 import { strings } from "../../strings/strings";
 import Hr from "./Hr";
-import { useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { logout } from "../../store/slices/authSlice";
+import { useLogoutUserMutation } from "../../store/slices/authApiSlice";
 
 const TopSectionSignup = () => {
 
+    // TODO: move this logic to a new component in features folder
+
+    const [logoutUser] = useLogoutUserMutation();
     const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+    const dispatch = useAppDispatch();
+
+    const handleLoginLogout = async (): Promise<void> => {
+        try {
+            if (isAuthenticated) {
+                await logoutUser();
+                dispatch(logout());
+            }
+        } catch (error) {
+            console.error("Email check failed", error);
+        }
+    }
 
     return (
         <>
@@ -15,7 +32,8 @@ const TopSectionSignup = () => {
                 <Logo />
                 <Link
                     className="text-2xl text-bold text-black border-b-2 border-transparent hover:border-black"
-                    to={"/login"}>
+                    to={isAuthenticated ? '/landing' : '/login'}
+                    onClick={handleLoginLogout}>
                     {isAuthenticated ? strings.auth.signout : strings.auth.signin}
                 </Link>
             </Container>

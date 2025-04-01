@@ -15,6 +15,8 @@ export class MoviesController{
             return next(error);
         }
     }
+
+    // TODO: getAllMovies action
     async getNowPlayingMovies(req: Request, res: Response, next: NextFunction){
         try {
             const nowPlayingMovies: IMovie[] | null = await this.moviesService.getNowPlayingMovies();

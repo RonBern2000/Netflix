@@ -29,9 +29,15 @@ export const usersApiSlice = createApi({
                     method: "POST",
                     body: _,
                 }),
-            })
+            }),
+            logoutUser: builder.mutation<void, void>({
+                query: () => ({
+                    url: "/users/api/v1/users/logout",
+                    method: "POST",
+                }),
+            }),
         };
     }
 });
 
-export const { useCreateUserMutation, useCheckEmailMutation , usePayAndActivateUserMutation } = usersApiSlice;
+export const { useCreateUserMutation, useCheckEmailMutation , usePayAndActivateUserMutation, useLogoutUserMutation} = usersApiSlice;

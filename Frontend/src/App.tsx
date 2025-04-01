@@ -19,7 +19,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          {/* Unauthenticated Users */}
+          {/* Unauthenticated Users  consider removing isActive here redandent*/}
           {!isAuthenticated && !isActive && !email ? (
             <>
               <Route path='/landing' element={<LandingPage />} />

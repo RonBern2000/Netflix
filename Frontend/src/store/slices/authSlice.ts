@@ -40,6 +40,7 @@ const authSlice = createSlice({
       state.token = "";
       state.email = "";
       state.message = null;
+      state.error = null;
       state.isAuthenticated = false;
       state.isActive = false;
     },

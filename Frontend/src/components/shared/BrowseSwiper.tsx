@@ -16,8 +16,6 @@ const BrowseSwiper = ({ movies }: SwiperProps) => {
     const [atLeft, setAtLeft] = useState(true);
     const [atRight, setAtRight] = useState(false);
 
-
-
     const updateButtonVisibility = (): void => {
         if (swiperRef.current) {
             const { scrollLeft, scrollWidth, clientWidth } = swiperRef.current;

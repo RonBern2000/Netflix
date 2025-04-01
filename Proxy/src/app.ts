@@ -55,7 +55,8 @@ app.use(
 );
 
 app.use(
-  "/movies",Authenticate ,
+  "/movies",
+  Authenticate ,
   createProxyMiddleware({
     target: MOVIES_URL,
     changeOrigin: true,
