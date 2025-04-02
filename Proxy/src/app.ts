@@ -34,6 +34,7 @@ app.use(
   createProxyMiddleware({
     target: USERS_URL,
     changeOrigin: true,
+    secure: false,
     on: {
       error: (error, req, res, target) => {
         console.error(error);
@@ -43,7 +44,7 @@ app.use(
       '^/users': '',
     },
   })
-)
+);
 
 app.use(
   "/payments",
