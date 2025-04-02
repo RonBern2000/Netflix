@@ -7,17 +7,16 @@ export const Authenticate = (req: Request, res: Response, next: NextFunction) =>
     const { path, header } = req;
 
     //TODO: check that Bearer is inside the token
-    console.log(path);
-    if (path.startsWith('/api/v1/movies/popular'))
-        next();
-
+    if (path.startsWith('/api/v1/movies/popular')){
+        return next();
+    }
     try {
         const token = header('token');
 
         if (token){
         const verified = jwt.verify(token, JWT_KEY!); //TODO: move to utils
         if (verified) {
-            next()
+            return next()
         } else {
             throw new BadRequestError('unautherized');
         }
