@@ -34,6 +34,7 @@ function App() {
               <Route path='/landing' element={<LandingPage />} />
               <Route path='/signup/registration' element={<Registration />} />
               <Route path='/signup/regform' element={<Regform />} />
+              <Route path='/login' element={<Login />} />
               <Route path='*' element={<Navigate to='/landing' />} />
             </>
           ) : null}
@@ -53,10 +54,10 @@ function App() {
             <>
               <Route path='*' element={<Navigate to='/browse' />} />
 
+              <Route path='/browse' element={<Browse />} /> {/* Move it up, here just for testing */}
+              <Route path='/browse/mylist' element={<Mylist />} />
             </>
           ) : null}
-          <Route path='/browse' element={<Browse />} /> {/* Move it up, here just for testing */}
-          <Route path='/browse/mylist' element={<Mylist />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -32,10 +32,11 @@ const CheckEmailForm = ({ className = '' }: CheckEmailFormProps) => {
         try {
             const response = await checkEmailMutation(data).unwrap();
             dispatch(setEmail({ email: data.email }));
+            console.log(response.isExist);
             if (response.isExist) {
-                navigate('/login');
+                return navigate('/login');
             }
-            navigate('/signup/registration');
+            return navigate('/signup/registration');
         } catch (error) {
             console.error("Email check failed", error);
         }
