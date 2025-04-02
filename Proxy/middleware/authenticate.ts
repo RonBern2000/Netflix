@@ -8,7 +8,7 @@ export const Authenticate = (req: Request, res: Response, next: NextFunction) =>
 
     //TODO: check that Bearer is inside the token
 
-    if (path.startsWith('/movies/api/v1/movies/popular'))
+    if (path.startsWith('/api/v1/movies/popular'))
         next();
 
     try {

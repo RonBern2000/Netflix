@@ -22,6 +22,9 @@ app.use(limiter);
 
 app.use(
   "/users",
+  (req, res, next) => {
+    next();
+  },
   createProxyMiddleware({
     target: USERS_URL,
     changeOrigin: true,
@@ -29,6 +32,15 @@ app.use(
     on: {
       error: (error, req, res, target) => {
         console.error(error);
+      },
+      proxyReq: (proxyReq, req, res) => {
+        if (req.body) {
+          const bodyData = JSON.stringify(req.body);
+          proxyReq.setHeader("Content-Type", "application/json");
+          proxyReq.setHeader("Content-Length", Buffer.byteLength(bodyData));
+          proxyReq.write(bodyData);
+          proxyReq.end();
+        }
       },
     },
     pathRewrite: {
@@ -56,7 +68,6 @@ app.use(
 
 app.use(
   "/movies",
-  Authenticate ,
   createProxyMiddleware({
     target: MOVIES_URL,
     changeOrigin: true,
