@@ -13,7 +13,7 @@ import Input from "../components/shared/Input";
 
 const SignupForm = () => {
 
-    const {email, token} = useAppSelector((state) => state.auth);
+    const email = useAppSelector((state) => state.auth.email);
     const dispatch = useAppDispatch();
     const [createUserMutation, { isLoading: isCreatingUser }] = useCreateUserMutation();
 
@@ -30,9 +30,7 @@ const SignupForm = () => {
     const onSubmit = async (data: AuthFormData) => {
         try {
             const response = await createUserMutation(data).unwrap();
-            console.log(response);
             dispatch(signup(response));
-            console.log(token);
         } catch (error) {
             console.error("Email check failed", error);
         }

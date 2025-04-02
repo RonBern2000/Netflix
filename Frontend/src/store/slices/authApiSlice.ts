@@ -11,10 +11,10 @@ export const usersApiSlice = createApi({
     endpoints: (builder) => {
         return {
             checkEmail:builder.mutation<{isExist: boolean}, {email: string}>({
-                query: (body) => ({
+                query: (emailData) => ({
                     url: "/users/api/v1/users/checkEmail",
                     method: "POST",
-                    body,
+                    body: emailData,
                 }),
             }),
             createUser: builder.mutation<AuthResponse, Omit<IUser, "id">>({

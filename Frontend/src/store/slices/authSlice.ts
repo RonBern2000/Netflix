@@ -30,7 +30,6 @@ const authSlice = createSlice({
       state.isActive = action.payload.active
     },
     signup: (state, action: PayloadAction<AuthResponse>) => {
-      console.log(action.payload);
       state.token = action.payload.token;
       state.message = action.payload.message;
       state.isAuthenticated = true;
