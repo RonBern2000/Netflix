@@ -39,7 +39,7 @@ export class UserController{
                 res.cookie(TOKENS.tempToken, token, {
                     httpOnly: true
                 });
-                res.status(200).json({message: "Login Successful", tempToken: `Bearer ${token}`, active: decoded.active});
+                res.status(200).json({message: "Login Successful", token: `Bearer ${token}`, active: decoded.active});
             } else {
                 console.error('Token is invalid or does not contain "active" property.');
             }

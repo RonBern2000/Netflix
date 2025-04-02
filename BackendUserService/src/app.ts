@@ -5,6 +5,8 @@ import { connectRabbitMQ } from "./utils/rabbitmq";
 import { basicApp, notFoundHandler, errorHandler } from "@netflix-utils/shared";
 import { PROXY_URL, RABBITMQ_URL } from "./config/env";
 
+
+console.log(PROXY_URL);
 const app: Application = basicApp([PROXY_URL!, RABBITMQ_URL!]);
 
 app.use(cookieParser());

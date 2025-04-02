@@ -11,7 +11,13 @@ type SwiperProps = {
 }
 
 const BrowseSwiper = ({ movies }: SwiperProps) => {
+    let paginationAmount = items.length / 6;
+    if (items.length % 6 !== 0) {
+        paginationAmount++;
+    }
+    console.log(paginationAmount);
     console.log(movies);
+
     const swiperRef = useRef<HTMLDivElement | null>(null);
     //TODO: grouping enum:
     const [atLeft, setAtLeft] = useState(true);
@@ -52,16 +58,21 @@ const BrowseSwiper = ({ movies }: SwiperProps) => {
 
     return (
         <Container className="flex-col relative w-19/20 mx-auto">
+            <ul className="flex gap-0.5">
+                {items?.map((_, index) =>
+                    (index + 1) % 6 === 0 ? <li key={index}>{index}</li> : null
+                )}
+            </ul>
             {!atLeft ? (
                 <Button
-                    className="absolute flex items-center justify-center left-0 top-1/2 -translate-y-1/2 h-30 w-6 bg-[rgba(255,255,255,0.1)] text-white p-2 rounded-full hover:shadow-md hover:bg-gray-600 transition z-2"
+                    className="absolute flex items-center justify-center left-0 top-1/2 -translate-y-1/2 h-full w-6 text-white p-2 rounded-full hover:shadow-md hover:bg-[rgb(0,0,0,0.8)] transition z-2"
                     onClick={() => scroll("left")}
                 >
                     <img src="/ArrowRight.svg" />
                 </Button>
             ) : (
                 <Button
-                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center left-0 top-1/2 -translate-y-1/2 h-30 w-6 bg-[rgba(255,255,255,0.1)] text-white p-2 rounded-full hover:shadow-md hover:bg-gray-600 z-2"
+                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center left-0 top-1/2 -translate-y-1/2 h-full w-6 bg-[rgb(0,0,0,0.8)] text-white p-2 rounded-full hover:shadow-md hover:bg-[rgb(0,0,0,0.8)]z-2"
                     style={{ opacity: atLeft ? 0 : 1 }}
                     onClick={() => scroll("left")}
                     type="button"
@@ -74,21 +85,21 @@ const BrowseSwiper = ({ movies }: SwiperProps) => {
                 <div ref={swiperRef}
                     className="flex scrollbar-hide overflow-hidden scroll-smooth gap-5 py-4 px-4 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full">
                     {items?.map((_, index) => (
-                        <div className="w-13/84 h-full relative flex-shrink-0 bg-[rgb(250,249,249)] text-white flex items-center justify-center rounded-md transition ease-in-out hover:scale-105 duration-300" key={index} />
+                        <div className="cursor-pointer w-13/84 h-full relative flex-shrink-0 bg-[rgb(250,249,249)] text-white flex items-center justify-center rounded-md transition ease-in-out hover:scale-105 duration-300" key={index} />
                     ))}
                 </div>
             </div>
 
             {!atRight ? (
                 <Button
-                    className="absolute flex items-center justify-center right-0 top-1/2 -translate-y-1/2 h-30 w-6 bg-[rgba(255,255,255,0.1)] text-white p-2 rounded-full shadow-md hover:bg-gray-600 transition z-2"
+                    className="absolute flex items-center justify-center right-0 top-1/2 -translate-y-1/2 h-full w-6  text-white p-2 rounded-full hover:bg-[rgb(0,0,0,0.8)] transition z-2"
                     onClick={() => scroll("right")}
                 >
                     <img src="/ArrowLeft.svg" />
                 </Button>
             ) : (
                 <Button
-                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center right-0 top-1/2 -translate-y-1/2 h-30 w-6 bg-[rgba(255,255,255,0.1)] text-white p-2 rounded-full shadow-md hover:bg-gray-600 z-2"
+                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center right-0 top-1/2 -translate-y-1/2 h-full w-6 bg-[rgb(0,0,0,0.8)] text-white p-2 rounded-full shadow-md hover:bg-[rgb(0,0,0,0.8)] z-2"
                     style={{ opacity: atRight ? 0 : 1 }}
                     onClick={() => scroll("right")}
                 >

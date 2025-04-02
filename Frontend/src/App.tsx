@@ -54,10 +54,10 @@ function App() {
             <>
               <Route path='*' element={<Navigate to='/browse' />} />
 
-              <Route path='/browse' element={<Browse />} /> {/* Move it up, here just for testing */}
               <Route path='/browse/mylist' element={<Mylist />} />
             </>
           ) : null}
+          <Route path='/browse' element={<Browse />} /> {/* Move it up, here just for testing */}
         </Routes>
       </BrowserRouter>
     </>
