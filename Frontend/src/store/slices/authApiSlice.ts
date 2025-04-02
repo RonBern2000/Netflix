@@ -6,17 +6,15 @@ export const usersApiSlice = createApi({
     reducerPath: "authApi",
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:5000",
+        credentials: 'include'
     }),
     endpoints: (builder) => {
         return {
             checkEmail:builder.mutation<{isExist: boolean}, {email: string}>({
-                query: (emailData) => ({
+                query: (body) => ({
                     url: "/users/api/v1/users/checkEmail",
                     method: "POST",
-                    body: emailData,
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    body,
                 }),
             }),
             createUser: builder.mutation<AuthResponse, Omit<IUser, "id">>({

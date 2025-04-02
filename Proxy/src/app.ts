@@ -1,16 +1,25 @@
-import { Application } from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import rateLimit, { RateLimitRequestHandler } from "express-rate-limit";
-import { basicApp, notFoundHandler, errorHandler } from "@netflix-utils/shared";
+import { notFoundHandler, errorHandler } from "@netflix-utils/shared";
 import { CLIENT_URL, MOVIES_URL, PAYMENT_URL, USERS_URL } from "./config/env";
-import { Authenticate } from "../middleware/authenticate";
+import express from 'express';
+import { Application, urlencoded } from 'express';
+import cors from 'cors';
+// import { Authenticate } from "../middleware/authenticate";
 
-const app: Application = basicApp([
-  USERS_URL!,
-  PAYMENT_URL!,
-  MOVIES_URL!,
-  CLIENT_URL!,
-]);
+const app: Application = express();
+
+app.use(urlencoded({ extended: true }));
+
+app.use(cors({
+    credentials: true,
+    origin: [
+        USERS_URL!,
+        PAYMENT_URL!,
+        MOVIES_URL!,
+        CLIENT_URL!
+    ]
+}));
 
 const limiter: RateLimitRequestHandler = rateLimit({
   windowMs: 60000,
@@ -22,9 +31,6 @@ app.use(limiter);
 
 app.use(
   "/users",
-  (req, res, next) => {
-    next();
-  },
   createProxyMiddleware({
     target: USERS_URL,
     changeOrigin: true,
@@ -32,15 +38,6 @@ app.use(
     on: {
       error: (error, req, res, target) => {
         console.error(error);
-      },
-      proxyReq: (proxyReq, req, res) => {
-        if (req.body) {
-          const bodyData = JSON.stringify(req.body);
-          proxyReq.setHeader("Content-Type", "application/json");
-          proxyReq.setHeader("Content-Length", Buffer.byteLength(bodyData));
-          proxyReq.write(bodyData);
-          proxyReq.end();
-        }
       },
     },
     pathRewrite: {
