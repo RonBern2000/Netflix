@@ -70,11 +70,13 @@ const BrowseSwiper = ({ movies }: SwiperProps) => {
                 </Button>
             )}
 
-            <div ref={swiperRef}
-                className="flex scrollbar-hide overflow-hidden scroll-smooth gap-5 py-4 px-4">
-                {items?.map((_, index) => (
-                    <div className="w-100 h-60 relative flex-shrink-0 bg-[rgb(250,249,249)] text-white flex items-center justify-center rounded-md transition ease-in-out hover:scale-105 duration-300" key={index} />
-                ))}
+            <div className="h-50 ">
+                <div ref={swiperRef}
+                    className="flex scrollbar-hide overflow-hidden scroll-smooth gap-5 py-4 px-4 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full">
+                    {items?.map((_, index) => (
+                        <div className="w-13/84 h-full relative flex-shrink-0 bg-[rgb(250,249,249)] text-white flex items-center justify-center rounded-md transition ease-in-out hover:scale-105 duration-300" key={index} />
+                    ))}
+                </div>
             </div>
 
             {!atRight ? (
