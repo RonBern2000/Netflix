@@ -29,22 +29,17 @@ export class UserController{
             // TODO: Move logic to a service, determine which token we are dealing with..
             if (decoded) {
                 if (decoded.active === true)
+                {
+                    console.log(`User active status: ${decoded.active}`);
                     res.cookie(TOKENS.token, token, {
                         httpOnly: true
                     });
-<<<<<<< HEAD
-                else
-                    res.cookie(TOKENS.tempToken, token, {
-                        httpOnly: true
-                    });
-=======
                     res.status(200).json({message: "Login Successful", token: `Bearer ${token}`, active: decoded.active});
                 }
                 res.cookie(TOKENS.tempToken, token, {
                     httpOnly: true
                 });
->>>>>>> 58643ab89d4329aebd5f8757097cb4d41f698ca4
-                res.status(200).json({message: "Login Successful", token: `Bearer ${token}`, active: decoded.active});
+                res.status(200).json({message: "Login Successful", tempToken: `Bearer ${token}`, active: decoded.active});
             } else {
                 console.error('Token is invalid or does not contain "active" property.');
             }
@@ -61,7 +56,7 @@ export class UserController{
             res.cookie(TOKENS.tempToken, token, {
                 httpOnly: true
             });
-            res.status(200).json({message: "Signup Successful", token: `Bearer ${token}`});
+            res.status(200).json({message: "Signup Successful", tempToken: `Bearer ${token}`});
         } catch (error) {
             return next(error);
         }
