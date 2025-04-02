@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthResponse, EmailResponse } from "../../dto/AuthResponse";
-import { checkTokenCookie} from "../../utils/checkWhatToken";
 
 interface AuthState {
     token: string;
@@ -28,7 +27,7 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.message = action.payload.message;
       state.isAuthenticated = true;
-      state.isActive = checkTokenCookie();
+      state.isActive = action.payload.active
     },
     signup: (state, action: PayloadAction<AuthResponse>) => {
       state.token = action.payload.token;
@@ -47,7 +46,7 @@ const authSlice = createSlice({
     pay: (state) => {
       state.token = "";
       state.message = null;
-       state.isAuthenticated = false;
+      state.isAuthenticated = false;
       state.isActive = false;
     },
     setEmail: (state, action: PayloadAction<EmailResponse>) => {

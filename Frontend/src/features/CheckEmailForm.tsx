@@ -30,7 +30,7 @@ const CheckEmailForm = ({ className = '' }: CheckEmailFormProps) => {
 
     const onSubmit = async (data: EmailFormData) => {
         try {
-            const response = await checkEmailMutation(data.email).unwrap();
+            const response = await checkEmailMutation(data).unwrap();
             dispatch(setEmail({ email: data.email }));
             if (response.isExist) {
                 navigate('/login');

@@ -8,4 +8,5 @@ export interface EmailResponse{
 
 export interface AuthResponse extends BaseResponse{
     token: string;
+    active: boolean;
 }

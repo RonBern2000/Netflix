@@ -14,7 +14,7 @@ function App() {
 
   //TODO: Check the user that entered our site => isAuthenticated or active or nor
   const { isAuthenticated, isActive, email } = useAppSelector((state) => state.auth);
-
+  //TODO: Ping pong to server to check who is the current user
   return (
     <>
       <BrowserRouter>
