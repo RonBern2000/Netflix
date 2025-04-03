@@ -11,6 +11,7 @@ type SwiperProps = {
 }
 
 const BrowseSwiper = ({ movies }: SwiperProps) => {
+    //TODO: Movie the logic of this component to other place
     const swiperRef = useRef<HTMLDivElement | null>(null);
     //TODO: grouping enum:
     const [atLeft, setAtLeft] = useState(true);
@@ -69,9 +70,9 @@ const BrowseSwiper = ({ movies }: SwiperProps) => {
 
     return (
         <Container className="flex-col relative w-19/20 mx-auto">
-            <ul className="absolute flex gap-1 right-20 -top-4">
+            <ul className="absolute flex gap-1 right-20 -top-4.5">
                 {new Array(paginationAmount).fill(0).map((_, index) =>
-                    <li className={`w-4 border-white ${activeIndex === index ? "border-b-2" : ""}`} key={index}> 1</li>
+                    <li className={`w-4 border-gray-500 ${activeIndex === index ? "border-b-2 border-white" : "border-gray-500 border-b-2"}`} key={index}>.</li>
                 )}
             </ul>
             {!atLeft ? (

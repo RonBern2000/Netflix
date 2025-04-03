@@ -10,7 +10,7 @@ import CheckBox from "../shared/CheckBox";
 const MidSection = () => {
     return (
         <Container className="flex-col justify-center items-center mt-5">
-            <Container className="flex-col w-[450px] bg-[rgba(0,0,0,0.7)] p-12 py-15 rounded-xl gap-3.5">
+            <Container className="flex-col w-[450px] bg-[rgba(0,0,0,0.7)] p-12 py-15 rounded-xl gap-3.5 max-md:w-[300px]">
                 <H1 className="text-3xl mb-3">{strings.landing.signin}</H1>
                 <Container className="flex-col items-center gap-3">
                     <LoginForm />

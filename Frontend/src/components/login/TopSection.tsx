@@ -3,7 +3,7 @@ import Header from "./Header";
 
 const TopSection = () => {
     return (
-        <Container className="justify-between items-center w-full px-60 py-5">
+        <Container className="justify-between items-center w-full px-40 py-5">
             <Header />
         </Container>
     )
