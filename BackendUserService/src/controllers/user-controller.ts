@@ -10,11 +10,15 @@ export class UserController{
     constructor(@inject(TOKENS.IUserService) private userService: IUserService){}
 
     async checkEmailExist(req: Request, res: Response, next: NextFunction){
-        const { email } = req.body;
-
-        const isExist = await this.userService.checkUserExist(email);
-
-        res.status(200).json({ isExist });
+        try {
+            const { email } = req.body;
+    
+            const isExist = await this.userService.checkUserExist(email);
+    
+            res.status(200).json({ isExist });
+        } catch (error) {
+            return next(error);
+        }
     }
 
     async login(req: Request, res: Response, next: NextFunction){
