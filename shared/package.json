@@ -3,15 +3,17 @@
     "cors": "^2.8.5",
     "del-cli": "^6.0.0",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.1"
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9"
   },
   "name": "@netflix-utils/shared",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "files": [
