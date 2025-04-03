@@ -11,17 +11,20 @@ type SwiperProps = {
 }
 
 const BrowseSwiper = ({ movies }: SwiperProps) => {
+    const swiperRef = useRef<HTMLDivElement | null>(null);
+    //TODO: grouping enum:
+    const [atLeft, setAtLeft] = useState(true);
+    const [atRight, setAtRight] = useState(false);
+
+    const [activeIndex, setActiveIndex] = useState(0);
+
     let paginationAmount = items.length / 6;
+    paginationAmount = Math.floor(paginationAmount);
     if (items.length % 6 !== 0) {
         paginationAmount++;
     }
     console.log(paginationAmount);
     console.log(movies);
-
-    const swiperRef = useRef<HTMLDivElement | null>(null);
-    //TODO: grouping enum:
-    const [atLeft, setAtLeft] = useState(true);
-    const [atRight, setAtRight] = useState(false);
 
     const updateButtonVisibility = (): void => {
         if (swiperRef.current) {
@@ -54,25 +57,33 @@ const BrowseSwiper = ({ movies }: SwiperProps) => {
                 behavior: "smooth",
             });
         }
+
+        setActiveIndex((prevIndex) => {
+            if (direction === "right") {
+                return Math.min(prevIndex + 1, paginationAmount - 1);
+            } else {
+                return Math.max(prevIndex - 1, 0);
+            }
+        });
     };
 
     return (
         <Container className="flex-col relative w-19/20 mx-auto">
-            <ul className="flex gap-0.5">
-                {items?.map((_, index) =>
-                    (index + 1) % 6 === 0 ? <li key={index}>{index}</li> : null
+            <ul className="absolute flex gap-1 right-20 -top-4">
+                {new Array(paginationAmount).fill(0).map((_, index) =>
+                    <li className={`w-4 border-white ${activeIndex === index ? "border-b-2" : ""}`} key={index}> 1</li>
                 )}
             </ul>
             {!atLeft ? (
                 <Button
-                    className="absolute flex items-center justify-center left-0 top-1/2 -translate-y-1/2 h-full w-6 text-white p-2 rounded-full hover:shadow-md hover:bg-[rgb(0,0,0,0.8)] transition z-2"
+                    className="absolute flex items-center opacity-0 hover:opacity-100 justify-center left-0  max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8 text-white p-2 hover:bg-[rgb(0,0,0,0.8)] transition z-2"
                     onClick={() => scroll("left")}
                 >
                     <img src="/ArrowRight.svg" />
                 </Button>
             ) : (
                 <Button
-                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center left-0 top-1/2 -translate-y-1/2 h-full w-6 bg-[rgb(0,0,0,0.8)] text-white p-2 rounded-full hover:shadow-md hover:bg-[rgb(0,0,0,0.8)]z-2"
+                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center left-0 top-1/2 -translate-y-1/2 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8 bg-[rgb(0,0,0,0.8)] text-white p-2 hover:bg-[rgb(0,0,0,0.8)]z-2"
                     style={{ opacity: atLeft ? 0 : 1 }}
                     onClick={() => scroll("left")}
                     type="button"
@@ -92,14 +103,14 @@ const BrowseSwiper = ({ movies }: SwiperProps) => {
 
             {!atRight ? (
                 <Button
-                    className="absolute flex items-center justify-center right-0 top-1/2 -translate-y-1/2 h-full w-6  text-white p-2 rounded-full hover:bg-[rgb(0,0,0,0.8)] transition z-2"
+                    className="absolute opacity-0 hover:opacity-100 flex items-center justify-center right-0 top-1/2 -translate-y-1/2 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8  text-white p-2 hover:bg-[rgb(0,0,0,0.8)] transition z-2"
                     onClick={() => scroll("right")}
                 >
                     <img src="/ArrowLeft.svg" />
                 </Button>
             ) : (
                 <Button
-                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center right-0 top-1/2 -translate-y-1/2 h-full w-6 bg-[rgb(0,0,0,0.8)] text-white p-2 rounded-full shadow-md hover:bg-[rgb(0,0,0,0.8)] z-2"
+                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center right-0 top-1/2 -translate-y-1/2 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8 bg-[rgb(0,0,0,0.8)] text-white p-2 hover:bg-[rgb(0,0,0,0.8)] z-2"
                     style={{ opacity: atRight ? 0 : 1 }}
                     onClick={() => scroll("right")}
                 >
