@@ -5,7 +5,7 @@ import { CLIENT_URL, MOVIES_URL, PAYMENT_URL, USERS_URL } from "./config/env";
 import express from 'express';
 import { Application, urlencoded } from 'express';
 import cors from 'cors';
-import { Authenticate } from "../middleware/authenticate";
+import { authenticate } from "../middleware/authenticate";
 
 const app: Application = express();
 
@@ -65,7 +65,7 @@ app.use(
 
 app.use(
   "/movies",
-  Authenticate,
+  authenticate,
   createProxyMiddleware({
     target: MOVIES_URL,
     changeOrigin: true,
