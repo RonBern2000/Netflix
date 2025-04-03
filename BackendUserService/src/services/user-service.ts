@@ -10,6 +10,7 @@ import { IUser } from "../interfaces/IUser";
 import { publishMessage } from "../utils/rabbitmq";
 import { BadRequestError } from "@netflix-utils/shared";
 import { IUserPayload } from "../interfaces/IUserPayload";
+import { ILoginResponse } from "../interfaces/ILoginResponse";
 
 @injectable()
 export class UserService implements IUserService{
@@ -46,7 +47,7 @@ export class UserService implements IUserService{
         return sign({ id: newUser.id, email: newUser.email, active: newUser.active} as IUserPayload);
     }
     
-    async login(data: LoginRequestDTO): Promise<string> {
+    async login(data: LoginRequestDTO): Promise<ILoginResponse> {
         const { email, password} = data;
         const existingUser = await this.userRepository.findUserByEmail(email);
 
@@ -62,6 +63,6 @@ export class UserService implements IUserService{
 
         await publishMessage("user.login", { id: existingUser.id, email: existingUser.email, active: existingUser.active });
 
-        return sign({ id: existingUser.id, email: existingUser.email, active: existingUser.active} as IUserPayload);
+        return {token: sign({ id: existingUser.id, email: existingUser.email, active: existingUser.active} as IUserPayload), active: existingUser.active};
     }
 }

@@ -4,5 +4,6 @@ export const TOKENS = {
     IUserRepository: "IUserRepository",
     IUserService: "IUserService",
     token:"token",
-    tempToken: "tempToken"
+    tempToken: "tempToken",
+    Bearer: 'Bearer',
 };

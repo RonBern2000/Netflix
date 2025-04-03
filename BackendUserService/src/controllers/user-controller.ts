@@ -4,7 +4,6 @@ import { LoginRequestDTO } from "../DTOs/login-dto";
 import { TOKENS } from "../tokens";
 import { IUserService } from "../interfaces/IUserService";
 import { SignupRequestDTO } from "../DTOs/signup-dto";
-import { verify } from '../utils/jwt'
 
 @injectable()
 export class UserController{
@@ -19,30 +18,22 @@ export class UserController{
     }
 
     async login(req: Request, res: Response, next: NextFunction){
-        // TODO: More logic if its an active user or inactive
         try {
             const data: LoginRequestDTO = req.body;
             
-            const token: string = await this.userService.login(data);
-            const decoded = verify(token);
+            const {token, active} = await this.userService.login(data);
 
-            // TODO: Move logic to a service, determine which token we are dealing with..
-            if (decoded) {
-                if (decoded.active === true)
-                {
-                    console.log(`User active status: ${decoded.active}`);
-                    res.cookie(TOKENS.token, token, {
-                        httpOnly: true
-                    });
-                    res.status(200).json({message: "Login Successful", token: `Bearer ${token}`, active: decoded.active});
-                }
-                res.cookie(TOKENS.tempToken, token, {
+            if (active)
+            {
+                res.cookie(TOKENS.token, `${TOKENS.Bearer} ${token}`, {
                     httpOnly: true
                 });
-                res.status(200).json({message: "Login Successful", tempToken: `Bearer ${token}`, active: decoded.active});
-            } else {
-                console.error('Token is invalid or does not contain "active" property.');
+                res.status(200).json({message: "Login Successful", token: `Bearer ${token}`, active: active});
             }
+            res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${token}`, {
+                httpOnly: true
+            });
+            res.status(200).json({message: "Login Successful", token: `${TOKENS.Bearer} ${token}`, active: active});
         } catch (error) {
             return next(error);
         }
@@ -53,10 +44,10 @@ export class UserController{
 
             const token: string = await this.userService.signup(data);
 
-            res.cookie(TOKENS.tempToken, token, {
+            res.cookie(TOKENS.tempToken, `Bearer ${token}`, {
                 httpOnly: true
             });
-            res.status(200).json({message: "Signup Successful", tempToken: `Bearer ${token}`});
+            res.status(200).json({message: "Signup Successful", token: `${TOKENS.Bearer} ${token}`});
         } catch (error) {
             return next(error);
         }
