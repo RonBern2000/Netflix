@@ -37,8 +37,15 @@ export const usersApiSlice = createApi({
                     method: "POST",
                 }),
             }),
+            login: builder.mutation<AuthResponse, Omit<IUser, "id">>({
+                query: (user) => ({
+                    url: "/users/api/v1/users/login",
+                    method: "POST",
+                    body: user,
+                }),
+            }),
         };
     }
 });
 
-export const { useCreateUserMutation, useCheckEmailMutation , usePayAndActivateUserMutation, useLogoutUserMutation} = usersApiSlice;
+export const { useCreateUserMutation, useCheckEmailMutation , usePayAndActivateUserMutation, useLogoutUserMutation, useLoginMutation} = usersApiSlice;

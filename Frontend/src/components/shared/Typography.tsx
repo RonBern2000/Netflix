@@ -3,7 +3,7 @@ import React from 'react';
 type TypographyProps = {
   children: React.ReactNode;
   className?: string;
-  size?: "text-sm" | "text-base" | "text-lg" | "text-xl";
+  size?: "text-sm" | "text-base" | "text-md" | "text-lg" | "text-xl";
 }
 
 const Typography = ({ children, className = '', size = 'text-sm' }: TypographyProps) => {

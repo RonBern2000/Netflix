@@ -14,6 +14,17 @@ export const strings = {
                 { text: "Unlimited viewing on all your devices.", id: 3 },
             ],
         },
+        login: {
+            newToNetflix: "New to Netflix?",
+            signupNow: "Sign up now.",
+            typo: "This page is protected by Google reCAPTCHA to ensure you're not a bot.",
+            learnMore: "Learn more.",
+            signin: "Sign In",
+            signingIn: "Signing In...",
+            OR: "OR",
+            UseaSignInCode: "Use a Sign-In Code",
+            forgotpassword: "Forgot password?"
+        },
         registration:{
             step1of3: "STEP 1 OF 3",
             h1: "Finish setting up your account",
