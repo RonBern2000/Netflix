@@ -17,7 +17,7 @@ const MidSection = () => {
                     <Typography size="text-md" className="text-gray-400">{strings.auth.login.OR}</Typography>
                     <Button className="bg-[rgba(58,58,58,0.7)] hover:bg-[rgba(58,58,58,0.5)] text-white w-full py-1.5 rounded-md font-semibold text-lg">{strings.auth.login.UseaSignInCode}</Button>
                     <Link to={'#'} className="underline">{strings.auth.login.forgotpassword}</Link>
-                    <CheckBox className="self-start gap-2">Remember me</CheckBox>
+                    <CheckBox className="self-start gap-2">{strings.auth.login.rememberme}</CheckBox>
                 </Container>
                 <Typography size="text-md" className="text-[#adadad]">
                     {strings.auth.login.newToNetflix}

@@ -23,7 +23,8 @@ export const strings = {
             signingIn: "Signing In...",
             OR: "OR",
             UseaSignInCode: "Use a Sign-In Code",
-            forgotpassword: "Forgot password?"
+            forgotpassword: "Forgot password?",
+            rememberme: "Remember me",
         },
         registration:{
             step1of3: "STEP 1 OF 3",
