@@ -1,12 +1,10 @@
 import { Application } from "express";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user-routes";
-import { connectRabbitMQ } from "./utils/rabbitmq";
+import { RabbitMQClient } from "@netflix-utils/shared/build/utils/rabbitmq";
 import { basicApp, notFoundHandler, errorHandler } from "@netflix-utils/shared";
 import { PROXY_URL, RABBITMQ_URL } from "./config/env";
 
-
-console.log(PROXY_URL);
 const app: Application = basicApp([PROXY_URL!, RABBITMQ_URL!]);
 
 app.use(cookieParser());
@@ -16,7 +14,5 @@ app.use("/api/v1/users", userRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
-
-connectRabbitMQ().catch(console.error);
 
 export { app };

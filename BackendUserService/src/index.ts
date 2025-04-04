@@ -1,22 +1,23 @@
 import { app } from "./app";
-import { config } from "dotenv";
 import { dbConnection } from "./config/db";
 import fs from "fs";
 import https from "https";
-import { NODE_ENV, PORT } from "./config/env";
-
-config();
+import { DB_URI, JWT_KEY, NODE_ENV, PORT, RABBITMQ_URL } from "./config/env";
+import { rabbit } from "./config/rabbit";
+import { startAllConsumers } from "./utils/start-all-consumers";
 
 const start = async () => {
   //TODO: Add all the evn variables to validate
-  if (!process.env.DB_URI) {
+  if (!DB_URI) {
     throw new Error("Missing db url");
   }
-  if (!process.env.JWT_KEY) {
-    throw new Error("Missing jwt token");
+  if (!JWT_KEY || !RABBITMQ_URL) {
+    throw new Error("Missing env variables");
   }
 
   await dbConnection();
+  await rabbit.connectRabbitMQ();
+  await startAllConsumers();
 
   if (NODE_ENV === "dev") {
     const options = {
