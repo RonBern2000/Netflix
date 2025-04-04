@@ -4,6 +4,7 @@ import { IUserRepository } from '../interfaces/IUserRepository'
 import { IUserService } from "../interfaces/IUserService";
 import { IUser } from "../interfaces/IUser";
 import { BadRequestError } from "@netflix-utils/shared";
+import { rabbit } from "../config/rabbit";
 
 @injectable()
 export class UserService implements IUserService{
@@ -16,7 +17,7 @@ export class UserService implements IUserService{
             throw new BadRequestError("Error updating user's status");
         }
 
-        //TODO: Rabbitmq logic
+        await rabbit.publishMessage("user", 'pay' ,{ id: user.id, active: user.active });
 
         return user;
     }

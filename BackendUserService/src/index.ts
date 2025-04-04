@@ -4,7 +4,7 @@ import fs from "fs";
 import https from "https";
 import { DB_URI, JWT_KEY, NODE_ENV, PORT, RABBITMQ_URL } from "./config/env";
 import { rabbit } from "./config/rabbit";
-import { startAllConsumers } from "./utils/start-all-consumers";
+import { PaymentConsumer } from "./rabbitmq/consumers/payment-consumer";
 
 const start = async () => {
   //TODO: Add all the evn variables to validate
@@ -17,7 +17,8 @@ const start = async () => {
 
   await dbConnection();
   await rabbit.connectRabbitMQ();
-  await startAllConsumers();
+  const paymentConsumer = new PaymentConsumer(rabbit);
+  await paymentConsumer.consume();
 
   if (NODE_ENV === "dev") {
     const options = {

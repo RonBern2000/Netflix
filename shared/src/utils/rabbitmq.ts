@@ -17,28 +17,28 @@ export class RabbitMQClient{
         }
     }
 
-    async publishMessage(exchange: string, message: object){
+    async publishMessage(exchange: string, routingKey: string, message: object){
         if (!this.channel) {
             console.error("RabbitMQ channel is not initialized.");
             return;
         }
 
-        await this.channel.assertExchange(exchange, 'fanout', {
+        await this.channel.assertExchange(exchange, 'topic', {
             durable: false
         });
 
-        this.channel.publish(exchange, '', Buffer.from(JSON.stringify(message)));
+        this.channel.publish(exchange, routingKey, Buffer.from(JSON.stringify(message)));
 
         console.log(`Message sent to queue [${exchange}]:`, message);
     }
 
-    async comsumeMessage(exchange: string, onMessage: (msg: any) => void){
+    async comsumeMessage(exchange: string, routingKey: string,onMessage: (msg: any) => void){
         if(!this.channel){
             console.error("RabbitMQ channek is not initialized.");
             return;
         }
 
-        await this.channel.assertExchange(exchange, 'fanout',{
+        await this.channel.assertExchange(exchange, 'topic',{
             durable: false,
         });
 
@@ -46,7 +46,7 @@ export class RabbitMQClient{
             exclusive: true,
         });
 
-        await this.channel.bindQueue(q.queue, exchange, "");
+        await this.channel.bindQueue(q.queue, exchange, routingKey);
         console.log(" [*] Waiting for messages. To exit press CTRL+C");
 
         this.channel.consume(

@@ -44,7 +44,7 @@ export class UserService implements IUserService{
             throw new Error("Error in user creation");
         }
 
-        await rabbit.publishMessage("user.signup", { id: newUser.id, active: newUser.active });
+        await rabbit.publishMessage("user", 'signup' ,{ id: newUser.id, active: newUser.active });
 
         return sign({ id: newUser.id, email: newUser.email, active: newUser.active} as IUserPayload);
     }

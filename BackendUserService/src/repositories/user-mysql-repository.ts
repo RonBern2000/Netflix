@@ -6,6 +6,15 @@ import { SignupRequestDTO } from "../DTOs/signup-dto";
 
 @injectable()
 export class UserSqlRepository implements IUserRepository{
+    async findUserById(id: string): Promise<IUser | null> {
+        return await User.findByPk(id);
+    }
+    async updateUserStatus(id:string, active:boolean): Promise<void> {
+        await User.update(
+            { active },
+            { where: { id }}
+        );
+    }
     async create(data: SignupRequestDTO): Promise<IUser | null> {
         return await User.create({
             email: data.email,
