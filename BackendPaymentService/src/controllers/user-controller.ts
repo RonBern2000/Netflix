@@ -8,11 +8,10 @@ import { IUser } from '../interfaces/IUser';
 export class UserController{
     constructor(@inject(TOKENS.IUserService) private userService: IUserService){}
 
-    // TODO: the proxy should give this service the id from the cookie
     async pay(req: Request, res: Response, next: NextFunction){
         try {
-            const { id } = req.body;
-            const user: IUser | null = await this.userService.pay(id); 
+            const { userId } = req.body;
+            const user: IUser | null = await this.userService.pay(userId); 
             if(!user)
                 res.status(400).json({message: "Payment was not Successful"});
 

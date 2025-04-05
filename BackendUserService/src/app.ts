@@ -1,7 +1,6 @@
 import { Application } from "express";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user-routes";
-import { RabbitMQClient } from "@netflix-utils/shared/build/utils/rabbitmq";
 import { basicApp, notFoundHandler, errorHandler } from "@netflix-utils/shared";
 import { PROXY_URL, RABBITMQ_URL } from "./config/env";
 
