@@ -15,8 +15,7 @@ export const authenticatePayment = (req: Request, res: Response, next: NextFunct
         if (!decoded || !decoded.id)
             throw new BadRequestError('Invalid token');
 
-        req.body = req.body || {};
-        req.body.userId = decoded.id;
+        req.headers.userId = decoded.id;
         return next();
         } catch (error) {
             return next(error);

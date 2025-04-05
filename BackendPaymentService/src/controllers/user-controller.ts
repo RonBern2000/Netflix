@@ -10,8 +10,10 @@ export class UserController{
 
     async pay(req: Request, res: Response, next: NextFunction){
         try {
-            const { userId } = req.body;
-            const user: IUser | null = await this.userService.pay(userId); 
+            const userId = req.headers.userId;
+            let user: IUser | null = null;
+            if(typeof userId === 'string')
+                user = await this.userService.pay(userId); 
             if(!user)
                 res.status(400).json({message: "Payment was not Successful"});
 

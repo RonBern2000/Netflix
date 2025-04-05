@@ -17,8 +17,7 @@ const start = async () => {
 
   await dbConnection();
   await rabbit.connectRabbitMQ();
-  const paymentConsumer = new PaymentConsumer(rabbit);
-  await paymentConsumer.consume();
+  await new PaymentConsumer(rabbit).consume();
 
   if (NODE_ENV === "dev") {
     const options = {

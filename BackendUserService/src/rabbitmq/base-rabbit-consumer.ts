@@ -1,10 +1,13 @@
 import { RabbitMQClient } from "@netflix-utils/shared/build/utils/rabbitmq";
 
-//TODO: create an interface for T
-export abstract class BaseRabbitMQConsumer<T = any>{
-    abstract exchange: string;
+interface Event{
+  exchange: string; // TODO enum with all the events
+  data: any;
+}
+export abstract class BaseRabbitMQConsumer<T extends Event>{
+    abstract exchange: T['exchange'];
     abstract routingKey: string;
-    abstract onMessage(data: T): Promise<void>;
+    abstract onMessage(data: T['data']): Promise<void>;
 
     protected rabbit: RabbitMQClient;
 

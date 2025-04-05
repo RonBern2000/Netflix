@@ -2,15 +2,15 @@ import { User } from "../../models/user-sql-entity";
 import { BaseRabbitMQConsumer } from "../base-rabbit-consumer";
 
 interface UserPaidEvent {
-  id: string;
-  active: boolean;
+  exchange: string;
+  data: { id: string, active: boolean};
 }
 
 export class PaymentConsumer extends BaseRabbitMQConsumer<UserPaidEvent> {
   routingKey: string = "pay";
-  exchange: string = "user";
+  exchange: string = this.exchange;
 
-  async onMessage(data: UserPaidEvent): Promise<void> {
+  async onMessage(data: UserPaidEvent['data']): Promise<void> {
     console.log("User paid event received:", data);
     try {
       const [updatedCount] = await User.update(
