@@ -29,10 +29,3 @@ const TopSection = () => {
 }
 
 export default TopSection;
-
-{/* <Input className='w-full bg-[rgba(31,31,31,0.7)] border-1' type='email'></Input> */ }
-{/* <Button className='relative rounded-sm max-md:text-sm text-white bg-[rgba(229,8,20,0.9)] px-6 py-3'>{strings.landing.getStarted}<img
-                            className="absolute right-2 top-1/2 -translate-y-1/2"
-                            src="/ArrowLeft.svg"
-                            alt="arrowLeft" />
-                        </Button> */}

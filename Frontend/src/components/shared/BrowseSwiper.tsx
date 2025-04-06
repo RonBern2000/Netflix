@@ -2,36 +2,29 @@ import { useEffect, useRef, useState } from "react";
 import Container from "./Container";
 import Button from "./Button";
 import { IMovie } from "../../dto/IMovie";
+import { getScrollPosition } from "../../utils/getScrollPosition";
+import { scrollElement } from "../../utils/scrollElement";
 
 const items = Array.from({ length: 8 }, (_, i) => `Item ${i + 1}`); {/* Only for testing the swiper offline*/ }
 {/* Neflix's behaivor: every section is 6 movies */ }
 
 type SwiperProps = {
     movies: IMovie[] | undefined;
+    paginationAmount: number
 }
 
-const BrowseSwiper = ({ movies }: SwiperProps) => {
-    //TODO: Movie the logic of this component to other place
-    const swiperRef = useRef<HTMLDivElement | null>(null);
-    //TODO: grouping enum:
-    const [atLeft, setAtLeft] = useState(true);
-    const [atRight, setAtRight] = useState(false);
-
-    const [activeIndex, setActiveIndex] = useState(0);
-
-    let paginationAmount = items.length / 6;
-    paginationAmount = Math.floor(paginationAmount);
-    if (items.length % 6 !== 0) {
-        paginationAmount++;
-    }
-    console.log(paginationAmount);
+const BrowseSwiper = ({ movies, paginationAmount }: SwiperProps) => {
     console.log(movies);
+    const swiperRef = useRef<HTMLDivElement | null>(null);
+    const [scrollPosition, setScrollPosition] = useState({
+        atLeft: true,
+        atRight: false
+    });
+    const [activeIndex, setActiveIndex] = useState(0);
 
     const updateButtonVisibility = (): void => {
         if (swiperRef.current) {
-            const { scrollLeft, scrollWidth, clientWidth } = swiperRef.current;
-            setAtLeft(scrollLeft === 0);
-            setAtRight(scrollLeft + clientWidth >= scrollWidth);
+            setScrollPosition(getScrollPosition(swiperRef.current));
         }
     };
 
@@ -52,44 +45,38 @@ const BrowseSwiper = ({ movies }: SwiperProps) => {
 
     const scroll = (direction: "left" | "right") => {
         if (swiperRef.current) {
-            const scrollAmount = swiperRef.current.offsetWidth;
-            swiperRef.current.scrollBy({
-                left: direction === "right" ? scrollAmount : -scrollAmount,
-                behavior: "smooth",
-            });
+            scrollElement(swiperRef.current, direction);
         }
 
-        setActiveIndex((prevIndex) => {
-            if (direction === "right") {
-                return Math.min(prevIndex + 1, paginationAmount - 1);
-            } else {
-                return Math.max(prevIndex - 1, 0);
-            }
-        });
+        setActiveIndex((prevIndex) =>
+            direction === "right"
+                ? Math.min(prevIndex + 1, paginationAmount - 1)
+                : Math.max(prevIndex - 1, 0)
+        );
     };
 
     return (
         <Container className="flex-col relative w-19/20 mx-auto">
-            <ul className="absolute flex gap-1 right-20 -top-4.5">
+            <ul className="absolute flex gap-1 right-20 -top-[-6px]">
                 {new Array(paginationAmount).fill(0).map((_, index) =>
-                    <li className={`w-4 border-gray-500 ${activeIndex === index ? "border-b-2 border-white" : "border-gray-500 border-b-2"}`} key={index}>.</li>
+                    <li className={`w-4 border-gray-500 ${activeIndex === index ? "border-b-2 border-white" : "border-gray-500 border-b-2"}`} key={index}></li>
                 )}
             </ul>
-            {!atLeft ? (
+            {!scrollPosition.atLeft ? (
                 <Button
-                    className="absolute flex items-center opacity-0 hover:opacity-100 justify-center left-0  max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8 text-white p-2 hover:bg-[rgb(0,0,0,0.8)] transition z-2"
+                    className="absolute flex items-center opacity-0 hover:opacity-100 justify-center left-0  max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8 text-white p-2 hover:bg-[#1f1f1fa1] transition z-2"
                     onClick={() => scroll("left")}
                 >
-                    <img src="/ArrowRight.svg" />
+                    <img className="h-9" src="/ArrowRight.svg" />
                 </Button>
             ) : (
                 <Button
-                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center left-0 top-1/2 -translate-y-1/2 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8 bg-[rgb(0,0,0,0.8)] text-white p-2 hover:bg-[rgb(0,0,0,0.8)]z-2"
-                    style={{ opacity: atLeft ? 0 : 1 }}
+                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center left-0 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8 bg-[#1f1f1fa1] text-white p-2 hover:bg-[#1f1f1fa1]z-2"
+                    style={{ opacity: scrollPosition.atLeft ? 0 : 1 }}
                     onClick={() => scroll("left")}
                     type="button"
                 >
-                    <img src="/ArrowRight.svg" />
+                    <img className="h-9" src="/ArrowRight.svg" />
                 </Button>
             )}
 
@@ -102,20 +89,20 @@ const BrowseSwiper = ({ movies }: SwiperProps) => {
                 </div>
             </div>
 
-            {!atRight ? (
+            {!scrollPosition.atRight ? (
                 <Button
-                    className="absolute opacity-0 hover:opacity-100 flex items-center justify-center right-0 top-1/2 -translate-y-1/2 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8  text-white p-2 hover:bg-[rgb(0,0,0,0.8)] transition z-2"
+                    className="absolute opacity-0 hover:opacity-100 flex items-center justify-center right-0 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8  text-white p-2 hover:bg-[#1f1f1fa1] transition z-2"
                     onClick={() => scroll("right")}
                 >
-                    <img src="/ArrowLeft.svg" />
+                    <img className="h-9" src="/ArrowLeft.svg" />
                 </Button>
             ) : (
                 <Button
-                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center right-0 top-1/2 -translate-y-1/2 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8 bg-[rgb(0,0,0,0.8)] text-white p-2 hover:bg-[rgb(0,0,0,0.8)] z-2"
-                    style={{ opacity: atRight ? 0 : 1 }}
+                    className="transition-opacity duration-1000 opacity-100 absolute flex items-center justify-center right-0 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full w-8 bg-[#1f1f1fa1] text-white p-2 hover:bg-[#1f1f1fa1] z-2"
+                    style={{ opacity: scrollPosition.atRight ? 0 : 1 }}
                     onClick={() => scroll("right")}
                 >
-                    <img src="/ArrowLeft.svg" />
+                    <img className="h-9" src="/ArrowLeft.svg" />
                 </Button>
             )}
         </Container>

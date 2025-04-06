@@ -4,7 +4,7 @@ import Container from "../components/shared/Container";
 
 const Browse = () => {
     return (
-        <Container className='flex-col w-full h-screen bg-black'> {/* TODO: temp bg color */}
+        <Container className='flex-col w-full h-screen '> {/* TODO: temp bg color */}
             <TopSection />
             <MidSection />
         </Container>
