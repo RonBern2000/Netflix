@@ -1,9 +1,9 @@
 import { Response, Request, NextFunction } from "express";
 import { inject, injectable } from "inversify";
-import { LoginRequestDTO } from "../DTOs/login-dto";
 import { TOKENS } from "../tokens";
 import { IUserService } from "../interfaces/IUserService";
-import { SignupRequestDTO } from "../DTOs/signup-dto";
+import { authSchema, emailSchema } from "../DTOs/schema";
+import { BadRequestError } from "@netflix-utils/shared";
 
 @injectable()
 export class UserController{
@@ -11,9 +11,12 @@ export class UserController{
 
     async checkEmailExist(req: Request, res: Response, next: NextFunction){
         try {
-            const { email } = req.body;
-    
-            const isExist = await this.userService.checkUserExist(email);
+            const result = await emailSchema.safeParseAsync(req.body);
+
+            if(!result.success){
+                throw new BadRequestError("Invalid sanitation"); 
+            }
+            const isExist = await this.userService.checkUserExist(result.data.email);
     
             res.status(200).json({ isExist });
         } catch (error) {
@@ -23,9 +26,13 @@ export class UserController{
 
     async login(req: Request, res: Response, next: NextFunction){
         try {
-            const data: LoginRequestDTO = req.body;
+            const result = await authSchema.safeParseAsync(req.body);
             
-            const {token, active} = await this.userService.login(data);
+            if(!result.success){
+                throw new BadRequestError("Invalid sanitation"); 
+            }
+
+            const {token, active} = await this.userService.login(result.data);
 
             if (active)
             {
@@ -44,9 +51,13 @@ export class UserController{
     }
     async signup(req: Request, res: Response, next: NextFunction){
         try {
-            const data: SignupRequestDTO = req.body;
+             const result = await authSchema.safeParseAsync(req.body);
+            
+            if(!result.success){
+                throw new BadRequestError("Invalid sanitation"); 
+            }
 
-            const token: string = await this.userService.signup(data);
+            const token: string = await this.userService.signup(result.data);
 
             res.cookie(TOKENS.tempToken, `Bearer ${token}`, {
                 httpOnly: true
@@ -57,9 +68,3 @@ export class UserController{
         }
     }
 }
-
-// from login action:
-// res.cookie(TOKENS.token, token, {
-            //     httpOnly: true
-            // });
-            // res.status(200).json({message: "Login Successful", token: `Bearer ${token}`, active: (decoded as JwtPayload).active});

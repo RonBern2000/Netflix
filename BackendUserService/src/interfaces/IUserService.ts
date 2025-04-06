@@ -1,9 +1,8 @@
-import { LoginRequestDTO } from "../DTOs/login-dto";
-import { SignupRequestDTO } from "../DTOs/signup-dto";
+import { AuthFormData } from "../DTOs/schema";
 import { ILoginResponse } from "./ILoginResponse";
 
 export interface IUserService{
     checkUserExist(email: string): Promise<boolean>;
-    login(data: LoginRequestDTO): Promise<ILoginResponse>;
-    signup(data: SignupRequestDTO): Promise<string>;
+    login(data: AuthFormData): Promise<ILoginResponse>;
+    signup(data: AuthFormData): Promise<string>;
 }
