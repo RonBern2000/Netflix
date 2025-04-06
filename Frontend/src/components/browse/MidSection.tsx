@@ -8,7 +8,7 @@ const MidSection = () => {
     // Here we need to get all the genres in an array and map the array to create multiple swipers
 
     return (
-        <Container className="flex-col gap-10 md:w-full bg-[#1f1f1f]">
+        <Container className="flex-col gap-10 md:w-full bg-[#1f1f1f] pt-72">
             <BrowseSwiperContainer genre="" />
             <BrowseSwiperContainer genre="" />
             <BrowseSwiperContainer genre="" />

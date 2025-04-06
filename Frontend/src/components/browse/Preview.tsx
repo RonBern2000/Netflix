@@ -7,8 +7,9 @@ type PreviewProps = {
 
 const Preview = ({ movie }: PreviewProps) => {
     return (
-        <Container className="bg-[url('/LandingPage.jpg')] bg-cover bg-center w-full h-100">{/* TODO: temporary */}
+        <Container className="absolute bg-[url('/LandingPage.jpg')] bg-cover bg-center w-full h-100">{/* TODO: temporary hieght */}
             {movie?.title}
+            <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#1f1f1f] pointer-events-none" />
         </Container>
     )
 }
