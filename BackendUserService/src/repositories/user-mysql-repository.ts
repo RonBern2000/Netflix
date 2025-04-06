@@ -2,7 +2,7 @@ import { injectable } from "inversify";
 import { IUserRepository } from "../interfaces/IUserRepository";
 import { IUser } from "../interfaces/IUser";
 import { User } from "../models/user-sql-entity";
-import { SignupRequestDTO } from "../DTOs/signup-dto";
+import { AuthFormData } from "../DTOs/schema";
 
 @injectable()
 export class UserSqlRepository implements IUserRepository{
@@ -15,7 +15,7 @@ export class UserSqlRepository implements IUserRepository{
             { where: { id }}
         );
     }
-    async create(data: SignupRequestDTO): Promise<IUser | null> {
+    async create(data: AuthFormData): Promise<IUser | null> {
         return await User.create({
             email: data.email,
             password: data.password,

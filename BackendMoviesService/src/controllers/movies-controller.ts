@@ -24,4 +24,18 @@ export class MoviesController{
             return next(error);
         }
     }
+
+    async getMovieTrailer(req: Request, res: Response, next: NextFunction){
+        const { movieId } = req.params;
+        const parsedId = Number(movieId); // TODO: make it a middleware/utils not here inside a controller
+        if (isNaN(parsedId)) {
+            return res.status(400).json({ message: "Invalid movie ID" });
+        }
+        try {
+            const key: string | null = await this.moviesService.getMovieTrailer(parsedId);
+            res.status(200).json(key);
+        } catch (error) {
+            return next(error);
+        }
+    }
 }

@@ -11,8 +11,12 @@ router.get("/popular", async(req: Request, res: Response, next: NextFunction) =>
     moviesController.getPopularMovies(req, res, next);
 });
 
-router.get("/nowPlaying", async(req: Request, res: Response, next: NextFunction) => {
-    moviesController.getNowPlayingMovies(req, res, next);
+router.get("/allMovies", async(req: Request, res: Response, next: NextFunction) => {
+    moviesController.getAllMovies(req, res, next);
+});
+
+router.get("/movieTrailer/:movieId", async(req: Request, res: Response, next: NextFunction) => {
+    moviesController.getMovieTrailer(req, res, next);
 });
 
 export default router;

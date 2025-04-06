@@ -3,23 +3,27 @@ import { IMoviesService } from "../interfaces/IMoviesService";
 import { TOKENS } from "../tokens";
 import { IMoviesRepository } from "../interfaces/IMovieRepository";
 import { IMovie } from "../interfaces/IMovie";
-import { tmdbGetAllMovies, tmdbGetPopular } from "../utils/tmdb-api";
+import { tmdbGetAllMovies, tmdbGetPopular, tmdbGetTrailer } from "../utils/tmdb-api";
+import redis from "../config/redis-client";
 @injectable()
 export class MoviesService implements IMoviesService{
     constructor(@inject(TOKENS.IMoviesRepository) private moviesRepository: IMoviesRepository) {}
 
     async getAllMovies(): Promise<IMovie[] | null> {
+        await redis.del(TOKENS.allMovies); // only for testing
         let allMovies : IMovie[] | null = await this.moviesRepository.getAllMovies();
         console.log('Is there redis:',allMovies);
         if(!allMovies){
-            allMovies = await tmdbGetAllMovies();
+            allMovies = await tmdbGetAllMovies(5);
             await this.moviesRepository.setAllMovies(allMovies!);
             console.log('Ron the king:', allMovies);
         }
+        console.log(allMovies?.length);
         return allMovies;
     }
 
     async getPopularMovies(): Promise<IMovie[] | null> {
+        await redis.del(TOKENS.popularMovies); // only for testing
         let popMovies : IMovie[] | null = await this.moviesRepository.getPopularMovies();
         console.log('Is there redis:',popMovies);
         if(!popMovies){
@@ -28,6 +32,11 @@ export class MoviesService implements IMoviesService{
             console.log('Ron the king:', popMovies);
         }
         return popMovies ? popMovies.slice(0, 10) : null; // Top 10
+    }
+
+    async getMovieTrailer(movieId: number): Promise<string | null>{
+        const key = await tmdbGetTrailer(movieId);
+        return key;
     }
 }
 

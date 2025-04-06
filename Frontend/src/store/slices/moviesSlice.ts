@@ -1,59 +1,28 @@
-// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import { PopMoviesResponse } from "../../api/api";
-// import { IMovie } from "../../dto/IMovie";
+import { createSlice } from "@reduxjs/toolkit";
 
-// interface MoviesState{
-//     message: string;
-//     popMovies: IMovie[];
-// }
+interface MoviesState{
+    message: string;
+    trailerKeys: string[];
+}
 
-// const initialState: MoviesState = {
-//     message: '',
-//     popMovies: [],
-// }
+const initialState: MoviesState = {
+    message: '',
+    trailerKeys: [],
+}
 
-// const moviesSlice = createSlice({
-//   name: "movies",
-//   initialState,
-//   reducers: {
-//     loadPopMovies: (state, action: PayloadAction<PopMoviesResponse>) => {
-//       state.popMovies = action.payload.popMovies;
-//       state.message = action.payload.message;
-//     },
-//   },
-//   extraReducers: () => {}
-// });
+const moviesSlice = createSlice({
+  name: "movies",
+  initialState,
+  reducers: {
+    // addTrailerKey: (state, action: PayloadAction<>) => {
+    //   state.token = action.payload.token;
+    //   state.message = action.payload.message;
+    //   state.isAuthenticated = true;
+    //   state.isActive = action.payload.active
+    // },
+  },
+  extraReducers: () => {}
+});
 
-// export const { loadPopMovies } = moviesSlice.actions;
-// export default moviesSlice.reducer;
-
-// export const loadPopMovies = createAsyncThunk(
-//     "movies/loadPopMovies",
-//     async (popMoviesResponse: PopMoviesResponse , { rejectWithValue }) => {
-//         try {
-//             return popMoviesResponse = await loadPopMoviesRequest(data);
-//         } catch (error) {
-//             const errorMessage: string = getErrorMessage(error);
-//             return rejectWithValue(errorMessage);
-//         }
-//     }
-// );
-
-// const moviesSlice = createSlice({
-//     name: "movies",
-//     initialState,
-//     reducers: {
-//         loadPopMovies: 
-//     },
-//     extraReducers: (builder) => {
-//         builder
-//             .addCase(loadPopMovies.fulfilled, (state, action) => {
-//                 state.popMovies = action.payload.popMovies;
-//                 state.message = action.payload.message;
-//             })
-//             .addCase(loadPopMovies.rejected, (state) => {
-//                 state.popMovies = [];
-//                 state.message = '';
-//             })
-//     }
-// });
+//export const { } = moviesSlice.actions;
+export default moviesSlice.reducer;

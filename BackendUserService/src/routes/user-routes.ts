@@ -19,4 +19,9 @@ router.post("/signup", (req: Request, res: Response, next: NextFunction) => {
     userController.signup(req, res, next);
 });
 
+router.post("/logout", (req: Request, res: Response, next: NextFunction) => {
+    userController.logout(req, res, next);
+});
+
+
 export default router;

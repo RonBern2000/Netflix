@@ -37,12 +37,14 @@ export class UserController{
             if (active)
             {
                 res.cookie(TOKENS.token, `${TOKENS.Bearer} ${token}`, {
-                    httpOnly: true
+                    httpOnly: true,
+                    sameSite: 'strict',
                 });
                 res.status(200).json({message: "Login Successful", token: `Bearer ${token}`, active: active});
             }
             res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${token}`, {
-                httpOnly: true
+                httpOnly: true,
+                sameSite: 'strict',
             });
             res.status(200).json({message: "Login Successful", token: `${TOKENS.Bearer} ${token}`, active: active});
         } catch (error) {
@@ -51,7 +53,7 @@ export class UserController{
     }
     async signup(req: Request, res: Response, next: NextFunction){
         try {
-             const result = await authSchema.safeParseAsync(req.body);
+            const result = await authSchema.safeParseAsync(req.body);
             
             if(!result.success){
                 throw new BadRequestError("Invalid sanitation"); 
@@ -60,11 +62,27 @@ export class UserController{
             const token: string = await this.userService.signup(result.data);
 
             res.cookie(TOKENS.tempToken, `Bearer ${token}`, {
-                httpOnly: true
+                httpOnly: true,
+                sameSite: 'strict',
             });
             res.status(200).json({message: "Signup Successful", token: `${TOKENS.Bearer} ${token}`});
         } catch (error) {
             return next(error);
+        }
+    }
+
+    async logout(req: Request, res: Response, next: NextFunction){
+        try {
+            for (const cookieName in req.cookies) {
+                res.clearCookie(cookieName, {
+                    path: '/',
+                    httpOnly: true,
+                    sameSite: 'strict',
+                });
+            }
+            res.status(200).json({message: "Logout Successful"});
+        } catch (error) {
+            
         }
     }
 }
