@@ -1,4 +1,7 @@
 export const strings = {
+    browse:{
+        signout: "Sign out",
+    },
     auth:{
         token: "token",
         temp: "temp",
