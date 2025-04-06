@@ -1,7 +1,8 @@
-import { RabbitMQClient } from "@netflix-utils/shared/build/utils/rabbitmq";
+import { Exchanges } from "./exchanges";
+import { RabbitMQClient } from "./rabbitmq";
 
 interface Event{
-  exchange: string; // TODO enum with all the events
+  exchange: Exchanges;
   data: any;
 }
 export abstract class BaseRabbitMQConsumer<T extends Event>{

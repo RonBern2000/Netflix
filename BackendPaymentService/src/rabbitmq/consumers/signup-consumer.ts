@@ -1,16 +1,16 @@
 import { User } from "../../models/user-sql-entity";
-import { BaseRabbitMQConsumer } from "../base-rabbit-consumer";
+import { BaseRabbitMQConsumer, Exchanges } from "@netflix-utils/shared";
 
 interface UserSignednupEvent {
-  id: string;
-  active: boolean;
+  exchange: Exchanges.User;
+  data: { id: string, active: boolean};
 }
 
 export class SignedUpConsumer extends BaseRabbitMQConsumer<UserSignednupEvent> {
   routingKey: string = "pay";
-  exchange: string = "user";
+  exchange: Exchanges.User = Exchanges.User ;
 
-  async onMessage(data: UserSignednupEvent): Promise<void> {
+  async onMessage(data: UserSignednupEvent['data']): Promise<void> {
     console.log("User Signed up event received:", data);
     try {
       const newUser = await User.create(
