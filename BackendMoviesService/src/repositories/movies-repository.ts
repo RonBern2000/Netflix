@@ -8,32 +8,14 @@ export class MoviesRepository implements IMoviesRepository{
         const res =  await redis.get(TOKENS.popularMovies);
         return res ? JSON.parse(res) : null;
     }
-    async getNowPlayingMovies(): Promise<IMovie[] | null> {
-        const res =  await redis.get(TOKENS.nowPlayingMovies);
-        return res ? JSON.parse(res) : null;    
-    }
-    async getMoviesByQuery(query: string): Promise<string | null> {
-        throw new Error("Method not implemented.");
-    }
-    async getMoviesByTitle(query: string): Promise<IMovie[] | null> {
-        throw new Error("Method not implemented.");
-    }
-    async getMoviesByYear(query: string): Promise<IMovie[] | null> {
-        throw new Error("Method not implemented.");
-    }
-    async setMoviesByTitle(movies: IMovie[]): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    async setMoviesByYear(movies: IMovie[]): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
     async setPopularMovies(movies: IMovie[]): Promise<void> {
         await redis.set(TOKENS.popularMovies, JSON.stringify(movies), {EX: 30});
     }
-    async setNowPlayingMovies(movies: IMovie[]): Promise<void> {
-        await redis.set(TOKENS.nowPlayingMovies, JSON.stringify(movies), {EX: 30});
+    async getAllMovies(): Promise<IMovie[] | null> {
+        const res =  await redis.get(TOKENS.allMovies);
+        return res ? JSON.parse(res) : null;
     }
-    async setAllMovies(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async setAllMovies(movies: IMovie[]): Promise<void> {
+        await redis.set(TOKENS.allMovies, JSON.stringify(movies), {EX: 30});;
     }
 }

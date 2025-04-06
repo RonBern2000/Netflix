@@ -3,13 +3,21 @@ import { IMoviesService } from "../interfaces/IMoviesService";
 import { TOKENS } from "../tokens";
 import { IMoviesRepository } from "../interfaces/IMovieRepository";
 import { IMovie } from "../interfaces/IMovie";
-import { tmdbGetMoviesByTitle, tmdbGetMoviesByYear, tmdbGetNowPlaying, tmdbGetPopular } from "../utils/tmdb-api";
-import { BadRequestError } from "@netflix-utils/shared";
-import { ParsedQs } from "qs";
-
+import { tmdbGetAllMovies, tmdbGetPopular } from "../utils/tmdb-api";
 @injectable()
 export class MoviesService implements IMoviesService{
     constructor(@inject(TOKENS.IMoviesRepository) private moviesRepository: IMoviesRepository) {}
+
+    async getAllMovies(): Promise<IMovie[] | null> {
+        let allMovies : IMovie[] | null = await this.moviesRepository.getAllMovies();
+        console.log('Is there redis:',allMovies);
+        if(!allMovies){
+            allMovies = await tmdbGetAllMovies();
+            await this.moviesRepository.setAllMovies(allMovies!);
+            console.log('Ron the king:', allMovies);
+        }
+        return allMovies;
+    }
 
     async getPopularMovies(): Promise<IMovie[] | null> {
         let popMovies : IMovie[] | null = await this.moviesRepository.getPopularMovies();
@@ -20,46 +28,6 @@ export class MoviesService implements IMoviesService{
             console.log('Ron the king:', popMovies);
         }
         return popMovies ? popMovies.slice(0, 10) : null; // Top 10
-    }
-    async getNowPlayingMovies(): Promise<IMovie[] | null> {
-        let nowPlayingMovies : IMovie[] | null = await this.moviesRepository.getNowPlayingMovies();
-        console.log('Is there redis:',nowPlayingMovies);
-        if(!nowPlayingMovies){
-            nowPlayingMovies = await tmdbGetNowPlaying();
-            await this.moviesRepository.setNowPlayingMovies(nowPlayingMovies!);
-            console.log('Yehonatan the king:', nowPlayingMovies);
-        }
-        return nowPlayingMovies ? nowPlayingMovies.slice(0, 10) : null; // Top 10
-    }
-    async getMoviesByTitle(queryParam: ParsedQs): Promise<IMovie[] | null> {
-        const { query } = queryParam;
-        if (query && typeof query === 'string')
-        {
-            let moviesByTitle : IMovie[] | null = await this.moviesRepository.getMoviesByTitle(query);
-            console.log('Is there redis:',moviesByTitle);
-            if(!moviesByTitle){
-                moviesByTitle = await tmdbGetMoviesByTitle(query);
-                await this.moviesRepository.setMoviesByTitle(moviesByTitle!);
-                console.log('Yehonatan the king:', moviesByTitle);
-            }
-            return moviesByTitle ? moviesByTitle.slice(0, 20) : null; // Top 20
-        }
-        throw new BadRequestError('Query is not right');
-    }
-    async getMoviesByYear(queryParam: ParsedQs): Promise<IMovie[] | null> {
-        const { query } = queryParam;
-        if (query && typeof query === 'string')
-        {
-            let moviesByYear : IMovie[] | null = await this.moviesRepository.getMoviesByYear(query);
-            console.log('Is there redis:',moviesByYear);
-            if(!moviesByYear){
-                moviesByYear = await tmdbGetMoviesByYear(query);
-                await this.moviesRepository.setMoviesByYear(moviesByYear!);
-                console.log('Yehonatan the king:', moviesByYear);
-            }
-            return moviesByYear ? moviesByYear.slice(0, 20) : null; // Top 20
-        }
-        throw new BadRequestError('Query is not right');
     }
 }
 

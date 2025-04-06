@@ -5,5 +5,5 @@ export const TOKENS = {
     IMoviesService: "IMoviesService",
     Token:"Token",
     popularMovies: "popularMovies",
-    nowPlayingMovies: "nowPlayingMovies"
+    allMovies: "allMovies"
 };
