@@ -15,6 +15,12 @@ export class MoviesService implements IMoviesService{
         console.log('Is there redis:',allMovies);
         if(!allMovies){
             allMovies = await tmdbGetAllMovies(5);
+            if(allMovies){
+                for (const movie of allMovies) {
+                    const key = await tmdbGetTrailer(movie.id);
+                    movie.key = key!;
+                }
+            }
             await this.moviesRepository.setAllMovies(allMovies!);
             console.log('Ron the king:', allMovies);
         }

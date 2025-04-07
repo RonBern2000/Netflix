@@ -52,6 +52,7 @@ export const tmdbGetAllMovies = async(pages: number): Promise<IMovie[] | null> =
             const movies: IMovie[] = res.data.results.map((movie: any) => ({
                 genre_ids: movie.genre_ids,
                 id: movie.id,
+                key: "",
                 overview: movie.overview,
                 popularity: movie.popularity,
                 poster_path: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
