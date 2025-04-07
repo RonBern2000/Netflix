@@ -7,7 +7,7 @@ interface UserSignednupEvent {
 }
 
 export class SignedUpConsumer extends BaseRabbitMQConsumer<UserSignednupEvent> {
-  routingKey: string = "pay";
+  routingKey: string = "signup";
   exchange: Exchanges.User = Exchanges.User ;
 
   async onMessage(data: UserSignednupEvent['data']): Promise<void> {

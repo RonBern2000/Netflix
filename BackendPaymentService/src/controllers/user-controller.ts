@@ -11,7 +11,7 @@ export class UserController{
     async pay(req: Request, res: Response, next: NextFunction){
         console.log("cotroller action here");
         try {
-            const userId = req.headers.userId;
+            const userId = req.headers['x-user-id'];
             console.log(userId);
             let user: IUser | null = null;
             if(typeof userId === 'string')

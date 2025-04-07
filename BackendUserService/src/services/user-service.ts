@@ -5,7 +5,7 @@ import { TOKENS } from "../tokens";
 import { IUserRepository } from "../interfaces/IUserRepository";;
 import { sign } from "../utils/jwt";
 import { IUser } from "../interfaces/IUser";
-import { BadRequestError } from "@netflix-utils/shared";
+import { BadRequestError, Exchanges } from "@netflix-utils/shared";
 import { IUserPayload } from "../interfaces/IUserPayload";
 import { ILoginResponse } from "../interfaces/ILoginResponse";
 import { RabbitMQClient } from "@netflix-utils/shared/build/utils/rabbitmq";
@@ -41,7 +41,7 @@ export class UserService implements IUserService{
             throw new Error("Error in user creation");
         }
 
-        await rabbit.publishMessage("user", 'signup' ,{ id: newUser.id, active: newUser.active });
+        await rabbit.publishMessage(Exchanges.User, 'signup' ,{ id: newUser.id, active: newUser.active });
 
         return sign({ id: newUser.id, email: newUser.email, active: newUser.active} as IUserPayload);
     }
