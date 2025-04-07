@@ -23,7 +23,6 @@ export class UserService implements IUserService{
         return existingUser ? true : false;
     }
 
-    //TODO: we check here and above keep or only check above?
     async signup(data: AuthFormData): Promise<string> {
         const { email, password } = data;
         const existingUser: IUser | null = await this.userRepository.findUserByEmail(email);
@@ -34,7 +33,6 @@ export class UserService implements IUserService{
         const hashedPassword = await hash(password);
 
         const newUser : IUser | null = await this.userRepository.create({
-            name,
             email,
             password: hashedPassword,
         });

@@ -56,7 +56,7 @@ export class UserController{
             const result = await authSchema.safeParseAsync(req.body);
             
             if(!result.success){
-                throw new BadRequestError("Invalid sanitation"); 
+                throw new BadRequestError("Invalid sanitation");
             }
 
             const token: string = await this.userService.signup(result.data);

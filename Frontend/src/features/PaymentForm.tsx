@@ -19,7 +19,7 @@ const PaymentForm = () => {
     }
 
     return (
-        <Button onClick={handlePay}>{isPaying ? "Processing" : "Pay"}</Button>
+        <Button className="h-10 w-20 bg-red-700" onClick={handlePay}>{isPaying ? "Processing" : "Pay"}</Button>
     )
 }
 

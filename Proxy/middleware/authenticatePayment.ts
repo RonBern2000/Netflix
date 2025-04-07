@@ -7,6 +7,8 @@ export const authenticatePayment = (req: Request, res: Response, next: NextFunct
     try {
         const token = req.cookies?.tempToken;
 
+        console.log("Proxy:", token);
+
         if (!token)
             throw new BadRequestError('No token provided');
 

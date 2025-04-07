@@ -9,8 +9,10 @@ export class UserController{
     constructor(@inject(TOKENS.IUserService) private userService: IUserService){}
 
     async pay(req: Request, res: Response, next: NextFunction){
+        console.log("cotroller action here");
         try {
             const userId = req.headers.userId;
+            console.log(userId);
             let user: IUser | null = null;
             if(typeof userId === 'string')
                 user = await this.userService.pay(userId); 
