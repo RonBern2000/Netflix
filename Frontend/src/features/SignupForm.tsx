@@ -38,7 +38,7 @@ const SignupForm = () => {
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <Input label={strings.auth.regform.email} containerClassName="w-full" className='w-full border-1 border-gray-400 rounded-sm' {...register("email")} error={errors.email?.message} />
+            <Input value={email} label={strings.auth.regform.email} containerClassName="w-full" className='w-full border-1 border-gray-400 rounded-sm' {...register("email")} error={errors.email?.message} />
             <Input label={strings.auth.regform.password} type="password" containerClassName="w-full mt-2.5" className='w-full border-1 border-gray-400 rounded-sm' {...register("password")} error={errors.password?.message} />
             <Button type="submit" className='bg-red-500 text-white w-full h-18 rounded-md font-semibold text-2xl mt-5'>{isCreatingUser ? strings.auth.regform.creating : strings.auth.next}</Button>
         </Form>

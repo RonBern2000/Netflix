@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
@@ -7,14 +7,20 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-const Input = ({ className = '', containerClassName = '', label, error, ...props }: InputProps) => {
-  const lableRef = useRef<HTMLLabelElement | null>(null);
+const Input = ({ className = '', containerClassName = '', label, error, value, ...props }: InputProps) => {
+  const labelRef = useRef<HTMLLabelElement | null>(null);
+
+  useEffect(() => {
+    if (typeof value === 'string' && value.length > 0 && labelRef.current) {
+      labelRef.current.classList.add("!text-xs", "!top-2");
+    }
+  }, [value]);
 
   const handleOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (event.target.value !== '' && lableRef.current) {
-      lableRef.current.classList.add("!text-xs", "!top-2");
-    } else if (event.target.value === '' && lableRef.current) {
-      lableRef.current.classList.remove("!text-xs", "!top-2");
+    if (event.target.value !== '' && labelRef.current) {
+      labelRef.current.classList.add("!text-xs", "!top-2");
+    } else if (event.target.value === '' && labelRef.current) {
+      labelRef.current.classList.remove("!text-xs", "!top-2");
     }
   }
 
@@ -26,7 +32,7 @@ const Input = ({ className = '', containerClassName = '', label, error, ...props
           onBlur={handleOnBlur}
         />
         <label
-          ref={lableRef}
+          ref={labelRef}
           className="absolute pointer-events-none text-[#9a9a9a] top-1/2 -translate-y-1/2 left-5 transition-all duration-200 ease-in-out peer-focus:top-2.5 peer-focus:text-xs">{label}</label>
 
       </div>

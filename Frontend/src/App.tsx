@@ -52,11 +52,13 @@ function App() {
           {/* Fully Authenticated and Active Users */}
           {isAuthenticated && isActive ? (
             <>
+              <Route path='/browse' element={<Browse />} />
               <Route path='/browse/mylist' element={<Mylist />} />
               <Route path='*' element={<Navigate to='/browse' />} />
+
             </>
           ) : null}
-          <Route path='/browse' element={<Browse />} /> {/* Move it up, here just for testing */}
+          {/* Move it up, here just for testing */}
         </Routes>
       </BrowserRouter>
     </>
