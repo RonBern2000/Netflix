@@ -9,8 +9,8 @@ import { SignedUpConsumer } from "./rabbitmq/consumers/signup-consumer";
 const start = async () => {
   //TODO: Validations for env variables
 
-  //await dbConnection();
-  //await rabbit.connectRabbitMQ();
+  await dbConnection();
+  await rabbit.connectRabbitMQ();
   const signedUpConsumer = new SignedUpConsumer(rabbit);
   await signedUpConsumer.consume();
 

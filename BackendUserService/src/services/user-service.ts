@@ -38,7 +38,7 @@ export class UserService implements IUserService{
         });
 
         if(!newUser){
-            throw new Error("Error in user creation");
+            throw new BadRequestError("Error in user creation");
         }
 
         await rabbit.publishMessage(Exchanges.User, 'signup' ,{ id: newUser.id, active: newUser.active });

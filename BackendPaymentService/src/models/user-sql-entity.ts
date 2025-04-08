@@ -16,4 +16,10 @@ export class User extends Model{
         type: DataType.BOOLEAN,
     })
     active!: boolean;
+
+    @Default(null)
+    @Column({
+        type: DataType.STRING,
+    })
+    subscriptionId!: string
 }

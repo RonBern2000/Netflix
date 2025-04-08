@@ -18,7 +18,7 @@ export class MySqlConnection{
                 await sequelize.authenticate();
                 console.log("MySql Database connected");
                 try {
-                    await sequelize.sync({ alter: false, force: false });
+                    await sequelize.sync({ alter: true, force: false });
                 } catch (error) {
                     console.error("Sequelize sync error:", error);
                 }
