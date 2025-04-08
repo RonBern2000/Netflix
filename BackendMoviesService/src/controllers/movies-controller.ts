@@ -3,6 +3,7 @@ import { inject, injectable } from "inversify";
 import { TOKENS } from "../tokens";
 import { IMoviesService } from "../interfaces/IMoviesService";
 import { IMovie } from "../interfaces/IMovie";
+import { getMovieIdParam } from "../utils/getMovieIdParam";
 
 @injectable()
 export class MoviesController{
@@ -25,17 +26,22 @@ export class MoviesController{
         }
     }
 
-    async getMovieTrailer(req: Request, res: Response, next: NextFunction){
-        const { movieId } = req.params;
-        const parsedId = Number(movieId); // TODO: make it a middleware/utils not here inside a controller
-        if (isNaN(parsedId)) {
-            return res.status(400).json({ message: "Invalid movie ID" });
-        }
+    async getAllMoviesByGenres(req: Request, res: Response, next: NextFunction) {
         try {
-            const key: string | null = await this.moviesService.getMovieTrailer(parsedId);
-            res.status(200).json(key);
+            const allMoviesByGenres: Record<string, IMovie[]> | null = await this.moviesService.getAllMoviesByGenres();
+            res.status(200).json({allMoviesByGenres});
         } catch (error) {
             return next(error);
         }
     }
+
 }
+// async getMovieTrailer(req: Request, res: Response, next: NextFunction){
+//     try {
+//         const movieId = getMovieIdParam(req);
+//         const key: string | null = await this.moviesService.getMovieTrailer(movieId);
+//         res.status(200).json(key);
+//     } catch (error) {
+//         return next(error);
+//     }
+// }

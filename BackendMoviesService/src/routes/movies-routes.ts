@@ -15,8 +15,12 @@ router.get("/allMovies", async(req: Request, res: Response, next: NextFunction) 
     moviesController.getAllMovies(req, res, next);
 });
 
-router.get("/movieTrailer/:movieId", async(req: Request, res: Response, next: NextFunction) => {
-    moviesController.getMovieTrailer(req, res, next);
+router.get("/allMoviesByGenres", async(req: Request, res: Response, next: NextFunction) => {
+    moviesController.getAllMoviesByGenres(req, res, next);
 });
+
+// router.get("/movieTrailer/:movieId", async(req: Request, res: Response, next: NextFunction) => {
+//     moviesController.getMovieTrailer(req, res, next);
+// });
 
 export default router;
