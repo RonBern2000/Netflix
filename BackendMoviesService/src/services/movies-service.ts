@@ -3,11 +3,20 @@ import { IMoviesService } from "../interfaces/IMoviesService";
 import { TOKENS } from "../tokens";
 import { IMoviesRepository } from "../interfaces/IMovieRepository";
 import { IMovie } from "../interfaces/IMovie";
-import { tmdbGetAllMovies, tmdbGetPopular, tmdbGetTrailer } from "../utils/tmdb-api";
+import { tmdbGetAllMovies, tmdbGetGenres, tmdbGetPopular, tmdbGetTrailer } from "../utils/tmdb-api";
 import redis from "../config/redis-client";
+import { orderMoviesByGenre } from "../utils/orderMoviesByGenre";
+import { MoviesByGenre } from "../DTOs/genre-movie-dto";
+
 @injectable()
 export class MoviesService implements IMoviesService{
+    
     constructor(@inject(TOKENS.IMoviesRepository) private moviesRepository: IMoviesRepository) {}
+
+    async getAllMoviesByGenres(): Promise<Record<string, IMovie[]> | null> {
+
+        let allMovies : IMovie[] | null = await this.moviesRepository.getMoviesByGenre(genre);   
+    }
 
     async getAllMovies(): Promise<IMovie[] | null> {
         await redis.del(TOKENS.allMovies); // only for testing
@@ -22,6 +31,12 @@ export class MoviesService implements IMoviesService{
                 }
             }
             await this.moviesRepository.setAllMovies(allMovies!);
+            const genres = await tmdbGetGenres();
+            const orderedByGenre: Record<string, IMovie[]> = await orderMoviesByGenre(allMovies!, genres!);
+            Object.entries(orderedByGenre).forEach(async ([genre, movies]) => {
+                const moviesByGenre: MoviesByGenre = {genre, movies};
+                await this.moviesRepository.setMoviesByGenre(moviesByGenre);
+            })
             console.log('Ron the king:', allMovies);
         }
         console.log(allMovies?.length);
@@ -40,11 +55,11 @@ export class MoviesService implements IMoviesService{
         return popMovies ? popMovies.slice(0, 10) : null; // Top 10
     }
 
-    async getMovieTrailer(movieId: number): Promise<string | null>{
-        const key = await tmdbGetTrailer(movieId);
-        return key;
-    }
 }
+// async getMovieTrailer(movieId: number): Promise<string | null>{
+//     const key = await tmdbGetTrailer(movieId);
+//     return key;
+// }
 
  // await redis.del(TOKENS.popularMovies);
         // let data: string | null = await redis.get(TOKENS.popularMovies);
