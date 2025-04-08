@@ -35,19 +35,19 @@ export class MoviesService implements IMoviesService{
                 const moviesByGenre: MoviesByGenre = {genre, movies};
                 await this.moviesRepository.setMoviesByGenre(moviesByGenre);
             })
-            console.log('Ron the king:', allMovies);
         }
 
         const allMoviesByGenres: Record<string, IMovie[]> = {}; 
         const genres: IGenre[] | null = await this.moviesRepository.getGeneres();
-        genres?.forEach(async(genre)=>{
-            const movies = await this.moviesRepository.getMoviesByGenre(genre.name);
-            if(movies){
-                allMoviesByGenres[genre.name] = movies;
+        if (genres) {
+            for (const genre of genres) {
+                const movies = await this.moviesRepository.getMoviesByGenre(genre.name);
+                if (movies) {
+                    allMoviesByGenres[genre.name] = movies;
+                }
             }
-        });
-        console.log("AllMoviesBygenre: ", allMoviesByGenres)
-        return allMoviesByGenres; 
+        }
+        return allMoviesByGenres;
     }
 
     async getAllMovies(): Promise<IMovie[] | null> {

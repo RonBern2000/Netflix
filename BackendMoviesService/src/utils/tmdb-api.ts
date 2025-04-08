@@ -81,7 +81,6 @@ export const tmdbGetGenres = async(): Promise<IGenre[] | null> => {
     };
     try{
         const res = await axios.request(options);
-        console.log(res);
         const genres: IGenre[] = res.data.genres.map((genre: any) => ({
             id: genre.id,
             name: genre.name
