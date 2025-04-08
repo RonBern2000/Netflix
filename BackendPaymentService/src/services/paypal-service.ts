@@ -1,8 +1,8 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 
+// TODO: transfer the env vaiables to the env.ts file and then import the needed ones to here.
 dotenv.config();
-
 const { PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API_BASE_URL, PAYPAL_PLAN_ID} = process.env;
 
 if (!PAYPAL_CLIENT_ID || !PAYPAL_SECRET || !PAYPAL_API_BASE_URL) {
@@ -10,7 +10,7 @@ if (!PAYPAL_CLIENT_ID || !PAYPAL_SECRET || !PAYPAL_API_BASE_URL) {
 }
 
 // Function to create and get an access token to communicate with paypal
-export async function getPayPalAccessToken(): Promise<string> {
+export const getPayPalAccessToken = async(): Promise<string> => {
     try {
         const response = await axios({
             url: `${PAYPAL_API_BASE_URL}/v1/oauth2/token`,
@@ -29,10 +29,10 @@ export async function getPayPalAccessToken(): Promise<string> {
       console.error('Failed to get PayPal access token:', error.response?.data || error.message);
       throw new Error('Could not retrieve PayPal access token');
     }
-}   
+}
 
 // Function to create a billing agreement (user subscribes to an existing plan)
-export async function createPayPalSubscription(): Promise<any> {
+export const createPayPalSubscription = async(): Promise<any> => {
     const token = await getPayPalAccessToken(); // Get the PayPal access token
   
     try {
@@ -44,7 +44,7 @@ export async function createPayPalSubscription(): Promise<any> {
                   locale: "en-US",
                   shipping_preference: "NO_SHIPPING",
                   user_action: "SUBSCRIBE_NOW",
-                  return_url: "http://localhost:3000/browse",
+                  return_url: "http://localhost:3000/landing",
                   cancel_url: "http://localhost:3000/signup/payment"
                 }
             },
@@ -69,7 +69,7 @@ export async function createPayPalSubscription(): Promise<any> {
     }
 }
 
-export async function cancelSubscription(subscriptionId: string, reason = 'User requested cancellation') {
+export const cancelSubscription = async(subscriptionId: string, reason = 'User requested cancellation') => {
     const token = await getPayPalAccessToken();
   
     const response = await axios.post(`${PAYPAL_API_BASE_URL}/v1/billing/subscriptions/${subscriptionId}/cancel`,

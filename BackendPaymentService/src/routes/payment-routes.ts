@@ -8,16 +8,15 @@ const router: Router = Router();
 
 const userController = container.get<UserController>(TOKENS.UserController);
 
-router.get("/Subscribe", async(req: Request, res: Response, next: NextFunction) => { 
-    PaymentController.Subscribe(req, res);
+router.get("/subscribe", async(req: Request, res: Response, next: NextFunction) => { 
+    userController.subscribe(req, res, next);
 });
 
 router.post("/cancelSubscription", async(req: Request, res: Response, next: NextFunction) => { 
-    cancelSubscriptionController(req, res);
+    userController.cancelSubscriptionController(req, res, next);
 });
 
 router.post("/payAndActivate",  async(req: Request, res: Response, next: NextFunction) => {
-    console.log("route here");
     userController.pay(req, res, next);
 });
 

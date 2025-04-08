@@ -32,4 +32,3 @@ export async function cancelSubscriptionController(req: Request, res: Response) 
       res.status(500).json({ error: 'Something went wrong cancelling the subscription' });
     }
   }
- // I-AMFK8LNRK6L5

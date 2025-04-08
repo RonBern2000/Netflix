@@ -1,4 +1,5 @@
 export * from './errors/bad-request-error';
+export * from './errors/invalid-enviroment-variable-error';
 export * from './middleware/error-handler';
 export * from './middleware/not-found-hadler';
 export * from './utils/basic-app';
