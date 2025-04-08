@@ -1,4 +1,5 @@
 import { MoviesByGenre } from "../DTOs/genre-movie-dto";
+import { IGenre } from "./IGenre";
 import { IMovie } from "./IMovie";
 
 export interface IMoviesRepository{
@@ -8,4 +9,6 @@ export interface IMoviesRepository{
     setAllMovies(movies: IMovie[]): Promise<void>;
     getMoviesByGenre(genre: string): Promise<IMovie[] | null>;
     setMoviesByGenre(moviesByGenre: MoviesByGenre): Promise<void>;
+    getGeneres(): Promise<IGenre[] | null>;
+    setGenres(genres: IGenre[]): Promise<void>;
 }
