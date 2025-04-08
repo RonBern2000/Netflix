@@ -3,7 +3,6 @@ import { TOKENS } from '../tokens';
 import { IUserService } from '../interfaces/IUserService';
 import { NextFunction, Request, Response } from 'express';
 import { IUser } from '../interfaces/IUser';
-import { createPayPalSubscription, cancelSubscription } from '../services/paypal-service';
 
 @injectable()
 export class UserController{
@@ -11,11 +10,10 @@ export class UserController{
 
     async subscribe(req: Request, res: Response,  next: NextFunction) {
         try {
-          const order = await createPayPalSubscription();  // Call the service function to create the order
-          res.json(order);  // Return the created order to the client
+          const order = await this.userService.createPayPalSubscription();  // Call the service function to create the order
+          res.status(200).json({order});  // Return the created order to the client
         } catch (error) {
             return next(error);
-          //res.status(500).json({ error: 'Failed to create PayPal order', details: err});
         }
     }
 
@@ -23,21 +21,19 @@ export class UserController{
         const { subscriptionId } = req.body;
       
         if (!subscriptionId) {
-          return res.status(400).json({ error: 'Missing subscriptionId' });
+          res.status(400).json({ error: 'Missing subscriptionId' });
         }
       
         try {
-          const success = await cancelSubscription(subscriptionId);
+          const success = await this.userService.cancelSubscription(subscriptionId);
       
           if (success) {
-            return res.status(200).json({ message: 'Subscription cancelled successfully' });
+            res.status(200).json({ message: 'Subscription cancelled successfully' });
           } else {
-            return res.status(500).json({ error: 'Failed to cancel subscription' });
+            res.status(500).json({ error: 'Failed to cancel subscription' });
           }
         } catch (error: any) {
             return next(error);
-          //console.error('Cancel error:', error.message);
-          //res.status(500).json({ error: 'Something went wrong cancelling the subscription' });
         }
     }
 

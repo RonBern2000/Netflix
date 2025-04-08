@@ -46,13 +46,14 @@ export class MoviesService implements IMoviesService{
                 allMoviesByGenres[genre.name] = movies;
             }
         });
+        console.log("AllMoviesBygenre: ", allMoviesByGenres)
         return allMoviesByGenres; 
     }
 
     async getAllMovies(): Promise<IMovie[] | null> {
         await redis.del(TOKENS.allMovies); // only for testing
         let allMovies : IMovie[] | null = await this.moviesRepository.getAllMovies();
-        console.log('Is there redis:',allMovies);
+        // console.log('Is there redis:',allMovies);
         if(!allMovies){
             allMovies = await tmdbGetAllMovies(5);
             if(allMovies){
@@ -63,13 +64,13 @@ export class MoviesService implements IMoviesService{
             }
             await this.moviesRepository.setAllMovies(allMovies!);
             const genres = await tmdbGetGenres();
-            await this.moviesRepository.setGenres(genres!);
-            const orderedByGenre: Record<string, IMovie[]> = await orderMoviesByGenre(allMovies!, genres!);
-            Object.entries(orderedByGenre).forEach(async ([genre, movies]) => {
-                const moviesByGenre: MoviesByGenre = {genre, movies};
-                await this.moviesRepository.setMoviesByGenre(moviesByGenre);
-            })
-            console.log('Ron the king:', allMovies);
+            // await this.moviesRepository.setGenres(genres!);
+            // const orderedByGenre: Record<string, IMovie[]> = await orderMoviesByGenre(allMovies!, genres!);
+            // Object.entries(orderedByGenre).forEach(async ([genre, movies]) => {
+            //     const moviesByGenre: MoviesByGenre = {genre, movies};
+            //     await this.moviesRepository.setMoviesByGenre(moviesByGenre);
+            // })
+            // console.log('Ron the king:', allMovies);
         }
         console.log(allMovies?.length);
         return allMovies;

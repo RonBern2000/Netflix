@@ -17,9 +17,5 @@ export const orderMoviesByGenre = async(allMovies: IMovie[], genres: IGenre[]): 
             orderedByGenre[genresDict[genreId]].push(movie);
         })
     }
-
-    console.log(orderedByGenre.length);
-    console.log(orderedByGenre);
-    
     return orderedByGenre;
 }

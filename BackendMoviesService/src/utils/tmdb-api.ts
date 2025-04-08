@@ -73,7 +73,7 @@ export const tmdbGetAllMovies = async(pages: number): Promise<IMovie[] | null> =
 export const tmdbGetGenres = async(): Promise<IGenre[] | null> => {
         const options = {
         method: 'GET',
-        url: `https://api.themoviedb.org/3/genre/movie/list?language=en`,
+        url: 'https://api.themoviedb.org/3/genre/movie/list?language=en',
         headers: {
         accept: 'application/json',
         Authorization: `Bearer ${apiReadAccessToken}`
@@ -81,9 +81,10 @@ export const tmdbGetGenres = async(): Promise<IGenre[] | null> => {
     };
     try{
         const res = await axios.request(options);
-        const genres: IGenre[] = res.data.results.map((movie: any) => ({
-            id: movie.id,
-            name: movie.name
+        console.log(res);
+        const genres: IGenre[] = res.data.genres.map((genre: any) => ({
+            id: genre.id,
+            name: genre.name
         }));
         return genres;
     } catch (error) {
