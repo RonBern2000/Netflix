@@ -2,7 +2,6 @@ import { NextFunction, Request, Response, Router } from "express";
 import { container } from "../config/inversify";
 import { TOKENS } from "../tokens";
 import { UserController } from "../controllers/user-controller";
-import { PaymentController , cancelSubscriptionController } from "../controllers/payment-controller";
 
 const router: Router = Router();
 
