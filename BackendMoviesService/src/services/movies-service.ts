@@ -64,7 +64,7 @@ export class MoviesService implements IMoviesService{
     }
 
     async getAllMovies(): Promise<IMovie[] | null> {
-        const allMovies = tmdbGetMoviesByGenre();
+        const allMovies = await tmdbGetMoviesByGenre();
         console.log(allMovies);
         return allMovies;
         // await redis.del(TOKENS.allMovies); // only for testing

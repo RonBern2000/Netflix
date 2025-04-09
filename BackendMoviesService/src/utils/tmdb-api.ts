@@ -114,7 +114,7 @@ export const tmdbGetTrailer = async (movieId: number): Promise<string | null> =>
 export const tmdbGetMoviesByGenre = async(): Promise<IMovie[] | null> => {
     const options = {
         method: 'GET',
-        url: `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&sort_by=popularity.desc&with_genres=Action`,
+        url: `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&sort_by=popularity.desc&with_genres=28`,
         headers: {
         accept: 'application/json',
         Authorization: `Bearer ${apiReadAccessToken}`
