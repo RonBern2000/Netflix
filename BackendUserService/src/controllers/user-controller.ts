@@ -40,7 +40,7 @@ export class UserController{
                     httpOnly: true,
                     sameSite: 'strict',
                 });
-                res.status(200).json({message: "Login Successful", token: `Bearer ${token}`, active: active});
+                res.status(200).json({message: "Login Successful", token: `${TOKENS.Bearer} ${token}`, active: active});
             }
             res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${token}`, {
                 httpOnly: true,
@@ -61,7 +61,7 @@ export class UserController{
 
             const token: string = await this.userService.signup(result.data);
 
-            res.cookie(TOKENS.tempToken, `Bearer ${token}`, {
+            res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${token}`, {
                 httpOnly: true,
                 sameSite: 'strict',
             });
