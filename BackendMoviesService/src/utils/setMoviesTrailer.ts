@@ -6,7 +6,7 @@ export const setMoviesTrailer = async (allMovies: IMovie[] | null) =>{
         for (const movie of allMovies) {
             console.log(movie);
             const key = await tmdbGetTrailer(movie.id);
-            movie.key = key!;
+            movie.key = key ? key : '';
         }
     }
 }
