@@ -29,7 +29,7 @@ export class UserService implements IUserService{
       return response.data.access_token;
     }
 
-    async createPayPalSubscription(userId:string): Promise<any> {
+    async createPayPalSubscription(): Promise<any> {
         const token = await this.getPayPalAccessToken(); // Get the PayPal access token
         if(!token){
           throw new BadRequestError('token not found');
@@ -42,7 +42,7 @@ export class UserService implements IUserService{
               locale: "en-US",
               shipping_preference: "NO_SHIPPING",
               user_action: "SUBSCRIBE_NOW",
-              return_url: `http://localhost:4001/api/v1/payments/paymentSuccess?user_id=${userId}`,
+              return_url: `http://localhost:4001/api/v1/payments/paymentSuccess`,
               cancel_url: "http://localhost:3000/signup/payment"
             }
           },
