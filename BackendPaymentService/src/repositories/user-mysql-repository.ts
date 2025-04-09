@@ -8,8 +8,21 @@ export class UserSqlRepository implements IUserRepository{
     async getUser(id: string): Promise<IUser | null> {
         return await User.findByPk(id);
     }
-    async pay(id: string): Promise<IUser | null> {
-        await User.update({ active: true }, { where: { id } });
+    async updateUser(id: string, subscriptionId: string): Promise<IUser | null> {
+        await User.update(
+          {
+            active: true,
+            subscriptionId: subscriptionId,
+          },
+          { where: { id } }
+        );
         return await User.findByPk(id);
-    }
+      }
+    // async updateSubscriptionId(id: string, subscriptionId: string): Promise<IUser | null> {
+    //     await User.update(
+    //         { subscriptionId },
+    //         { where: { id } }
+    //     );
+    //     return await User.findByPk(id);
+    // }
 }

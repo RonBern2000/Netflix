@@ -15,8 +15,12 @@ router.post("/cancelSubscription", async(req: Request, res: Response, next: Next
     userController.cancelSubscriptionController(req, res, next);
 });
 
-router.post("/payAndActivate",  async(req: Request, res: Response, next: NextFunction) => {
-    userController.pay(req, res, next);
+router.post("/paymentSuccess", async(req: Request, res: Response, next: NextFunction) => { 
+    userController.paymentSuccess(req, res, next);
 });
+
+// router.post("/payAndActivate",  async(req: Request, res: Response, next: NextFunction) => {
+//     userController.pay(req, res, next);
+// });
 
 export default router
