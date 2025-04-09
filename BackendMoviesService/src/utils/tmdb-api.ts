@@ -109,7 +109,6 @@ export const tmdbGetTrailer = async (movieId: number): Promise<string | null> =>
         const key = res.data.results.map((movieTrailer: any) => ({
             key: movieTrailer.key
         }));
-        console.log("ggg "+key[0]?.key);
         return key[0]?.key;
     } catch (error) {
         throw new BadRequestError("Error in fetching movies");

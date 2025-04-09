@@ -15,7 +15,7 @@ const start = async () => {
   }
 
   await dbConnection();
-  //await rabbit.connectRabbitMQ();
+  await rabbit.connectRabbitMQ();
   const signedUpConsumer = new SignedUpConsumer(rabbit);
   await signedUpConsumer.consume();
 

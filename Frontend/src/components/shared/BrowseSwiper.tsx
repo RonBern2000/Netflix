@@ -14,7 +14,6 @@ type SwiperProps = {
 }
 
 const BrowseSwiper = ({ movies, paginationAmount }: SwiperProps) => {
-    console.log(movies);
     const swiperRef = useRef<HTMLDivElement | null>(null);
     const [scrollPosition, setScrollPosition] = useState({
         atLeft: true,

@@ -16,6 +16,7 @@ router.get("/allMovies", async(req: Request, res: Response, next: NextFunction) 
 });
 
 router.get("/allMoviesByGenres", async(req: Request, res: Response, next: NextFunction) => {
+    console.log("Made it to the route!")
     moviesController.getAllMoviesByGenres(req, res, next);
 });
 

@@ -22,16 +22,14 @@ export class MoviesService implements IMoviesService{
         if(!popMovies){
             popMovies = await tmdbGetPopular();
             await this.moviesRepository.setPopularMovies(popMovies!);
-            console.log('Ron the king:', popMovies);
         }
         return popMovies ? popMovies.slice(0, 10) : null; // Top 10
     }
 
 
     async getAllMoviesByGenres(): Promise<Record<string, IMovie[]> | null> {
-        await redis.del(TOKENS.allMovies);
+        //await redis.del(TOKENS.allMovies); // only for testing
         let allMovies : IMovie[] | null = await this.moviesRepository.getAllMovies();
-        console.log('Is there redis:',allMovies);
 
         if(!allMovies){
             allMovies = await tmdbGetAllMovies(5);

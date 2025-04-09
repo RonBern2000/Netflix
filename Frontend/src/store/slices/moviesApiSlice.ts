@@ -5,6 +5,7 @@ export const moviesApiSlice = createApi({
     reducerPath: "moviesApi",
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:5000",
+        credentials: 'include',
     }),
     endpoints: (builder) => ({
         
@@ -14,7 +15,7 @@ export const moviesApiSlice = createApi({
             }),
             getAllMovies: builder.query<Record<string,IMovie[]>, void>({
                 query: () => "/movies/api/v1/movies/allMoviesByGenres",
-                transformResponse: (response: { allMoviesByGenre: Record<string,IMovie[]> }) => response.allMoviesByGenre,
+                transformResponse: (response: { allMoviesByGenres: Record<string, IMovie[]> }) => response.allMoviesByGenres,
             }),
         
     })

@@ -17,6 +17,16 @@ export class MoviesController{
         }
     }
 
+    async getAllMoviesByGenres(req: Request, res: Response, next: NextFunction) {
+        try {
+            const allMoviesByGenres: Record<string, IMovie[]> | null = await this.moviesService.getAllMoviesByGenres();
+            console.log("All movies sorted by genres:",allMoviesByGenres);
+            res.status(200).json({allMoviesByGenres});
+        } catch (error) {
+            return next(error);
+        }
+    }
+
     async getAllMovies(req: Request, res: Response, next: NextFunction){
         try {
             const allMovies: IMovie[] | null = await this.moviesService.getAllMovies();
@@ -25,16 +35,6 @@ export class MoviesController{
             return next(error);
         }
     }
-
-    async getAllMoviesByGenres(req: Request, res: Response, next: NextFunction) {
-        try {
-            const allMoviesByGenres: Record<string, IMovie[]> | null = await this.moviesService.getAllMoviesByGenres();
-            res.status(200).json({allMoviesByGenres});
-        } catch (error) {
-            return next(error);
-        }
-    }
-
 }
 // async getMovieTrailer(req: Request, res: Response, next: NextFunction){
 //     try {

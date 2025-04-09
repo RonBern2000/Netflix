@@ -9,12 +9,12 @@ export const authenticateMovies = (req: Request, res: Response, next: NextFuncti
     if (path.startsWith('/api/v1/movies/popular')){
         return next();
     }
+
     try {
         const token = req.cookies.token;
-
         if (!token)
             throw new BadRequestError('No token provided');
-
+        
         const decoded = verify(token, JWT_KEY!);
 
         if (!decoded)
