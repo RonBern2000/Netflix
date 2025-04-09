@@ -5,7 +5,7 @@ import { IMovie } from "../../dto/IMovie";
 import { getScrollPosition } from "../../utils/getScrollPosition";
 import { scrollElement } from "../../utils/scrollElement";
 
-const items = Array.from({ length: 8 }, (_, i) => `Item ${i + 1}`); {/* Only for testing the swiper offline*/ }
+//const items = Array.from({ length: 8 }, (_, i) => `Item ${i + 1}`); {/* Only for testing the swiper offline*/ }
 {/* Neflix's behaivor: every section is 6 movies */ }
 
 type SwiperProps = {
@@ -80,10 +80,19 @@ const BrowseSwiper = ({ movies, paginationAmount }: SwiperProps) => {
                 </Button>
             )}
 
-            <div className="h-50 ">
+            {/* <div className="h-50 "> offline testing without movies
                 <div ref={swiperRef}
                     className="flex scrollbar-hide overflow-hidden scroll-smooth gap-5 py-4 px-4 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full">
                     {items?.map((_, index) => (
+                        <div className="cursor-pointer w-13/84 h-full relative flex-shrink-0 bg-[rgb(250,249,249)] text-white flex items-center justify-center rounded-md transition ease-in-out hover:scale-105 duration-300" key={index} />
+                    ))}
+                </div>
+            </div> */}
+
+            <div className="h-50 ">
+                <div ref={swiperRef}
+                    className="flex scrollbar-hide overflow-hidden scroll-smooth gap-5 py-4 px-4 max-sm:h-4/10 sm:h-4/10 md:h-5/10 lg:h-7/10 xl:h-9/10 2xl:h-full">
+                    {movies?.map((_, index) => (
                         <div className="cursor-pointer w-13/84 h-full relative flex-shrink-0 bg-[rgb(250,249,249)] text-white flex items-center justify-center rounded-md transition ease-in-out hover:scale-105 duration-300" key={index} />
                     ))}
                 </div>

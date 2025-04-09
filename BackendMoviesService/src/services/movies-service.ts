@@ -8,6 +8,7 @@ import redis from "../config/redis-client";
 import { orderMoviesByGenre } from "../utils/orderMoviesByGenre";
 import { MoviesByGenre } from "../DTOs/genre-movie-dto";
 import { IGenre } from "../interfaces/IGenre";
+import { setMoviesTrailer } from "../utils/setMoviesTrailer";
 
 @injectable()
 export class MoviesService implements IMoviesService{
@@ -34,12 +35,7 @@ export class MoviesService implements IMoviesService{
 
         if(!allMovies){
             allMovies = await tmdbGetAllMovies(5);
-            if(allMovies){ //TODO util set all keys for all movies
-                for (const movie of allMovies) {
-                    const key = await tmdbGetTrailer(movie.id);
-                    movie.key = key!;
-                }
-            }
+            await setMoviesTrailer(allMovies);
             await this.moviesRepository.setAllMovies(allMovies!);
             const genres = await tmdbGetGenres();
             await this.moviesRepository.setGenres(genres!);
@@ -49,7 +45,7 @@ export class MoviesService implements IMoviesService{
                 await this.moviesRepository.setMoviesByGenre(moviesByGenre);
             })
         }
-
+        
         const allMoviesByGenres: Record<string, IMovie[]> = {}; 
         const genres: IGenre[] | null = await this.moviesRepository.getGeneres();
         if (genres) {
@@ -64,7 +60,7 @@ export class MoviesService implements IMoviesService{
     }
 
     async getAllMovies(): Promise<IMovie[] | null> {
-        const allMovies = tmdbGetMoviesByGenre();
+        const allMovies = await tmdbGetMoviesByGenre();
         console.log(allMovies);
         return allMovies;
         // await redis.del(TOKENS.allMovies); // only for testing
