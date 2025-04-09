@@ -11,7 +11,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@netflix-utils/shared": "^1.0.12",
+    "@netflix-utils/shared": "^1.0.15",
     "@types/bcryptjs": "^3.0.0",
     "amqplib": "^0.10.5",
     "bcryptjs": "^3.0.2",
