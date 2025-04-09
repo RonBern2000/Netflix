@@ -6,5 +6,6 @@ export const TOKENS = {
     Token:"Token",
     popularMovies: "popularMovies",
     allMovies: "allMovies",
-    genres: "genres"
+    genres: "genres",
+    Bearer: 'Bearer'
 };
