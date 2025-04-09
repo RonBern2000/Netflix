@@ -1,4 +1,4 @@
-import { useGetPopMoviesQuery } from "../store/slices/moviesApiSlice";
+import {useGetPopMoviesQuery } from "../store/slices/moviesApiSlice";
 import Swiper from "../components/shared/Swiper";
 
 const PopSwiperContainer = () => {

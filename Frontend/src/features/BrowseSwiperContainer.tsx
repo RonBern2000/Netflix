@@ -5,13 +5,11 @@ import { calcPaginationAmount } from "../utils/calculateSwiperPagination";
 const items = Array.from({ length: 8 }, (_, i) => `Item ${i + 1}`);
 
 type BrowseSwiperContainerProps = {
-    genre: string;
+    movies: IMovie[];
 }
 
-const BrowseSwiperContainer = ({ genre }: BrowseSwiperContainerProps) => {
-    console.log(genre);
-    const movies: IMovie | undefined = undefined; //TODO: get movies from state based on the gives genre
-    const paginationAmount = calcPaginationAmount(items);
+const BrowseSwiperContainer = ({ movies }: BrowseSwiperContainerProps) => {
+    const paginationAmount = calcPaginationAmount(items); //TODO: More complex based on screen width
     return (
         <BrowseSwiper movies={movies} paginationAmount={paginationAmount} />
     )

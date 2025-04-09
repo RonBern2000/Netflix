@@ -6,18 +6,18 @@ export const moviesApiSlice = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:5000",
     }),
-    endpoints: (builder) => {
-        return {
+    endpoints: (builder) => ({
+        
             getPopMovies: builder.query<IMovie[], void>({
                 query: () => "/movies/api/v1/movies/popular",
                 transformResponse: (response: { popularMovies: IMovie[] }) => response.popularMovies,
             }),
-            getAllMovies: builder.query<Record<string, IMovie[]>, void>({
+            getAllMovies: builder.query<Record<string,IMovie[]>, void>({
                 query: () => "/movies/api/v1/movies/allMoviesByGenres",
-                transformResponse: (response: { allMoviesByGenre: Record<string, IMovie[]> }) => response.allMoviesByGenre,
+                transformResponse: (response: { allMoviesByGenre: Record<string,IMovie[]> }) => response.allMoviesByGenre,
             }),
-        };
-    }
+        
+    })
 });
 
 export const { useGetPopMoviesQuery, useGetAllMoviesQuery} = moviesApiSlice;
