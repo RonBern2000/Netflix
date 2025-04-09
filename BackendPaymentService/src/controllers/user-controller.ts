@@ -9,10 +9,11 @@ export class UserController{
     constructor(@inject(TOKENS.IUserService) private userService: IUserService){}
 
     async subscribe(req: Request, res: Response,  next: NextFunction) {
-      const userId = req.query.user_id as string;
+      console.log("enter to controller")
+      //const userId = req.query.user_id as string;
         try {
-          const order = await this.userService.createPayPalSubscription(userId);  // Call the service function to create the order
-          res.status(200).json({order});  // Return the created order to the client
+          const aprovalUrl = await this.userService.createPayPalSubscription();  // Call the service function to create the order
+          res.status(200).json(aprovalUrl);  // Return the created order to the client
         } catch (error) {
             return next(error);
         }
