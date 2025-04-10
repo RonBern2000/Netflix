@@ -29,14 +29,14 @@ const MoviePopup = ({ movie, className = '' }: MoviePopupProps) => {
 
   return (
     <div
-      className={`${className} shadow-md rounded-md transition-transform duration-500 ease-in-out transform ${isHovered ? "scale-x-150 scale-y-200 z-50" : "scale-100 z-10"} cursor-pointer w-13/84 h-full flex-shrink-0 text-white flex items-center justify-center overflow-hidden`}
+      className={`${className} shadow-md rounded-md transition-transform duration-500 ease-in-out transform ${isHovered ? "scale-x-150 scale-y-200 z-50" : "scale-100 z-10"} cursor-pointer w-13/84 h-full flex-shrink-0 text-white flex items-center justify-center overflow-hidden bg-[#1f1f1f]`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTransitionEnd={handleTransitionEnd}>
       {!transitionEnded ? (
         <img src={movie.backdrop_path} alt='movieBanner' className="object-contain rounded-md" />
       ) : (
-        <Container className="flex-col trailerPop rounded-md h-full w-full absolute overflow-visible">
+        <Container className="flex-col trailerPop rounded-md h-full w-full absolute overflow-visible bg-[#1f1f1f]">
           <div className="w-full h-6/10 bg-[#1f1f1f]">
             <ReactPlayer
               url={`https://www.youtube.com/watch?v=${movie.key}`}

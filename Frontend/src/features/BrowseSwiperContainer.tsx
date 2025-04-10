@@ -9,9 +9,18 @@ type BrowseSwiperContainerProps = {
 }
 
 const BrowseSwiperContainer = ({ movies }: BrowseSwiperContainerProps) => {
-    const paginationAmount = calcPaginationAmount(movies); //TODO: More complex based on screen width
+    // const width = useWindowWidth();
+
+    // if (width < 1280) itemsPerPage = 5;
+    // if (width < 1024) itemsPerPage = 4;
+    // if (width < 768) itemsPerPage = 3;
+    // if (width < 640) itemsPerPage = 2;
+
+    const paginationAmount = calcPaginationAmount(movies, 6);
     return (
-        <BrowseSwiper movies={movies} paginationAmount={paginationAmount} />
+        <BrowseSwiper
+            movies={movies}
+            paginationAmount={paginationAmount} />
     )
 }
 

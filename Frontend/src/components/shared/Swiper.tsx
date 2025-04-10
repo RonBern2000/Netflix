@@ -41,7 +41,7 @@ const Swiper = ({ movies }: SwiperProps) => {
 
     const scroll = (direction: "left" | "right") => {
         if (swiperRef.current) {
-            const scrollAmount = swiperRef.current.offsetWidth - 550;
+            const scrollAmount = swiperRef.current.offsetWidth;
             swiperRef.current.scrollBy({
                 left: direction === "right" ? scrollAmount : -scrollAmount,
                 behavior: "smooth",

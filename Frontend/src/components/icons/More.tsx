@@ -3,11 +3,11 @@ type MoreProps = {
 }
 const More = ({ className = '' }: MoreProps) => {
     return (
-        <svg className={`${className}`} width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="20" cy="20" r="20" fill="#2A2A2A" />
-            <circle cx="20" cy="20" r="19" stroke="white" stroke-opacity="0.5" stroke-width="2" />
-            <path d="M13.9995 18.0005L19.9995 24.0005L25.9995 18.0005" stroke="white" stroke-width="1.6" stroke-linecap="square" />
-        </svg>
+        <div className="w-6 h-6 flex items-center justify-center border border-white rounded-full">
+            <svg className={`${className}`} width="12" height="18" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.99951 2.00049L7.99951 8.00049L13.9995 2.00049" stroke="white" stroke-width="1.6" stroke-linecap="square" />
+            </svg>
+        </div>
     )
 }
 

@@ -3,8 +3,16 @@ export const scrollElement = (
   direction: "left" | "right"
 ) => {
   const scrollAmount = element.offsetWidth;
-  element.scrollBy({
-    left: direction === "right" ? scrollAmount : -scrollAmount,
+  const newScrollLeft =
+    direction === "right"
+      ? Math.min(
+          element.scrollLeft + scrollAmount,
+          element.scrollWidth - element.clientWidth
+        )
+      : Math.max(element.scrollLeft - scrollAmount, 0);
+
+  element.scrollTo({
+    left: newScrollLeft,
     behavior: "smooth",
   });
 };

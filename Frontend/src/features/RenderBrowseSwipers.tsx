@@ -10,7 +10,7 @@ const RenderBrowseSwipers = () => {
   // const { data: genres } = useGetGenresQuery();
 
   return (
-    <Container className="flex-col bg-[#1f1f1f]">
+    <Container className="flex-col bg-[#1c1c1c]">
       {isLoading ? (
         <>
           <H2 className="text-white z-1 ml-7.5">{strings.browse.loading}</H2>
@@ -19,7 +19,7 @@ const RenderBrowseSwipers = () => {
         Object.entries(data).map(([genre, movies]) =>
           movies.length > 5 ? (
             <Container className="flex-col relative" key={genre}>
-              <H2 className="text-white z-1 absolute top-[14%] left-[4%]">{genre}</H2>
+              <H2 className="text-white z-40 absolute top-[14%] left-[4%]">{genre}</H2>
               <BrowseSwiperContainer movies={movies} />
             </Container>
           ) : null

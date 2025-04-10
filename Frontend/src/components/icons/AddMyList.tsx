@@ -1,11 +1,11 @@
 
 const AddMyList = () => {
     return (
-        <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="20" cy="20" r="20" fill="#2A2A2A" />
-            <circle cx="20" cy="20" r="19" stroke="white" stroke-opacity="0.5" stroke-width="2" />
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M19.2 19.2L19.2 12H20.8L20.8 19.2L28 19.2V20.8L20.8 20.8L20.8 28H19.2L19.2 20.8L12 20.8V19.2L19.2 19.2Z" fill="white" />
-        </svg>
+        <div className="w-6 h-6 flex items-center justify-center border border-white rounded-full">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.2 7.2L7.2 0H8.8L8.8 7.2L16 7.2V8.8L8.8 8.8L8.8 16H7.2L7.2 8.8L0 8.8V7.2L7.2 7.2Z" fill="white" />
+            </svg>
+        </div>
     )
 }
 

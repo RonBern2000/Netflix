@@ -7,3 +7,4 @@ export * from './utils/jwt';
 export * from './utils/rabbitmq'
 export * from './utils/base-rabbit-consumer';
 export * from './utils/exchanges';
+export * from './genres';

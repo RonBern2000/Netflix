@@ -4,7 +4,7 @@ import More from "../icons/More";
 import Play from "../icons/Play";
 import Button from "./Button";
 import Container from "./Container";
-import Typography from "./Typography";
+import { allGenres } from '../../utils/genres';
 
 type MoviePopupFooterProps = {
     className?: string;
@@ -12,21 +12,6 @@ type MoviePopupFooterProps = {
 }
 
 const MoviePopupFooter = ({ movieGenres, className = '' }: MoviePopupFooterProps) => {
-
-    // const genresDict = movieGenres.reduce((acc, genre) => {
-    //     acc[genre] = genre;
-    //     return acc;
-    // }, {} as Record<number, number>);
-
-    // const genresString = () => {
-    //     const strings: { [key: number]: string } = {};
-    //     for (const genre of genres!) {
-    //         if (genresDict[genre.id]) {
-    //             strings[genre.id] = genre.name;
-    //         }
-    //     }
-    //     return strings;
-    // }
     return (
         <Container className={`bg-[#1f1f1f] ${className}`}>
             <Container className="gap-2 items-center mt-1 mx-3 w-full">
@@ -39,13 +24,26 @@ const MoviePopupFooter = ({ movieGenres, className = '' }: MoviePopupFooterProps
                 <Button className="hover:opacity-75 transition-opacity duration-200">
                     <Like />
                 </Button>
-                <Button className="hover:opacity-75 transition-opacity duration-200 ml-auto mr-5">
+                <Button className="hover:opacity-75 transition-opacity duration-200 ml-auto mr-6">
                     <More />
                 </Button>
             </Container>
-            <Typography className="flex gap-1.5">{movieGenres}</Typography>
+            <Container className="flex pt-2 ml-3">
+                <ul className="flex gap-5">
+                    {movieGenres.map((genreId, index) => {
+                        return (
+                            <li
+                                className={`text-[7px] ${index !== 0 ? 'list-disc text-white' : ''}`}
+                                key={genreId}
+                            >
+                                {allGenres[genreId]}
+                            </li>
+                        );
+                    })}
+                </ul>
+            </Container>
         </Container>
-    )
-}
+    );
+};
 
 export default MoviePopupFooter;
