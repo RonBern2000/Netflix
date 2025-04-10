@@ -14,3 +14,15 @@
 .reasonCard{
   box-shadow: inset 1px 2px 50px 1px rgba(168, 114, 152, 0.746);
 }
+
+.trailerPop{
+  box-shadow: 0px 0px 80px 40px rgba(0, 0, 0, 0.95);
+}
+
+.checkEmailInput:-webkit-autofill {
+  background-color: rgba(31,31,31,0.7) !important;
+}
+
+.checkEmailInput:focus:-webkit-autofill {
+  background-color: rgba(31,31,31,0.7) !important;
+}

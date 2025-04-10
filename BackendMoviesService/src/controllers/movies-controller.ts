@@ -27,6 +27,18 @@ export class MoviesController{
         }
     }
 
+    async getGenres(req: Request, res: Response, next: NextFunction){
+        try {
+            const genres = await this.moviesService.getGenres();
+            if(!genres){
+                res.status(500).json({message: 'Error'});
+            }
+            res.status(200).json({genres});
+        } catch (error) {
+            return next(error);
+        }
+    }
+
     async getAllMovies(req: Request, res: Response, next: NextFunction){
         try {
             const allMovies: IMovie[] | null = await this.moviesService.getAllMovies();
