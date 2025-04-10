@@ -3,16 +3,14 @@ import { IMovie } from "../../dto/IMovie";
 import Container from "./Container";
 import MoviePopupFooter from "./MoviePopupFooter";
 import ReactPlayer from 'react-player';
-import { IGenre } from "../../dto/IGenre";
 
 type MoviePopupProps = {
   movie: IMovie;
   className?: string;
-  genres: IGenre[] | undefined;
 }
 
 // TODO: When I do the more complex pagination amount => we should not relay on 6 each page 
-const MoviePopup = ({ genres, movie, className = '' }: MoviePopupProps) => {
+const MoviePopup = ({ movie, className = '' }: MoviePopupProps) => {
   const [transitionEnded, setTransitionEnded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -52,7 +50,7 @@ const MoviePopup = ({ genres, movie, className = '' }: MoviePopupProps) => {
               style={{ objectFit: 'contain' }}
             />
           </div>
-          <MoviePopupFooter genres={genres} movieGenres={movie.genre_ids} className="w-full h-4/10 -mt-1 flex-col" />
+          <MoviePopupFooter movieGenres={movie.genre_ids} className="w-full h-4/10 -mt-1 flex-col" />
         </Container>
       )}
     </div>

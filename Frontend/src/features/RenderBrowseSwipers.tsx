@@ -1,13 +1,13 @@
 import Container from "../components/shared/Container";
 import H2 from "../components/shared/H2";
 import BrowseSwiperContainer from "./BrowseSwiperContainer";
-import { useGetAllMoviesQuery, useGetGenresQuery } from "../store/slices/moviesApiSlice";
+import { useGetAllMoviesQuery } from "../store/slices/moviesApiSlice";
 import { strings } from "../strings/strings";
 
 const RenderBrowseSwipers = () => {
 
   const { data, isLoading } = useGetAllMoviesQuery();
-  const { data: genres } = useGetGenresQuery();
+  // const { data: genres } = useGetGenresQuery();
 
   return (
     <Container className="flex-col bg-[#1f1f1f]">
@@ -20,7 +20,7 @@ const RenderBrowseSwipers = () => {
           movies.length > 5 ? (
             <Container className="flex-col relative" key={genre}>
               <H2 className="text-white z-1 absolute top-[14%] left-[4%]">{genre}</H2>
-              <BrowseSwiperContainer genres={genres} movies={movies} />
+              <BrowseSwiperContainer movies={movies} />
             </Container>
           ) : null
         )

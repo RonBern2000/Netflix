@@ -5,7 +5,6 @@ import { IMovie } from "../../dto/IMovie";
 import { getScrollPosition } from "../../utils/getScrollPosition";
 import { scrollElement } from "../../utils/scrollElement";
 import MoviePopup from "./MoviePopup";
-import { IGenre } from "../../dto/IGenre";
 
 //const items = Array.from({ length: 8 }, (_, i) => `Item ${i + 1}`); {/* Only for testing the swiper offline*/ }
 {/* Neflix's behaivor: every section is 6 movies */ }
@@ -13,10 +12,9 @@ import { IGenre } from "../../dto/IGenre";
 type SwiperProps = {
     movies: IMovie[] | undefined;
     paginationAmount: number
-    genres: IGenre[] | undefined;
 }
 
-const BrowseSwiper = ({ genres, movies, paginationAmount }: SwiperProps) => {
+const BrowseSwiper = ({ movies, paginationAmount }: SwiperProps) => {
     const swiperRef = useRef<HTMLDivElement | null>(null);
     const [scrollPosition, setScrollPosition] = useState({
         atLeft: true,
@@ -86,7 +84,7 @@ const BrowseSwiper = ({ genres, movies, paginationAmount }: SwiperProps) => {
                 <div ref={swiperRef}
                     className="flex scrollbar-hide overflow-hidden scroll-smooth gap-5 py-20 px-4 h-full">
                     {movies?.map((movie) => (
-                        <MoviePopup genres={genres} key={movie.id} movie={movie} />
+                        <MoviePopup key={movie.id} movie={movie} />
                     ))}
                 </div>
             </div>

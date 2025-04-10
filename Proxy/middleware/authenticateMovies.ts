@@ -6,6 +6,7 @@ import { verify } from '@netflix-utils/shared'
 export const authenticateMovies = (req: Request, res: Response, next: NextFunction) => {
     const { path } = req;
 
+    console.log("first")
     if (path.startsWith('/api/v1/movies/popular')){
         return next();
     }
