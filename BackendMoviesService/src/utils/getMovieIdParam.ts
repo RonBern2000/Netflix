@@ -1,11 +1,11 @@
-import { BadRequestError } from "@netflix-utils/shared";
-import { Request } from "express";
+// import { BadRequestError } from "@netflix-utils/shared";
 
-export const getMovieIdParam = (req: Request) => {
-    const { movieId } = req.params;
-    const parsedId = Number(movieId);
-    if (isNaN(parsedId)) {
-        throw new BadRequestError('Movie Id was not found in params');
-    }
-    return parsedId;
-}
+// export const getMovieIdParam = (movieId: string | null) => {
+//     if(!movieId)
+//         throw
+//     const parsedId = Number(movieId);
+//     if (isNaN(parsedId)) {
+//         throw new BadRequestError('Movie Id was not found in params');
+//     }
+//     return parsedId;
+// }
