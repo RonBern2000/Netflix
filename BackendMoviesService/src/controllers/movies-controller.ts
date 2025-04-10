@@ -3,7 +3,7 @@ import { inject, injectable } from "inversify";
 import { TOKENS } from "../tokens";
 import { IMoviesService } from "../interfaces/IMoviesService";
 import { IMovie } from "../interfaces/IMovie";
-import { getMovieIdParam } from "../utils/getMovieIdParam";
+// import { getMovieIdParam } from "../utils/getMovieIdParam";
 
 @injectable()
 export class MoviesController{
