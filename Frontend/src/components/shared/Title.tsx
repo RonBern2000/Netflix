@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
 type TitleProps = {
     title: string;
@@ -6,9 +6,9 @@ type TitleProps = {
 
 const Title = ({title}: TitleProps) => {
   return (
-    <Helmet>
+    // <Helmet>
         <title>{title}</title>
-    </Helmet>
+    // </Helmet>
   )
 }
 

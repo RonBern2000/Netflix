@@ -21,6 +21,9 @@ services:
     build:
       context: ../BackendUserService/
     container_name: userservice
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     ports:
       - "4000:4000"
     env_file:
@@ -37,6 +40,9 @@ services:
     build:
       context: ../BackendPaymentService/
     container_name: paymentservice
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     ports:
       - "4001:4001"
     env_file:
@@ -54,6 +60,9 @@ services:
     build:
       context: ../BackendMoviesService/
     container_name: movieservice
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     ports:
       - "4002:4002"
     env_file:
@@ -81,6 +90,9 @@ services:
     build:
       context: ../Proxy/
     container_name: proxy
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     ports:
       - "5000:5000"
     depends_on:
@@ -95,6 +107,9 @@ services:
     build:
       context: ../Frontend/
     container_name: client
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     ports:
       - "3000:3000"
     networks:
