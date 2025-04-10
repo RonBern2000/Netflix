@@ -9,16 +9,23 @@ import { orderMoviesByGenre } from "../utils/orderMoviesByGenre";
 import { MoviesByGenre } from "../DTOs/genre-movie-dto";
 import { IGenre } from "../interfaces/IGenre";
 import { setMoviesTrailer } from "../utils/setMoviesTrailer";
+import { BadRequestError } from "@netflix-utils/shared";
 
 @injectable()
 export class MoviesService implements IMoviesService{
     
     constructor(@inject(TOKENS.IMoviesRepository) private moviesRepository: IMoviesRepository) {}
 
+    async getGenres(): Promise<IGenre[] | null> {
+        const genres = await this.moviesRepository.getGeneres();
+        if(!genres)
+            throw new BadRequestError('Failed to load genres');
+        return genres;
+    }
+
     async getPopularMovies(): Promise<IMovie[] | null> {
-        await redis.del(TOKENS.popularMovies); // only for testing
+        //await redis.del(TOKENS.popularMovies); // only for testing
         let popMovies : IMovie[] | null = await this.moviesRepository.getPopularMovies();
-        console.log('Is there redis:',popMovies);
         if(!popMovies){
             popMovies = await tmdbGetPopular();
             await this.moviesRepository.setPopularMovies(popMovies!);
@@ -28,9 +35,8 @@ export class MoviesService implements IMoviesService{
 
 
     async getAllMoviesByGenres(): Promise<Record<string, IMovie[]> | null> {
-        // await redis.del(TOKENS.allMovies); // only for testing
+        await redis.del(TOKENS.allMovies); // only for testing
         let allMovies : IMovie[] | null = await this.moviesRepository.getAllMovies();
-
         if(!allMovies){
             allMovies = await tmdbGetAllMovies(5);
             await setMoviesTrailer(allMovies);

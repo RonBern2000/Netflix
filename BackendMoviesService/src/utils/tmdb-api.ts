@@ -41,7 +41,6 @@ export const tmdbGetAllMovies = async(pages: number): Promise<IMovie[] | null> =
     for (let pageNum = 1; pageNum <= pages; pageNum++) {
         const options = {
             method: 'GET',
-            //  https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=true&language=en-US&page=${pageNum}&sort_by=popularity.desc
             url: `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=true&language=en-US&page=${pageNum}&sort_by=popularity.desc`,
             headers: {
                 accept: 'application/json',
@@ -51,18 +50,21 @@ export const tmdbGetAllMovies = async(pages: number): Promise<IMovie[] | null> =
         
         try {
             const res = await axios.request(options);
-            const movies: IMovie[] = res.data.results.map((movie: any) => ({
-                genre_ids: movie.genre_ids,
-                id: movie.id,
-                key: "",
-                overview: movie.overview,
-                popularity: movie.popularity,
-                poster_path: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-                release_date: movie.release_date,
-                title: movie.title,
-                vote_average: movie.vote_average,
-                vote_count: movie.vote_count
-            }));
+            const movies: IMovie[] = res.data.results
+                .filter((movie: any) => movie.backdrop_path)
+                .map((movie: any) => ({
+                    genre_ids: movie.genre_ids,
+                    id: movie.id,
+                    key: "",
+                    overview: movie.overview,
+                    popularity: movie.popularity,
+                    poster_path: `https://image.tmdb.org/t/p/w342${movie.poster_path}`,
+                    backdrop_path: `https://image.tmdb.org/t/p/w300${movie.backdrop_path}`,
+                    release_date: movie.release_date,
+                    title: movie.title,
+                    vote_average: movie.vote_average,
+                    vote_count: movie.vote_count
+                }));
 
             allMovies.push(...movies);
         } catch (error) {
@@ -104,8 +106,6 @@ export const tmdbGetTrailer = async (movieId: number): Promise<string | null> =>
     };
     try{
         const res = await axios.request(options);
-        console.log('after request');
-        console.log(res);
         const key = res.data.results.map((movieTrailer: any) => ({
             key: movieTrailer.key
         }));

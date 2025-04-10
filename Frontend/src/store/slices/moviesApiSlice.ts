@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import { IMovie } from '../../dto/IMovie';
+import { IGenre } from '../../dto/IGenre';
 
 export const moviesApiSlice = createApi({
     reducerPath: "moviesApi",
@@ -17,8 +18,11 @@ export const moviesApiSlice = createApi({
                 query: () => "/movies/api/v1/movies/allMoviesByGenres",
                 transformResponse: (response: { allMoviesByGenres: Record<string, IMovie[]> }) => response.allMoviesByGenres,
             }),
-        
+            getGenres: builder.query<IGenre[], void>({
+                query: () => "/movies/api/v1/movies/getGenres",
+                transformResponse: (response: { genres: IGenre[] }) => response.genres,
+            }),
     })
 });
 
-export const { useGetPopMoviesQuery, useGetAllMoviesQuery} = moviesApiSlice;
+export const { useGetPopMoviesQuery, useGetAllMoviesQuery, useGetGenresQuery} = moviesApiSlice;

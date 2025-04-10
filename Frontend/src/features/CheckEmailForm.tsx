@@ -43,7 +43,7 @@ const CheckEmailForm = ({ className = '' }: CheckEmailFormProps) => {
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)} className={`${className} flex gap-1.5`} >
-            <Input label={strings.landing.emailAddress} className='w-full bg-[rgba(31,31,31,0.7)] border-1 text-white'  {...register("email")} error={errors.email?.message} />
+            <Input label={strings.landing.emailAddress} className='checkEmailInput w-full bg-[rgba(31,31,31,0.7)] border-1 text-white'  {...register("email")} error={errors.email?.message} />
             <Button type="submit" className="h-[54px] relative rounded-sm max-md:text-sm text-white bg-[rgba(229,8,20,0.9)] px-6 py-3">{isCheckingEmail ? strings.landing.checking : strings.landing.getStarted}<img
                 className="absolute right-2 top-1/2 -translate-y-1/2"
                 src="/ArrowLeft.svg"
