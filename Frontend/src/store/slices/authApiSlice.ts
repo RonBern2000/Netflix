@@ -1,13 +1,11 @@
-import { createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import { createApi} from '@reduxjs/toolkit/query/react';
 import { IUser } from '../../dto/IUser';
 import { AuthResponse } from '../../dto/AuthResponse';
+import { baseQueryWithReauth } from '../apis';
 
 export const usersApiSlice = createApi({
     reducerPath: "authApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5000",
-        credentials: 'include'
-    }),
+    baseQuery: baseQueryWithReauth,
     endpoints: (builder) => {
         return {
             checkEmail: builder.mutation<{isExist: boolean}, {email: string}>({

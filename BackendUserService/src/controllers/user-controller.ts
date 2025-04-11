@@ -3,11 +3,30 @@ import { inject, injectable } from "inversify";
 import { TOKENS } from "../tokens";
 import { IUserService } from "../interfaces/IUserService";
 import { authSchema, emailSchema } from "../DTOs/schema";
-import { BadRequestError } from "@netflix-utils/shared";
+import { BadRequestError, verify } from "@netflix-utils/shared";
+import { JWT_KEY } from "../config/env";
+import { signAccessToken } from "../utils/jwt";
 
 @injectable()
 export class UserController{
     constructor(@inject(TOKENS.IUserService) private userService: IUserService){}
+
+    async refresh(req: Request, res: Response, next: NextFunction){
+        const refreshToken = req.cookies[TOKENS.token] || req.cookies[TOKENS.tempToken];
+
+        if(!refreshToken){
+            return res.status(401).json({message: 'Access Denied'});
+        }
+
+        try {
+            const accessToken = await this.userService.refresh(refreshToken);
+
+            res.header('authorization', accessToken);
+            res.status(200).json({ accessToken });
+        } catch (error) {
+            return next(error);
+        }
+    }
 
     async checkEmailExist(req: Request, res: Response, next: NextFunction){
         try {
@@ -32,21 +51,23 @@ export class UserController{
                 throw new BadRequestError("Invalid sanitation"); 
             }
 
-            const {token, active} = await this.userService.login(result.data);
+            const {accessToken ,refreshToken , active} = await this.userService.login(result.data);
 
             if (active)
             {
-                res.cookie(TOKENS.token, `${TOKENS.Bearer} ${token}`, {
+                res.cookie(TOKENS.token, `${TOKENS.Bearer} ${refreshToken}`, {
                     httpOnly: true,
                     sameSite: 'strict',
                 });
-                res.status(200).json({message: "Login Successful", token: `${TOKENS.Bearer} ${token}`, active: active});
+                res.header('authorization', accessToken);
+                res.status(200).json({message: "Login Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`, active: active});
             }
-            res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${token}`, {
+            res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${refreshToken}`, {
                 httpOnly: true,
                 sameSite: 'strict',
             });
-            res.status(200).json({message: "Login Successful", token: `${TOKENS.Bearer} ${token}`, active: active});
+            res.header('authorization', accessToken);
+            res.status(200).json({message: "Login Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`, active: active});
         } catch (error) {
             return next(error);
         }
@@ -59,13 +80,14 @@ export class UserController{
                 throw new BadRequestError("Invalid sanitation");
             }
 
-            const token: string = await this.userService.signup(result.data);
+            const {accessToken, refreshToken} = await this.userService.signup(result.data);
 
-            res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${token}`, {
+            res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${refreshToken}`, {
                 httpOnly: true,
                 sameSite: 'strict',
             });
-            res.status(200).json({message: "Signup Successful", token: `${TOKENS.Bearer} ${token}`});
+            res.header('authorization', accessToken);
+            res.status(200).json({message: "Signup Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`});
         } catch (error) {
             return next(error);
         }

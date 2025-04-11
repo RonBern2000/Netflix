@@ -3,27 +3,37 @@ import {compare, hash} from "../utils/bcrypt"
 import { IUserService } from "../interfaces/IUserService";
 import { TOKENS } from "../tokens";
 import { IUserRepository } from "../interfaces/IUserRepository";;
-import { sign } from "../utils/jwt";
+import { signAccessToken, signRefreshToken } from "../utils/jwt";
 import { IUser } from "../interfaces/IUser";
-import { BadRequestError, Exchanges } from "@netflix-utils/shared";
+import { BadRequestError, Exchanges, verify } from "@netflix-utils/shared";
 import { IUserPayload } from "../interfaces/IUserPayload";
 import { ILoginResponse } from "../interfaces/ILoginResponse";
 import { RabbitMQClient } from "@netflix-utils/shared/build/utils/rabbitmq";
 import { rabbit } from "../config/rabbit";
 import { AuthFormData } from "../DTOs/schema";
+import { ISignupResponse } from "../interfaces/ISignupResponse";
+import { JWT_KEY } from "../config/env";
 
 @injectable()
 export class UserService implements IUserService{
 
-    constructor(
-        @inject(TOKENS.IUserRepository) private userRepository: IUserRepository){}
+    constructor(@inject(TOKENS.IUserRepository) private userRepository: IUserRepository){}
 
-    async checkUserExist(email: string): Promise<boolean> { // מיותר?
+    async refresh(refreshToken: string): Promise<string> {
+        const decoded = verify(refreshToken, JWT_KEY!);
+        if(!decoded){
+            throw new BadRequestError('Invalid refreshToken');
+        }
+        const accessToken = signAccessToken(decoded);
+        return accessToken;
+    }
+
+    async checkUserExist(email: string): Promise<boolean> {
         const existingUser: IUser | null = await this.userRepository.findUserByEmail(email);
         return existingUser ? true : false;
     }
 
-    async signup(data: AuthFormData): Promise<string> {
+    async signup(data: AuthFormData): Promise<ISignupResponse> {
         const { email, password } = data;
         const existingUser: IUser | null = await this.userRepository.findUserByEmail(email);
         if(existingUser){
@@ -43,7 +53,16 @@ export class UserService implements IUserService{
 
         await rabbit.publishMessage(Exchanges.User, 'signup' ,{ id: newUser.id, active: newUser.active });
 
-        return sign({ id: newUser.id, email: newUser.email, active: newUser.active} as IUserPayload);
+        const payload: IUserPayload = {
+            id: newUser.id,
+            email: newUser.email,      
+            active: newUser.active
+        };
+
+        const accessToken = signAccessToken(payload);
+        const refreshToken = signRefreshToken(payload);
+
+        return {accessToken, refreshToken, };
     }
     
     async login(data: AuthFormData): Promise<ILoginResponse> {
@@ -60,6 +79,15 @@ export class UserService implements IUserService{
             throw new Error("Invalid password");
         }
 
-        return {token: sign({ id: existingUser.id, email: existingUser.email, active: existingUser.active} as IUserPayload), active: existingUser.active};
+        const payload: IUserPayload = {
+            id: existingUser.id,
+            email: existingUser.email,      
+            active: existingUser.active
+        };
+
+        const accessToken = signAccessToken(payload);
+        const refreshToken = signRefreshToken(payload);
+
+        return {accessToken, refreshToken ,active: existingUser.active};
     }
 }

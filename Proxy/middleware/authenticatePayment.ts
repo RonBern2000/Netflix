@@ -14,8 +14,6 @@ export const authenticatePayment = (req: Request, res: Response, next: NextFunct
     try {
         const token = req.cookies?.tempToken;
 
-        console.log("Proxy:", token);
-
         if (!token)
             throw new BadRequestError('No token provided');
 
@@ -23,8 +21,6 @@ export const authenticatePayment = (req: Request, res: Response, next: NextFunct
 
         if (!decoded || !decoded.id)
             throw new BadRequestError('Invalid token');
-
-        console.log("id: ", decoded.id);
 
         req.headers['x-user-id'] = decoded.id;
         return next();
