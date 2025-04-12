@@ -4,8 +4,6 @@ import { TOKENS } from "../tokens";
 import { IUserService } from "../interfaces/IUserService";
 import { authSchema, emailSchema } from "../DTOs/schema";
 import { BadRequestError, verify } from "@netflix-utils/shared";
-import { JWT_KEY } from "../config/env";
-import { signAccessToken } from "../utils/jwt";
 
 @injectable()
 export class UserController{

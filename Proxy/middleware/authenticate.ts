@@ -21,15 +21,18 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
         if (!refreshToken) {
             return res.status(401).send('Access Denied.');
         }
-        try {
-            if (req.originalUrl.includes('/refresh')) {// This will be the the api call for /users/api/v1/users/refresh because of the front
+        try { // missing access token But have refreshToken
+            if (req.originalUrl.includes('/refresh')) {// case: the front's refresh api call when the user does have the refresh token. The users service checks if the token itself is a valid one
                 return next();
-            } 
+            }
+            return res.status(401).send('Access Denied.'); // case: the user has might get here in the first call so we shall make him get to the if above
         } catch (error) {
             return res.status(400).send('Invalid Token.');
         }
     }
 }
+// QA: maybe do the refresh here? and not in the usersService it will make less requests but its not the responsibility of the proxy to make the tokens but the users service as its users's tokens 
+
  // const decoded = verify(refreshToken, JWT_KEY!);
 // if(!decoded)
 //     throw new BadRequestError('Invalid token');

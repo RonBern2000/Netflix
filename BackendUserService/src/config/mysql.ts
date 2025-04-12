@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import { User } from "../models/user-sql-entity";
 import { config } from "dotenv";
+import { UserLike } from "../models/user-like-sql-entity";
 
 config();
 
@@ -13,7 +14,7 @@ export class MySqlConnection{
             const sequelize = new Sequelize(process.env.DB_URI as string, {
                 dialect: "mysql",
                 logging: false,
-                models: [User],
+                models: [User, UserLike],
             });
 
             try {
