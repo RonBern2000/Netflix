@@ -9,11 +9,10 @@ export class UserController{
     constructor(@inject(TOKENS.IUserService) private userService: IUserService){}
 
     async subscribe(req: Request, res: Response,  next: NextFunction) {
-      console.log("enter to controller")
       //const userId = req.query.user_id as string;
         try {
           const aprovalUrl = await this.userService.createPayPalSubscription();  // Call the service function to create the order
-          res.status(200).json(aprovalUrl);  // Return the created order to the client
+          return res.status(200).json(aprovalUrl);  // Return the created order to the client
         } catch (error) {
             return next(error);
         }
@@ -26,7 +25,7 @@ export class UserController{
       //console.log(userId);
   
       if (!subscriptionId || !userId) {
-        res.status(400).send("Missing subscription_id or user_id");
+        return res.status(400).send("Missing subscription_id or user_id");
       }
   
       try {
@@ -35,7 +34,7 @@ export class UserController{
           await this.userService.getSubscriptionIdAndSave(userId, subscriptionId);
 
         // Redirect to frontend page
-        res.redirect(`http://localhost:3000/landing`);
+        return res.redirect(`http://localhost:3000/landing`);
       } catch (error) {
           return next(error);
       }
@@ -45,16 +44,16 @@ export class UserController{
         const cancelationDetails = req.body;
       
         if (!cancelationDetails.subscriptionId) {
-          res.status(400).json({ error: 'Missing subscriptionId' });
+          return res.status(400).json({ error: 'Missing subscriptionId' });
         }
       
         try {
           const success = await this.userService.cancelSubscription(cancelationDetails);
       
           if (success) {
-            res.status(200).json({ message: 'Subscription cancelled successfully' });
+             return res.status(200).json({ message: 'Subscription cancelled successfully' });
           } else {
-            res.status(500).json({ error: 'Failed to cancel subscription' });
+             return res.status(500).json({ error: 'Failed to cancel subscription' });
           }
         } catch (error: any) {
             return next(error);

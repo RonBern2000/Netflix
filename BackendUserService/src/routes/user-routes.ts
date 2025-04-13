@@ -7,7 +7,7 @@ const router: Router = Router();
 
 const userController = container.get<UserController>(TOKENS.UserController);
 
-router.post('/refresh', (req: Request, res: Response, next: NextFunction) => {
+router.get('/refresh', (req: Request, res: Response, next: NextFunction) => {
     userController.refresh(req, res, next);
 });
 

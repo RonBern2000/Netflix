@@ -13,6 +13,8 @@ export const basicApp = (origins: string[]): Application => {
         credentials: true,
         origin: [...origins]
     }));
+    
+    app.disable('x-powered-by');
 
     return app;
 };

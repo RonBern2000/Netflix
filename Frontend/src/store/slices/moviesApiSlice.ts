@@ -1,13 +1,11 @@
-import { createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { IMovie } from '../../dto/IMovie';
 import { IGenre } from '../../dto/IGenre';
+import { baseQueryWithReauth } from '../apis';
 
 export const moviesApiSlice = createApi({
     reducerPath: "moviesApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5000",
-        credentials: 'include',
-    }),
+    baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
             getPopMovies: builder.query<IMovie[], void>({
                 query: () => "/movies/api/v1/movies/popular",
@@ -21,18 +19,18 @@ export const moviesApiSlice = createApi({
                 query: () => "/movies/api/v1/movies/getGenres",
                 transformResponse: (response: { genres: IGenre[] }) => response.genres,
             }),
-            addToMyList: builder.mutation<number[], number>({
-                query: (movieId) => ({
+            addToMyList: builder.mutation<IMovie[], IMovie>({
+                query: (movie) => ({
                     url: "/users/api/v1/usersLike/add",
                     method: "POST",
-                    body: movieId,
+                    body: movie,
                 }),
             }),
-            removeFromMyList: builder.mutation<number[], number>({
-                query: (movieId) => ({
+            removeFromMyList: builder.mutation<IMovie[], IMovie>({
+                query: (movie) => ({
                     url: "/users/api/v1/usersLike/remove",
                     method: "POST",
-                    body: movieId,
+                    body: movie,
                 }),
             }),
     })

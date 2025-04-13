@@ -7,5 +7,5 @@ export const {
     MOVIES_URL,
     PORT,
     NODE_ENV,
-    JWT_KEY
+    JWT_KEY,
 } = process.env;

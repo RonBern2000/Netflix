@@ -8,7 +8,6 @@ import { IUser } from "../interfaces/IUser";
 import { BadRequestError, Exchanges, verify } from "@netflix-utils/shared";
 import { IUserPayload } from "../interfaces/IUserPayload";
 import { ILoginResponse } from "../interfaces/ILoginResponse";
-import { RabbitMQClient } from "@netflix-utils/shared/build/utils/rabbitmq";
 import { rabbit } from "../config/rabbit";
 import { AuthFormData } from "../DTOs/schema";
 import { ISignupResponse } from "../interfaces/ISignupResponse";
@@ -21,10 +20,13 @@ export class UserService implements IUserService{
 
     async refresh(refreshToken: string): Promise<string> {
         const decoded = verify(refreshToken, JWT_KEY!);
+        console.log("Decoded:", decoded);
         if(!decoded){
             throw new BadRequestError('Invalid refreshToken');
         }
-        const accessToken = signAccessToken(decoded);
+        const payload: IUserPayload = { id: decoded.id, email: decoded.email, active: decoded.active};
+        const accessToken = signAccessToken(payload);
+        console.log("accessToken:", accessToken);
         return accessToken;
     }
 

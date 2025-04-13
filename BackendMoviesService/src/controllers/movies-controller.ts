@@ -11,7 +11,7 @@ export class MoviesController{
     async getPopularMovies(req: Request, res: Response, next: NextFunction){
         try {
             const popularMovies: IMovie[] | null = await this.moviesService.getPopularMovies();
-            res.status(200).json({popularMovies});
+            return res.status(200).json({popularMovies});
         } catch (error) {
             return next(error);
         }
@@ -21,7 +21,7 @@ export class MoviesController{
         try {
             const allMoviesByGenres: Record<string, IMovie[]> | null = await this.moviesService.getAllMoviesByGenres();
             console.log("All movies sorted by genres:",allMoviesByGenres);
-            res.status(200).json({allMoviesByGenres});
+            return res.status(200).json({allMoviesByGenres});
         } catch (error) {
             return next(error);
         }
@@ -31,9 +31,9 @@ export class MoviesController{
         try {
             const genres = await this.moviesService.getGenres();
             if(!genres){
-                res.status(500).json({message: 'Error'});
+                return res.status(500).json({message: 'Error'});
             }
-            res.status(200).json({genres});
+            return res.status(200).json({genres});
         } catch (error) {
             return next(error);
         }
@@ -42,7 +42,7 @@ export class MoviesController{
     async getAllMovies(req: Request, res: Response, next: NextFunction){
         try {
             const allMovies: IMovie[] | null = await this.moviesService.getAllMovies();
-            res.status(200).json({allMovies});
+            return res.status(200).json({allMovies});
         } catch (error) {
             return next(error);
         }

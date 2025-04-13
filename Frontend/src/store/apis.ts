@@ -12,8 +12,11 @@ const mutex = new Mutex();
 export const baseQuery = fetchBaseQuery({
     baseUrl: "http://localhost:5000",
     prepareHeaders: (headers, { getState }) => {
+        const myAuth = (getState() as RootState).auth;
+        console.log(myAuth);
         const token = (getState() as RootState).auth.accessToken;
         if(token){
+            console.log('Access token:',token);
             headers.set("authorization", `Bearer ${token}`);
         }
         return headers;
@@ -30,7 +33,7 @@ export const baseQueryWithReauth: BaseQueryFn<
 
     let result = await baseQuery(args, api, extraOptions);
 
-    if (result.error && result.error.status === 401) {
+    if (result.error && result.error.status === 'PARSING_ERROR' && result.error.originalStatus === 401) {
         if (!mutex.isLocked()) {
         const release = await mutex.acquire();
 
@@ -40,7 +43,7 @@ export const baseQueryWithReauth: BaseQueryFn<
 
             if (data) {
                 const newToken = data.accessToken;
-                api.dispatch(setAccessToken({payload: newToken}));
+                api.dispatch(setAccessToken(newToken));
 
                 result = await baseQuery(args, api, extraOptions);
             } else {

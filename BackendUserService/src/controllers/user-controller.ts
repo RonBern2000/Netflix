@@ -20,7 +20,7 @@ export class UserController{
             const accessToken = await this.userService.refresh(refreshToken);
 
             res.header('authorization', accessToken);
-            res.status(200).json({ accessToken });
+            return res.status(200).json({ accessToken });
         } catch (error) {
             return next(error);
         }
@@ -35,7 +35,7 @@ export class UserController{
             }
             const isExist = await this.userService.checkUserExist(result.data.email);
     
-            res.status(200).json({ isExist });
+            return res.status(200).json({ isExist });
         } catch (error) {
             return next(error);
         }
@@ -58,14 +58,14 @@ export class UserController{
                     sameSite: 'strict',
                 });
                 res.header('authorization', accessToken);
-                res.status(200).json({message: "Login Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`, active: active});
+                return res.status(200).json({message: "Login Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`, active: active});
             }
             res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${refreshToken}`, {
                 httpOnly: true,
                 sameSite: 'strict',
             });
             res.header('authorization', accessToken);
-            res.status(200).json({message: "Login Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`, active: active});
+            return res.status(200).json({message: "Login Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`, active: active});
         } catch (error) {
             return next(error);
         }
@@ -85,7 +85,7 @@ export class UserController{
                 sameSite: 'strict',
             });
             res.header('authorization', accessToken);
-            res.status(200).json({message: "Signup Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`});
+            return res.status(200).json({message: "Signup Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`});
         } catch (error) {
             return next(error);
         }
@@ -100,9 +100,9 @@ export class UserController{
                     sameSite: 'strict',
                 });
             }
-            res.status(200).json({message: "Logout Successful"});
+            return res.status(200).json({message: "Logout Successful"});
         } catch (error) {
-            
+            return next(error);
         }
     }
 }
