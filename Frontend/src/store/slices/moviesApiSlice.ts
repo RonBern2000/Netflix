@@ -19,14 +19,14 @@ export const moviesApiSlice = createApi({
                 query: () => "/movies/api/v1/movies/getGenres",
                 transformResponse: (response: { genres: IGenre[] }) => response.genres,
             }),
-            addToMyList: builder.mutation<IMovie[], IMovie>({
+            addToMyList: builder.mutation<Record<number, IMovie>, IMovie>({
                 query: (movie) => ({
                     url: "/users/api/v1/usersLike/add",
                     method: "POST",
                     body: movie,
                 }),
             }),
-            removeFromMyList: builder.mutation<IMovie[], IMovie>({
+            removeFromMyList: builder.mutation<Record<number, IMovie>, IMovie>({
                 query: (movie) => ({
                     url: "/users/api/v1/usersLike/remove",
                     method: "POST",

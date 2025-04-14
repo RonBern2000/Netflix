@@ -6,7 +6,7 @@ import { IMovie } from "../interfaces/IMovie";
 
 @injectable()
 export class UserLikeRepository implements IUserLikeRepository{
-    async add(addRemove: AddRemoveRequest): Promise<IMovie[] | null> {
+    async add(addRemove: AddRemoveRequest): Promise<Record<number, IMovie> | null> {
         const isAlreadyLiked = await UserToMovie.findOne({
             where: {
                 userId: addRemove.userId,
@@ -37,7 +37,7 @@ export class UserLikeRepository implements IUserLikeRepository{
         return this.mapFromEntityToIMovie(userToMovies);
     }
     
-    async remove(addRemove: AddRemoveRequest): Promise<IMovie[] | null> {
+    async remove(addRemove: AddRemoveRequest): Promise<Record<number, IMovie> | null> {
         await UserToMovie.destroy({
             where: {
                 userId: addRemove.userId,
@@ -65,19 +65,22 @@ export class UserLikeRepository implements IUserLikeRepository{
         return this.mapFromEntityToIMovie(userToMovies);
     }
 
-    private mapFromEntityToIMovie(movies: UserToMovie[]): IMovie[] {
-        return movies.map(movie => ({
-            id: movie.movieId,
-            genre_ids: movie.genre_ids,
-            key: movie.key,
-            overview: movie.overview,
-            popularity: movie.popularity,
-            poster_path: movie.poster_path,
-            backdrop_path: movie.backdrop_path,
-            release_date: movie.release_date,
-            title: movie.title,
-            vote_average: movie.vote_average,
-            vote_count: movie.vote_count,
-        })) as IMovie[];
+    private mapFromEntityToIMovie(movies: UserToMovie[]): Record<number, IMovie> {
+        return movies.reduce((acc, movie) => {
+            acc[movie.movieId] = {
+                id: movie.movieId,
+                genre_ids: movie.genre_ids,
+                key: movie.key,
+                overview: movie.overview,
+                popularity: movie.popularity,
+                poster_path: movie.poster_path,
+                backdrop_path: movie.backdrop_path,
+                release_date: movie.release_date,
+                title: movie.title,
+                vote_average: movie.vote_average,
+                vote_count: movie.vote_count,
+            };
+            return acc;
+        }, {} as Record<number, IMovie>);
     }
 }
