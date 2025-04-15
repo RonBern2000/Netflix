@@ -20,7 +20,6 @@ export class MoviesController{
     async getAllMoviesByGenres(req: Request, res: Response, next: NextFunction) {
         try {
             const allMoviesByGenres: Record<string, IMovie[]> | null = await this.moviesService.getAllMoviesByGenres();
-            console.log("All movies sorted by genres:",allMoviesByGenres);
             return res.status(200).json({allMoviesByGenres});
         } catch (error) {
             return next(error);

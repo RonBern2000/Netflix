@@ -20,13 +20,11 @@ export class UserService implements IUserService{
 
     async refresh(refreshToken: string): Promise<string> {
         const decoded = verify(refreshToken, JWT_KEY!);
-        console.log("Decoded:", decoded);
         if(!decoded){
             throw new BadRequestError('Invalid refreshToken');
         }
         const payload: IUserPayload = { id: decoded.id, email: decoded.email, active: decoded.active};
         const accessToken = signAccessToken(payload);
-        console.log("accessToken:", accessToken);
         return accessToken;
     }
 

@@ -10,10 +10,28 @@ import { IMovie } from "../interfaces/IMovie";
 export class UserLikeController{
     constructor(@inject(TOKENS.IUserLikeService) private userLikeService: IUserLikeService){}
 
+    async getMyList(req: Request, res: Response, next: NextFunction){
+        try {
+            const userId = req.headers['x-user-id'];
+            if(typeof userId !== 'string' || !userId){
+                return res.status(400).json({message: 'Getting liked list failed...'});
+            }
+
+            const myList = await this.userLikeService.getMyList(userId);
+            if(!myList){
+                return res.status(400).json({message: 'Getting liked list failed...'});
+            }
+
+            return res.status(200).json({myList});
+        } catch (error) {
+            return next(error);
+        }
+    }
+
     async add(req: Request, res: Response, next: NextFunction){
         try {
             const userId = req.headers['x-user-id']; // from the prxoy
-            const { movie } = req.body;
+            const movie = req.body;
             if(typeof userId !== 'string' || !userId){
                 return res.status(400).json({message: 'Adding a movie to the liked list failed...'});
             }
@@ -45,8 +63,8 @@ export class UserLikeController{
     async remove(req: Request, res: Response, next: NextFunction){
         try {
             const userId = req.headers['x-user-id']; // from the prxoy
-            const { movie } = req.body;
-            if(typeof userId !== 'string'){
+            const movie = req.body;
+            if(typeof userId !== 'string' || !userId){
                 return res.status(400).json({message: 'Removing a movie to the liked list failed...'});
             }
             const addRequest: AddRemoveRequest = {

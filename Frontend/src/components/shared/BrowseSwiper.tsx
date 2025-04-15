@@ -11,10 +11,11 @@ import MoviePopup from "./MoviePopup";
 
 type SwiperProps = {
     movies: IMovie[] | undefined;
+    myList: Record<number, IMovie>;
     paginationAmount: number;
 }
 
-const BrowseSwiper = ({ movies, paginationAmount }: SwiperProps) => {
+const BrowseSwiper = ({ movies, myList, paginationAmount }: SwiperProps) => {
     const swiperRef = useRef<HTMLDivElement | null>(null);
     const [scrollPosition, setScrollPosition] = useState({
         atLeft: true,
@@ -109,7 +110,11 @@ const BrowseSwiper = ({ movies, paginationAmount }: SwiperProps) => {
                 <div ref={swiperRef}
                     className="flex scrollbar-hide overflow-hidden scroll-smooth gap-5 py-20 px-4 h-full">
                     {movies?.map((movie) => (
-                        <MoviePopup key={movie.id} movie={movie} />
+                        myList[movie.id] ? (
+                            <MoviePopup key={movie.id} movie={movie} isInMyList={true} />
+                        ) : (
+                            <MoviePopup key={movie.id} movie={movie} isInMyList={false} />
+                        )
                     ))}
                 </div>
             </div>

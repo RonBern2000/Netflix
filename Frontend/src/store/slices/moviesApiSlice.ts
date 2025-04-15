@@ -19,6 +19,10 @@ export const moviesApiSlice = createApi({
                 query: () => "/movies/api/v1/movies/getGenres",
                 transformResponse: (response: { genres: IGenre[] }) => response.genres,
             }),
+            getMyList: builder.query<Record<number, IMovie>, void>({
+                query: () => "/users/api/v1/usersLike/getMyList",
+                transformResponse: (response: { myList: Record<string, IMovie> }) => response.myList,
+            }),
             addToMyList: builder.mutation<Record<number, IMovie>, IMovie>({
                 query: (movie) => ({
                     url: "/users/api/v1/usersLike/add",
@@ -36,4 +40,4 @@ export const moviesApiSlice = createApi({
     })
 });
 
-export const { useGetPopMoviesQuery, useGetAllMoviesQuery, useGetGenresQuery, useAddToMyListMutation, useRemoveFromMyListMutation} = moviesApiSlice;
+export const { useGetPopMoviesQuery, useGetAllMoviesQuery, useGetGenresQuery, useGetMyListQuery, useAddToMyListMutation, useRemoveFromMyListMutation} = moviesApiSlice;

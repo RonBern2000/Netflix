@@ -18,7 +18,7 @@ export class UserToMovie extends Model{
     userId!: string;
     
     @Column({
-        type: DataType.NUMBER,
+        type: DataType.INTEGER,
         allowNull: false,
     })
     movieId!: number;
@@ -26,16 +26,9 @@ export class UserToMovie extends Model{
     @Column({
         type: DataType.STRING,
         allowNull: false,
-        field: "genres",
-        set(genre_ids: number[]) {
-            this.setDataValue("genres", genre_ids.join(","));
-        },
-        get() {
-            const rawValue = this.getDataValue("genres");
-            return rawValue ? rawValue.split(",").map(Number) : [];
-        },
+        field: "genre_ids",
     })
-    genre_ids!: number[];
+    genre_ids!: string;
 
     @Column({
         type: DataType.STRING,
@@ -44,49 +37,49 @@ export class UserToMovie extends Model{
     key!: string;
 
     @Column({
-        type: DataType.STRING,
+        type: DataType.TEXT,
         allowNull: false,
     })
     overview!: string;
 
     @Column({
-        type: DataType.NUMBER,
+        type: DataType.FLOAT,
         allowNull: false,
     })
     popularity!: number;
 
-     @Column({
+    @Column({
         type: DataType.STRING,
         allowNull: false,
     })
     poster_path!: string;
 
-     @Column({
+    @Column({
         type: DataType.STRING,
         allowNull: false,
     })
     backdrop_path!: string;
 
-     @Column({
+    @Column({
         type: DataType.STRING,
         allowNull: false,
     })
     release_date!: string;
     
-     @Column({
+    @Column({
         type: DataType.STRING,
         allowNull: false,
     })
     title!: string;
 
     @Column({
-        type: DataType.NUMBER,
+        type: DataType.FLOAT,
         allowNull: false,
     })
     vote_average!: number;
 
     @Column({
-        type: DataType.NUMBER,
+        type: DataType.INTEGER,
         allowNull: false,
     })
     vote_count!: number;

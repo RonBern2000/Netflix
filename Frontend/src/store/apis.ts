@@ -12,11 +12,8 @@ const mutex = new Mutex();
 export const baseQuery = fetchBaseQuery({
     baseUrl: "http://localhost:5000",
     prepareHeaders: (headers, { getState }) => {
-        const myAuth = (getState() as RootState).auth;
-        console.log(myAuth);
         const token = (getState() as RootState).auth.accessToken;
         if(token){
-            console.log('Access token:',token);
             headers.set("authorization", `Bearer ${token}`);
         }
         return headers;

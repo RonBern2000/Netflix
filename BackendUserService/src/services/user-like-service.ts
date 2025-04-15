@@ -8,8 +8,14 @@ import { IMovie } from "../interfaces/IMovie";
 
 @injectable()
 export class UserLikeService implements IUserLikeService{
-    constructor(@inject(TOKENS.IUserLikeRepository) private userLikeRepository: IUserLikeRepository){
-        
+    constructor(@inject(TOKENS.IUserLikeRepository) private userLikeRepository: IUserLikeRepository){}
+
+    async getMyList(userId: string): Promise<Record<number, IMovie> | null> {
+        const myList = await this.userLikeRepository.getMyList(userId);
+        if(!myList){
+            throw new BadRequestError('Failed getting myList...');
+        }
+        return myList;
     }
     async add(addRemove: AddRemoveRequest): Promise<Record<number, IMovie> | null> {
         const updatedLikedMovies = await this.userLikeRepository.add(addRemove);
