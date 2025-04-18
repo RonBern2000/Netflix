@@ -8,6 +8,20 @@ import { IMovie } from "../interfaces/IMovie";
 @injectable()
 export class MoviesController{
     constructor(@inject(TOKENS.IMoviesService) private moviesService: IMoviesService){}
+
+    async searchMoviesByTitle(req: Request, res: Response, next: NextFunction){
+        try {
+            const title = req.query.title as string;
+            if (!title) {
+                return res.status(400).json({ message: "Title query is required." });
+            }
+            const movies = await this.moviesService.searchByTitle(title);
+            return res.status(200).json({movies});
+        } catch (error) {
+            return next(error);
+        }
+    }
+
     async getPopularMovies(req: Request, res: Response, next: NextFunction){
         try {
             const popularMovies: IMovie[] | null = await this.moviesService.getPopularMovies();
@@ -37,16 +51,17 @@ export class MoviesController{
             return next(error);
         }
     }
-
-    async getAllMovies(req: Request, res: Response, next: NextFunction){
-        try {
-            const allMovies: IMovie[] | null = await this.moviesService.getAllMovies();
-            return res.status(200).json({allMovies});
-        } catch (error) {
-            return next(error);
-        }
-    }
 }
+
+// async getAllMovies(req: Request, res: Response, next: NextFunction){
+//         try {
+//             const allMovies: IMovie[] | null = await this.moviesService.getAllMovies();
+//             return res.status(200).json({allMovies});
+//         } catch (error) {
+//             return next(error);
+//         }
+//     }
+
 // async getMovieTrailer(req: Request, res: Response, next: NextFunction){
 //     try {
 //         const movieId = getMovieIdParam(req);

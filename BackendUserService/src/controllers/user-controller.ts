@@ -3,20 +3,29 @@ import { inject, injectable } from "inversify";
 import { TOKENS } from "../tokens";
 import { IUserService } from "../interfaces/IUserService";
 import { authSchema, emailSchema } from "../DTOs/schema";
-import { BadRequestError, verify } from "@netflix-utils/shared";
+import { BadRequestError} from "@netflix-utils/shared";
 
 @injectable()
 export class UserController{
     constructor(@inject(TOKENS.IUserService) private userService: IUserService){}
 
-    async refresh(req: Request, res: Response, next: NextFunction){
-        const refreshToken = req.cookies[TOKENS.token] || req.cookies[TOKENS.tempToken];
-
-        if(!refreshToken){
-            return res.status(401).json({message: 'Access Denied'});
-        }
-
+    async checkStatus(req: Request, res: Response, next: NextFunction){
         try {
+            const refreshToken = req.cookies[TOKENS.token] || req.cookies[TOKENS.tempToken];
+            const decoded = await this.userService.verify(refreshToken);
+            return res.status(200).json({active: decoded.active});
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    async refresh(req: Request, res: Response, next: NextFunction){
+        try {
+            const refreshToken = req.cookies[TOKENS.token] || req.cookies[TOKENS.tempToken];
+
+            if(!refreshToken){
+                return res.status(401).json({message: 'Access Denied'});
+            }
             const accessToken = await this.userService.refresh(refreshToken);
 
             res.header('authorization', accessToken);

@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
-import { useAppSelector } from './store/store';
+import { useAppDispatch, useAppSelector } from './store/store';
 import Registration from './pages/Registration';
 import Regform from './pages/Regform';
 import Payment from './pages/Payment';
@@ -9,12 +9,26 @@ import Signup from './pages/Signup';
 import Browse from './pages/Browse';
 import Login from './pages/Login';
 import Mylist from './pages/Mylist';
+import { useCheckStatusQuery } from './store/slices/authApiSlice';
+import { useEffect } from 'react';
+import { logout, setStatus } from './store/slices/authSlice';
+import Search from './pages/Search';
 
 function App() {
 
-  //TODO: Check the user that entered our site => isAuthenticated or active or nor
+  //TODO: export it to a custom Hook that will export the 3 props we need (isAuthenticated && isActive && email). All the routes will be a component that will ask for these props and will display accorrdingly
+  const dispatch = useAppDispatch();
   const { isAuthenticated, isActive, email } = useAppSelector((state) => state.auth);
-  //TODO: Ping pong to server to check who is the current user
+  const { data, isSuccess, isError } = useCheckStatusQuery();
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      dispatch(setStatus(data));
+    } else if (isError) {
+      dispatch(logout());
+    }
+  }, [data, isSuccess, isError, dispatch]);
+
   return (
     <>
       <BrowserRouter>
@@ -52,14 +66,13 @@ function App() {
           {/* Fully Authenticated and Active Users */}
           {isAuthenticated && isActive ? (
             <>
-
-
+              <Route path='/browse' element={<Browse />} />
+              <Route path='/browse/mylist' element={<Mylist />} />
+              <Route path='/search' element={<Search />} />
               <Route path='*' element={<Navigate to='/browse' />} />
-
             </>
           ) : null}
-          <Route path='/browse/mylist' element={<Mylist />} />
-          <Route path='/browse' element={<Browse />} />{/* Move it up, here just for testing */}
+
         </Routes>
       </BrowserRouter>
     </>

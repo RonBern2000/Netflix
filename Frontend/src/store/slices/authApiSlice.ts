@@ -42,8 +42,12 @@ export const usersApiSlice = createApi({
                     body: user,
                 }),
             }),
+            checkStatus: builder.query<boolean,void>({
+                query: () => "/users/api/v1/users/checkStatus",
+                transformResponse: (response: { active: boolean }) => response.active,
+            }),
         };
     }
 });
 
-export const { useCreateUserMutation, useCheckEmailMutation , usePayAndActivateUserMutation, useLogoutUserMutation, useLoginMutation} = usersApiSlice;
+export const { useCreateUserMutation, useCheckEmailMutation , usePayAndActivateUserMutation, useLogoutUserMutation, useLoginMutation, useCheckStatusQuery} = usersApiSlice;

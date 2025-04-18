@@ -1,9 +1,8 @@
-import MidSection from "../components/mylist/MidSection";
-import TopSection from "../components/mylist/TopSection";
+import MidSection from "../components/search/MidSection";
+import TopSection from "../components/search/TopSection";
 import Container from "../components/shared/Container";
 
-
-const Mylist = () => {
+const Search = () => {
     return (
         <Container className='flex-col w-full h-screen bg-[#1c1c1c]'>
             <TopSection />
@@ -12,4 +11,4 @@ const Mylist = () => {
     )
 }
 
-export default Mylist;
+export default Search;

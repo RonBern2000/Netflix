@@ -6,7 +6,7 @@ import express from 'express';
 import { Application, urlencoded } from 'express';
 import cors from 'cors';
 import cookieParser from "cookie-parser";
-import { authenticate } from "../middleware/authenticate";
+import { authenticate } from "./middleware/authenticate";
 
 const app: Application = express();
 

@@ -59,7 +59,6 @@ export class UserLikeRepository implements IUserLikeRepository{
     }
     
     async remove(addRemove: AddRemoveRequest): Promise<Record<number, IMovie> | null> {
-        console.log('first')
         await UserToMovie.destroy({
             where: {
                 userId: addRemove.userId,

@@ -37,7 +37,11 @@ export const moviesApiSlice = createApi({
                     body: movie,
                 }),
             }),
+            searchMovies: builder.query<IMovie[], string>({
+                query: (searchUrl) => `/movies/api/v1/movies/${searchUrl}`,
+                transformResponse: (response: { movies: IMovie[] }) => response.movies,
+            }),
     })
 });
 
-export const { useGetPopMoviesQuery, useGetAllMoviesQuery, useGetGenresQuery, useGetMyListQuery, useAddToMyListMutation, useRemoveFromMyListMutation} = moviesApiSlice;
+export const { useSearchMoviesQuery, useGetPopMoviesQuery, useGetAllMoviesQuery, useGetGenresQuery, useGetMyListQuery, useAddToMyListMutation, useRemoveFromMyListMutation} = moviesApiSlice;

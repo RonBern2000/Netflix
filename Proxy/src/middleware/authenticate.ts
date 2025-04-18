@@ -1,12 +1,16 @@
 import { NextFunction, Response, Request } from "express";
-import { JWT_KEY } from "../src/config/env";
-import { TOKENS } from "../tokens";
+import { JWT_KEY } from "../config/env";
+import { TOKENS } from "../../tokens";
 import { BadRequestError, verify } from '@netflix-utils/shared';
+import { isAuthenticatedRoute } from "../utils/is-unauthenticated-route";
+import { unauthenticatedRoutes } from "../utils/unauthenticated-routes";
 
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const { path } = req;
 
-    if (path.startsWith('/api/v1/movies/popular') || path.startsWith('/api/v1/users/')){
+    console.log("Path:", path);
+    if (isAuthenticatedRoute(path, unauthenticatedRoutes)){
+        console.log("Inside");
         return next();
     }
 

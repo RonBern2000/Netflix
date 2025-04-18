@@ -11,10 +11,6 @@ router.get("/popular", async(req: Request, res: Response, next: NextFunction) =>
     moviesController.getPopularMovies(req, res, next);
 });
 
-router.get("/allMovies", async(req: Request, res: Response, next: NextFunction) => {
-    moviesController.getAllMovies(req, res, next);
-});
-
 router.get("/allMoviesByGenres", async(req: Request, res: Response, next: NextFunction) => {
     moviesController.getAllMoviesByGenres(req, res, next);
 });
@@ -22,6 +18,14 @@ router.get("/allMoviesByGenres", async(req: Request, res: Response, next: NextFu
 router.get("/getGenres", async(req: Request, res: Response, next: NextFunction) => {
     moviesController.getGenres(req, res, next);
 });
+
+router.get("/search", async(req: Request, res: Response, next: NextFunction) => {
+    moviesController.searchMoviesByTitle(req, res, next);
+});
+
+// router.get("/allMovies", async(req: Request, res: Response, next: NextFunction) => {
+//     moviesController.getAllMovies(req, res, next);
+// });
 
 // router.get("/movieTrailer/:movieId", async(req: Request, res: Response, next: NextFunction) => {
 //     moviesController.getMovieTrailer(req, res, next);

@@ -17,6 +17,20 @@ import { JWT_KEY } from "../config/env";
 export class UserService implements IUserService{
 
     constructor(@inject(TOKENS.IUserRepository) private userRepository: IUserRepository){}
+    async verify(refreshToken: string): Promise<IUserPayload> {
+        const decoded = verify(refreshToken, JWT_KEY!);
+        if(!decoded)
+            throw new BadRequestError('Invalid refreshToken.');
+        return decoded;
+    }
+    
+    async findUser(id: string): Promise<boolean> {
+        const user = await this.userRepository.findUserById(id);
+        if(!user){
+            throw new BadRequestError('User was not found.');
+        }
+        return user.active ? true : false;
+    }
 
     async refresh(refreshToken: string): Promise<string> {
         const decoded = verify(refreshToken, JWT_KEY!);

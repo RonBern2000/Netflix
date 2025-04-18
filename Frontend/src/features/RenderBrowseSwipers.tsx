@@ -3,22 +3,11 @@ import H2 from "../components/shared/H2";
 import BrowseSwiperContainer from "./BrowseSwiperContainer";
 import { useGetAllMoviesQuery, useGetMyListQuery } from "../store/slices/moviesApiSlice";
 import { strings } from "../strings/strings";
-// import { usePersistedState } from "../hooks/usePersistedState";
-// import { useEffect } from "react";
 
 const RenderBrowseSwipers = () => {
 
   const { data, isLoading } = useGetAllMoviesQuery();
-  console.log("Data:", data);
   const { data: myList, isLoading: isLoadingMyList } = useGetMyListQuery();
-  console.log("MyList:", myList)
-  //const [persistedMyList, setPersistedMyList] = usePersistedState("myList", {}); // unnecessary, ask Almog
-
-  // useEffect(() => {
-  //   if (myList) {
-  //     setPersistedMyList(myList);
-  //   }
-  // }, [myList, setPersistedMyList]);
 
   return (
     <Container className="flex-col bg-[#1c1c1c]">

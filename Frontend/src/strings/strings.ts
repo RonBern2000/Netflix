@@ -1,4 +1,7 @@
 export const strings = {
+    myList: {
+        mylist: "My List"
+    },
     browse:{
         signout: "Sign out",
         loading: "Loading Movies...",
