@@ -3,7 +3,7 @@ import Container from "../shared/Container";
 
 const MidSection = () => {
     return (
-        <Container>
+        <Container className="pt-40 px-14">
             <SearchResults />
         </Container>
     )

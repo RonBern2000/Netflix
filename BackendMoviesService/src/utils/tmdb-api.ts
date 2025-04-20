@@ -147,6 +147,13 @@ export const tmdbGetTrailer = async (movieId: number): Promise<string | null> =>
     }
 }
 
+export const mapFromArrayToRecord = (movies: IMovie[]): Record<number, IMovie> => {
+    return movies.reduce((acc, movie) => {
+        acc[movie.id] = movie;
+        return acc;
+    }, {} as Record<number, IMovie>);
+};
+
 // export const tmdbGetMoviesByGenre = async(): Promise<IMovie[] | null> => {
 //     const options = {
 //         method: 'GET',

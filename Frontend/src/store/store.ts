@@ -3,10 +3,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { moviesApiSlice } from "./slices/moviesApiSlice";
 import { usersApiSlice } from "./slices/authApiSlice";
 import authReducer from "./slices/authSlice";
+import moviesReducer from './slices/moviesSlice'
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
+        movies: moviesReducer,
         [moviesApiSlice.reducerPath]: moviesApiSlice.reducer,
         [usersApiSlice.reducerPath]: usersApiSlice.reducer,
     },

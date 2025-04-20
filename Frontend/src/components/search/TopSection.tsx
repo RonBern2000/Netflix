@@ -1,8 +1,12 @@
+import Container from "../shared/Container";
+import Header from "../shared/Header";
 
 
 const TopSection = () => {
     return (
-        <div>TopSection</div>
+        <Container className="flex-col">
+            <Header className="px-5" />
+        </Container>
     )
 }
 

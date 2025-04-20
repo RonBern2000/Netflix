@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Search from "../components/icons/Search";
 import Container from "../components/shared/Container";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getFilterUrl } from "../utils/getFilterUrl";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { searchInputChange } from "../store/slices/moviesSlice";
 // import { useSearchMoviesQuery } from "../store/slices/moviesApiSlice";
 
 type SearchBarProps = {
@@ -11,21 +13,23 @@ type SearchBarProps = {
 
 const SearchBar = ({ className = '' }: SearchBarProps) => {
 
-    const [searchValue, setSearchValue] = useState('');
+    const searchValue = useAppSelector((state) => state.movies.searchValue);
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const delay = setTimeout(() => {
-            if (searchValue) {
+            if (searchValue !== '') {
                 const filterURI = getFilterUrl(searchValue);
                 navigate(filterURI);
-            } else {
-                navigate('/')
+            } else if (location.pathname.includes('/search')) {
+                navigate('/');
             }
         }, 500);
 
         return () => clearTimeout(delay);
-    }, [searchValue, navigate]);
+    }, [searchValue, navigate, location.pathname]);
 
     return (
         <Container className={`${className} bg-black border-white border-1 gap-2 py-1 px-0.5`}>
@@ -35,7 +39,7 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
                 max={30}
                 className="bg-black text-white border-none focus:outline-none"
                 value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)} />
+                onChange={(e) => dispatch(searchInputChange(e.target.value))} />
         </Container>
     )
 }

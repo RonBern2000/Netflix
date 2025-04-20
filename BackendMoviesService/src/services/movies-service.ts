@@ -3,7 +3,7 @@ import { IMoviesService } from "../interfaces/IMoviesService";
 import { TOKENS } from "../tokens";
 import { IMoviesRepository } from "../interfaces/IMovieRepository";
 import { IMovie } from "../interfaces/IMovie";
-import { tmdbGetAllMovies, tmdbGetGenres, tmdbGetPopular, tmdbSearchMovies } from "../utils/tmdb-api";
+import { mapFromArrayToRecord, tmdbGetAllMovies, tmdbGetGenres, tmdbGetPopular, tmdbSearchMovies } from "../utils/tmdb-api";
 import { orderMoviesByGenre } from "../utils/orderMoviesByGenre";
 import { MoviesByGenre } from "../DTOs/genre-movie-dto";
 import { IGenre } from "../interfaces/IGenre";
@@ -16,11 +16,12 @@ export class MoviesService implements IMoviesService{
     
     constructor(@inject(TOKENS.IMoviesRepository) private moviesRepository: IMoviesRepository) {}
 
-    async searchByTitle(title: string): Promise<IMovie[] | null> {
+    async searchByTitle(title: string): Promise<Record<number, IMovie>> {
         const movies = await tmdbSearchMovies(title);
         if(!movies)
             throw new BadRequestError('Failed to search movies.');
-        return movies;
+        const moviesRecord = mapFromArrayToRecord(movies);
+        return moviesRecord;
     }
 
     async getGenres(): Promise<IGenre[] | null> {
