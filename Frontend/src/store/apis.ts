@@ -35,7 +35,7 @@ export const baseQueryWithReauth: BaseQueryFn<
         const release = await mutex.acquire();
 
         try {
-            const refreshResult = await baseQuery('/users/api/v1/users/refresh', api, extraOptions);
+            const refreshResult = await baseQuery('/api/v1/users/refresh', api, extraOptions);
             const data = refreshResult.data as RefreshResponse;
 
             if (data) {

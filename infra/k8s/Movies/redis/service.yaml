@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: payments-srv
+  name: redis-srv
 spec:
   selector:
-    app: payments
+    app: redis
   type: ClusterIP
   ports:
-    - name: payments
+    - name: redis
       protocol: TCP
-      port: 4001
-      targetPort: 4001
+      port: 6379
+      targetPort: 6379

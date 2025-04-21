@@ -10,6 +10,8 @@ import { authenticate } from "./middleware/authenticate";
 
 const app: Application = express();
 
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
+
 app.use(cookieParser());
 
 app.use(urlencoded({ extended: true }));
@@ -33,7 +35,7 @@ const limiter: RateLimitRequestHandler = rateLimit({
 app.use(limiter);
 
 app.use(
-  "/users",
+  "/api/v1/users",
   authenticate,
   createProxyMiddleware({
     target: USERS_URL,
@@ -44,14 +46,11 @@ app.use(
         console.error(error);
       },
     },
-    pathRewrite: {
-      '^/users': '',
-    },
   })
 );
 
 app.use(
-  "/payments",
+  "/api/v1/payment",
   authenticate,
   createProxyMiddleware({
     target: PAYMENT_URL,
@@ -62,14 +61,11 @@ app.use(
         console.error(error);
       },
     },
-    pathRewrite: {
-      '^/payment': '',
-    },
   })
 );
 
 app.use(
-  "/movies",
+  "/api/v1/movies",
   authenticate,
   createProxyMiddleware({
     target: MOVIES_URL,
@@ -79,9 +75,6 @@ app.use(
       error: (error, req, res, target) => {
         console.error(error);
       },
-    },
-    pathRewrite: {
-      '^/movies': '',
     },
   })
 );
