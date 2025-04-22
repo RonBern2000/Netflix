@@ -1,4 +1,9 @@
 export const strings = {
+    navbarTitles: {
+        home: "Home",
+        movies: "Movies",
+        mylist: "My List"
+    },
     myList: {
         mylist: "My List"
     },

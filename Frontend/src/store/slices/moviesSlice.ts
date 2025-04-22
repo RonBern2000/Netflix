@@ -16,10 +16,13 @@ const moviesSlice = createSlice({
   reducers: {
     searchInputChange: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
-    }
+    },
+    resetSearchValue: (state) => {
+      state.searchValue = "";
+    },
   },
   extraReducers: () => {}
 });
 
-export const { searchInputChange } = moviesSlice.actions;
+export const { searchInputChange, resetSearchValue } = moviesSlice.actions;
 export default moviesSlice.reducer;

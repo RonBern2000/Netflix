@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getFilterUrl } from "../utils/getFilterUrl";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { searchInputChange } from "../store/slices/moviesSlice";
-// import { useSearchMoviesQuery } from "../store/slices/moviesApiSlice";
 
 type SearchBarProps = {
     className?: string;

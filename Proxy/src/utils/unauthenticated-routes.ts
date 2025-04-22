@@ -1,6 +1,9 @@
 export const unauthenticatedRoutes: string[] = [
     '/movies/popular',
-    '/users',
+    '/users/checkEmail',
+    '/users/login',
+    '/users/signup',
+    '/users/logout',
 ]
 
 // export const unauthenticatedRoutes: string[] = [
