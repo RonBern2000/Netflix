@@ -5,7 +5,7 @@ import { PROXY_URL, RABBITMQ_URL } from "./config/env";
 
 const app: Application = basicApp([PROXY_URL!, RABBITMQ_URL!]);
 
-app.use("/api/v1/movies", moviesRouter);
+app.use("/movies", moviesRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);

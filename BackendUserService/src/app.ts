@@ -10,8 +10,8 @@ const app: Application = basicApp([PROXY_URL!, RABBITMQ_URL!]);
 app.use(cookieParser());
 
 // https://localhost:5000/users/api/v1/users/login from the client => /api/v1/users/login when here
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/usersLike", userLikeRouter);
+app.use("/users", userRouter);
+app.use("/usersLike", userLikeRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);

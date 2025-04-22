@@ -10,14 +10,14 @@ export const usersApiSlice = createApi({
         return {
             checkEmail: builder.mutation<{isExist: boolean}, {email: string}>({
                 query: (emailData) => ({
-                    url: "/api/v1/users/checkEmail",
+                    url: "/api/v1/users/users/checkEmail",
                     method: "POST",
                     body: emailData,
                 }),
             }),
             createUser: builder.mutation<AuthResponse, Omit<IUser, "id">>({
                 query: (newUser) => ({
-                    url: "/api/v1/users/signup",
+                    url: "/api/v1/users/users/signup",
                     method: "POST",
                     body: newUser,
                 }),
@@ -31,19 +31,19 @@ export const usersApiSlice = createApi({
             }),
             logoutUser: builder.mutation<void, void>({
                 query: () => ({
-                    url: "/api/v1/users/logout",
+                    url: "/api/v1/users/users/logout",
                     method: "POST",
                 }),
             }),
             login: builder.mutation<AuthResponse, Omit<IUser, "id">>({
                 query: (user) => ({
-                    url: "/api/v1/users/login",
+                    url: "/api/v1/users/users/login",
                     method: "POST",
                     body: user,
                 }),
             }),
             checkStatus: builder.query<boolean,void>({
-                query: () => "/api/v1/users/checkStatus",
+                query: () => "/api/v1/users/users/checkStatus",
                 transformResponse: (response: { active: boolean }) => response.active,
             }),
         };
