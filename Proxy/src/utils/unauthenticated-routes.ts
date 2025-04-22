@@ -1,4 +1,4 @@
 export const unauthenticatedRoutes: string[] = [
-    '/api/v1/movies/popular',
+    '/popular',
     '/api/v1/users/',
 ]

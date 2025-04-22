@@ -9,8 +9,9 @@ interface RefreshResponse {
 
 const mutex = new Mutex();
 
+// "http://localhost:5000"
 export const baseQuery = fetchBaseQuery({
-    baseUrl: "http://localhost:5000",
+    baseUrl: "https://localhost.com",
     prepareHeaders: (headers, { getState }) => {
         const token = (getState() as RootState).auth.accessToken;
         if(token){
