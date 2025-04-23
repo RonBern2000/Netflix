@@ -24,7 +24,7 @@ spec:
                 name: proxy-srv
                 port:
                   number: 5000
-          - path: /  # This will catch the root path
+          - path: /
             pathType: Prefix
             backend:
               service:

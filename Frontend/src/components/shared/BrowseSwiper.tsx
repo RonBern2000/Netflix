@@ -75,7 +75,7 @@ const BrowseSwiper = ({ movies, myList, paginationAmount }: SwiperProps) => {
 
         setTimeout(() => {
             setIsScrolling(false);
-        }, 600);
+        }, 800);
     };
 
     return (
