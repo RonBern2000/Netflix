@@ -50,7 +50,7 @@ app.use(
 );
 
 app.use(
-  "/api/v1/payment",
+  "/api/v1/payments",
   authenticate,
   createProxyMiddleware({
     target: PAYMENT_URL,

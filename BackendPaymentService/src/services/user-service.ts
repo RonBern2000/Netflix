@@ -42,7 +42,7 @@ export class UserService implements IUserService{
               locale: "en-US",
               shipping_preference: "NO_SHIPPING",
               user_action: "SUBSCRIBE_NOW",
-              return_url: `https://payments-srv:4001/api/v1/payments/paymentSuccess`,
+              return_url: `https://localhost.com/api/v1/payments/payments/paymentSuccess`,
               cancel_url: "https://localhost.com/signup/payment"
             }
           },
@@ -90,7 +90,7 @@ export class UserService implements IUserService{
         throw new BadRequestError("User not found");
       }
     
-      user.subscriptionId = subscriptionId;
+      //user.subscriptionId = subscriptionId;
     
       const payingUser = await this.userRepository.updateUser(userId,subscriptionId); // or save/update logic as per your DB setup
 

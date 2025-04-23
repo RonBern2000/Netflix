@@ -24,7 +24,7 @@ export const usersApiSlice = createApi({
             }),
             payAndActivateUser: builder.mutation<void, void>({ // TODO: Actual logic interms what we send and receive
                 query: (_) => ({
-                    url: "/api/v1/payments/payAndActivate",
+                    url: "/api/v1/payments/payments/payAndActivate",
                     method: "POST",
                     body: _,
                 }),
