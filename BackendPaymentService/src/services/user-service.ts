@@ -42,8 +42,8 @@ export class UserService implements IUserService{
               locale: "en-US",
               shipping_preference: "NO_SHIPPING",
               user_action: "SUBSCRIBE_NOW",
-              return_url: `http://localhost:4001/api/v1/payments/paymentSuccess`,
-              cancel_url: "http://localhost:3000/signup/payment"
+              return_url: `https://payments-srv:4001/api/v1/payments/paymentSuccess`,
+              cancel_url: "https://localhost.com/signup/payment"
             }
           },
           {

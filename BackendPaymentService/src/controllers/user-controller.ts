@@ -8,7 +8,7 @@ import { IUser } from '../interfaces/IUser';
 export class UserController{
     constructor(@inject(TOKENS.IUserService) private userService: IUserService){}
 
-    async subscribe(req: Request, res: Response,  next: NextFunction) {
+    async subscribe(req: Request, res: Response, next: NextFunction) {
       //const userId = req.query.user_id as string;
         try {
           const aprovalUrl = await this.userService.createPayPalSubscription();  // Call the service function to create the order
@@ -20,12 +20,11 @@ export class UserController{
 
     async paymentSuccess(req: Request, res: Response, next: NextFunction){
       const subscriptionId = req.query.subscription_id as string;
-      const userId = req.query.user_id as string;
-      //const userId = req.headers['x-user-id'];
-      //console.log(userId);
+      const userId = req.headers['x-user-id'];
+      console.log(userId);
   
       if (!subscriptionId || !userId) {
-        return res.status(400).send("Missing subscription_id or user_id");
+        return res.status(400).send("Payment unsuccessful!");
       }
   
       try {
@@ -34,7 +33,7 @@ export class UserController{
           await this.userService.getSubscriptionIdAndSave(userId, subscriptionId);
 
         // Redirect to frontend page
-        return res.redirect(`http://localhost:3000/landing`);
+        return res.redirect(`https://localhost.com/landing`);
       } catch (error) {
           return next(error);
       }
