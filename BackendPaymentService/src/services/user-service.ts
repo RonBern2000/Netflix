@@ -92,7 +92,13 @@ export class UserService implements IUserService{
     
       user.subscriptionId = subscriptionId;
     
-      await this.userRepository.updateUser(userId,subscriptionId); // or save/update logic as per your DB setup
+      const payingUser = await this.userRepository.updateUser(userId,subscriptionId); // or save/update logic as per your DB setup
+
+      if(!payingUser){
+        throw new BadRequestError("Error updating user's status");
+      }
+
+      await rabbit.publishMessage(Exchanges.User, 'pay' ,{ id: payingUser.id, active: payingUser.active });
     }
 
     // Only for testing without Paypal
