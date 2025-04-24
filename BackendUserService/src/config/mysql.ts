@@ -1,9 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import { User } from "../models/user-sql-entity";
-import { config } from "dotenv";
 import { UserToMovie } from "../models/user-like-sql-entity";
-
-config();
+import { DB_URI } from "./env";
 
 export class MySqlConnection{
     private static instance: Sequelize | null = null;
@@ -11,7 +9,7 @@ export class MySqlConnection{
 
     public static async getInstance(): Promise<Sequelize> {
         if(!MySqlConnection.instance){
-            const sequelize = new Sequelize(process.env.DB_URI as string, {
+            const sequelize = new Sequelize(DB_URI as string, {
                 dialect: "mysql",
                 logging: false,
                 models: [User, UserToMovie],
