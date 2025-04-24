@@ -21,12 +21,18 @@ export const usersApiSlice = createApi({
                     method: "POST",
                     body: newUser,
                 }),
+            }),// TODO: Move this two to a new apiSlice paymentApiSlice
+            payAndActivateUser: builder.query<{ approvalUrl: string, subscriptionId: string }, void>({
+                query: () => "/api/v1/payments/payments/subscribe",
+                transformResponse: (response: { approvalUrl: string, subscriptionId: string }) => ({
+                    approvalUrl: response.approvalUrl,
+                    subscriptionId: response.subscriptionId
+                }),
             }),
-            payAndActivateUser: builder.mutation<void, void>({ // TODO: Actual logic interms what we send and receive
-                query: (_) => ({
-                    url: "/api/v1/payments/payments/payAndActivate",
+            paymentSuccess: builder.mutation<void, string>({
+                query: (subId) => ({
+                    url: `/api/v1/payments/payments/paymentSuccess?subscription_id=${subId}`,
                     method: "POST",
-                    body: _,
                 }),
             }),
             logoutUser: builder.mutation<void, void>({
@@ -50,4 +56,4 @@ export const usersApiSlice = createApi({
     }
 });
 
-export const { useCreateUserMutation, useCheckEmailMutation , usePayAndActivateUserMutation, useLogoutUserMutation, useLoginMutation, useCheckStatusQuery} = usersApiSlice;
+export const { useCreateUserMutation, useCheckEmailMutation , useLazyPayAndActivateUserQuery, usePaymentSuccessMutation, useLogoutUserMutation, useLoginMutation, useCheckStatusQuery} = usersApiSlice;

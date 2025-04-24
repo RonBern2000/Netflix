@@ -9,10 +9,9 @@ export class UserController{
     constructor(@inject(TOKENS.IUserService) private userService: IUserService){}
 
     async subscribe(req: Request, res: Response, next: NextFunction) {
-      //const userId = req.query.user_id as string;
         try {
-          const aprovalUrl = await this.userService.createPayPalSubscription();  // Call the service function to create the order
-          return res.status(200).json(aprovalUrl);  // Return the created order to the client
+          const {approvalUrl, subscriptionId } = await this.userService.createPayPalSubscription();  // Call the service function to create the order
+          return res.status(200).json({approvalUrl, subscriptionId});  // Return the created order to the client
         } catch (error) {
             return next(error);
         }
@@ -32,6 +31,13 @@ export class UserController{
         if(typeof userId === 'string')
           await this.userService.getSubscriptionIdAndSave(userId, subscriptionId);
 
+        for (const cookieName in req.cookies) {
+          res.clearCookie(cookieName, {
+              path: '/',
+              httpOnly: true,
+              sameSite: 'strict',
+          });
+        }
         // Redirect to frontend page
         return res.redirect(`https://localhost.com/landing`);
       } catch (error) {

@@ -22,7 +22,7 @@ function App() {
   const { data, isSuccess, isError } = useCheckStatusQuery();
 
   useEffect(() => {
-    if (isSuccess && data) {
+    if (isSuccess) {
       dispatch(setStatus(data));
     } else if (isError) {
       dispatch(logout());
@@ -56,7 +56,7 @@ function App() {
           {/* Authenticated but Not Active Users */}
           {isAuthenticated && !isActive ? (
             <>
-              <Route path='/landing' element={<LandingPage />} />
+              {/* <Route path='/landing' element={<LandingPage />} /> */}
               <Route path='/signup' element={<Signup />} />
               <Route path='/signup/payment' element={<Payment />} />
               <Route path='*' element={<Navigate to='/signup' />} />
