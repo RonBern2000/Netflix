@@ -28,7 +28,6 @@
     "inversify": "^7.2.0",
     "ioredis": "^5.6.0",
     "jsonwebtoken": "^9.0.2",
-    "mongodb-memory-server": "^10.1.4",
     "redis": "^4.7.0",
     "sequelize": "^6.37.6",
     "ts-node": "^10.9.2",

@@ -24,7 +24,6 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "inversify": "^7.5.0",
-    "mongodb-memory-server": "^10.1.4",
     "mysql2": "^3.14.0",
     "sequelize-typescript": "^2.1.6",
     "ts-node": "^10.9.2",
