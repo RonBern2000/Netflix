@@ -48,3 +48,11 @@ build:
         manual:
           - src: src/**/*.ts
             dest: .
+    - image: ron1111000/ai
+      context: ../BackendAiService
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: src/**/*.ts
+            dest: .

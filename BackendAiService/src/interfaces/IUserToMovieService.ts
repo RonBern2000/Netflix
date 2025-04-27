@@ -1,5 +1,5 @@
 import { IMovie } from "./IMovie";
 
 export interface IUserToMovieService{
-    getReccomendations(userId: string): Promise<IMovie[] | null>;
+    getRecommendations(userId: string): Promise<IMovie[] | null>;
 }

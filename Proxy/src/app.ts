@@ -1,7 +1,7 @@
 import { createProxyMiddleware } from "http-proxy-middleware";
 import rateLimit, { RateLimitRequestHandler } from "express-rate-limit";
 import { notFoundHandler, errorHandler } from "@netflix-utils/shared";
-import { CLIENT_URL, MOVIES_URL, PAYMENT_URL, USERS_URL } from "./config/env";
+import { CLIENT_URL, MOVIES_URL, PAYMENT_URL, AI_URL, USERS_URL } from "./config/env";
 import express from 'express';
 import { Application, urlencoded } from 'express';
 import cors from 'cors';
@@ -22,6 +22,7 @@ app.use(cors({
         USERS_URL!,
         PAYMENT_URL!,
         MOVIES_URL!,
+        AI_URL!,
         CLIENT_URL!
     ]
 }));
@@ -69,6 +70,21 @@ app.use(
   authenticate,
   createProxyMiddleware({
     target: MOVIES_URL,
+    changeOrigin: true,
+    secure: false,
+    on: {
+      error: (error, req, res, target) => {
+        console.error(error);
+      },
+    },
+  })
+);
+
+app.use(
+  "/api/v1/ai",
+  authenticate,
+  createProxyMiddleware({
+    target: AI_URL,
     changeOrigin: true,
     secure: false,
     on: {

@@ -41,6 +41,11 @@ spec:
                 secretKeyRef: 
                   name: proxy-secrets
                   key: MOVIES_URL
+            - name: AI_URL
+              valueFrom:
+                secretKeyRef: 
+                  name: proxy-secrets
+                  key: AI_URL
             - name: CLIENT_URL
               valueFrom:
                 secretKeyRef: 

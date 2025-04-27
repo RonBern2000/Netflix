@@ -16,7 +16,7 @@ const PaymentForm = () => {
             const { data } = await triggerPayment();
 
             if (data) {
-                const { subscriptionId } = data;
+                const { subscriptionId } = data; // TODO: Crypt it and deCrypt it in the backend
                 const greatSuccess = await paymentSuccess(subscriptionId);
                 if (greatSuccess) {
                     dispatch(pay());

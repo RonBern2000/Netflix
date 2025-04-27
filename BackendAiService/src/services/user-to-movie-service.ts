@@ -3,18 +3,47 @@ import { TOKENS } from "../tokens";
 import { IUserToMovieService } from "../interfaces/IUserToMovieService";
 import { IUserToMovieRepository } from "../interfaces/IUserToMovieRepository";
 import { IMovie } from "../interfaces/IMovie";
-import { AIService } from "../utils/ai-service";
 import redis from "../config/redis-client";
-
+import { IAIService } from "../interfaces/IAIService";
+import { BadRequestError } from "@netflix-utils/shared";
+import { IMovieForPrompt } from "../interfaces/IMovieForPrompt";
 @injectable()
 export class UserToMovieService implements IUserToMovieService{
 
-    private aiService = new AIService();
+    constructor(
+        @inject(TOKENS.IUserToMovieRepository) private userToMovieRepository: IUserToMovieRepository,
+        @inject(TOKENS.IAIService) private aiService: IAIService) {}
 
-    constructor(@inject(TOKENS.IUserToMovieRepository) private userToMovieRepository: IUserToMovieRepository) {}
+    async getRecommendations(userId: string): Promise<IMovie[] | null> {
+        const moviesDbString = await redis.get(TOKENS.allMovies);
+        if(!moviesDbString){
+            throw new BadRequestError('redis is empty');
+        }
+        const moviesDbFull: IMovie[] = JSON.parse(moviesDbString); 
+        const moviesDb: IMovieForPrompt[] = moviesDbFull.map(movie => ({ // IMovieForPrompt { id(number), genreIds[], release_date }
+            id: movie.id,
+            genre_ids: movie.genre_ids,
+            release_date: movie.release_date
+        }));
+        const movieStrings = this.fromObjectArrayToStringArray(moviesDb);
 
-    async getReccomendations(userId: string): Promise<IMovie[] | null> {
-        //TODO: here we do the logic where we first get all the movies from the redis, then all the data for the relevent user and make the Prompt to the AI and at the end we process the response and ideally return an array of recommended movies(IMovie[]). 
-        throw new Error("Method not implemented.");
+        console.log("MovieStrings: ",movieStrings, "Amount: ", movieStrings.length);
+
+        const userMyListMoviesWithNotNeededProps = await this.userToMovieRepository.getUserToMovies(userId); // can be length 0 array
+        const userMyListMovies: number[] = userMyListMoviesWithNotNeededProps.map(m => m.movieId); 
+        const userMyListMoviesStrings = this.fromObjectArrayToStringArray(userMyListMovies);
+
+        console.log("userMyListMoviesStrings: ",userMyListMoviesStrings, "Amount: ", userMyListMoviesStrings.length);
+
+        const recommendationString: string = await this.aiService.getMovieRecommendationsPrompt(movieStrings, userMyListMoviesStrings); // strings of ids of recommend movies 45,21,2,65...  
+
+        console.log("Recommened listString: ", recommendationString);
+        // Answer Processing
+        return null;
+    }
+
+    private fromObjectArrayToStringArray<T>(array: T[]): string[] {
+        const stringArray = array.map(item => JSON.stringify(item));
+        return stringArray;
     }
 }
