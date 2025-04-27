@@ -28,7 +28,6 @@
     "express": "^4.21.2",
     "inversify": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongodb-memory-server": "^10.1.4",
     "mysql2": "^3.14.0",
     "sequelize": "^6.37.6",
     "sequelize-typescript": "^2.1.6",
