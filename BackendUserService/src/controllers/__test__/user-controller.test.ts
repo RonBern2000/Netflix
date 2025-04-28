@@ -96,5 +96,23 @@ describe("Tests for USER CONTROLLER", () => {
             });
             expect(response.status).toBe(400);
         });
-     })
+     });
+
+     describe('logout', () => { 
+        it("Should return 200 if logout successfully", async () => {
+            await request(app).post("/users/signup").send({
+                email: 'test@test.com',
+                password: 'test123'
+            });
+
+            await request(app).post("/users/login").send({
+                email: 'test@test.com',
+                password: 'test123'
+            });
+
+            const response = await request(app).post("/users/logout");
+
+            expect(response.status).toBe(200);
+        });
+     });
 });
