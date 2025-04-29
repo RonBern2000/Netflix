@@ -16,9 +16,10 @@ type MoviePopupFooterProps = {
     movie: IMovie;
     movieGenres: number[];
     isInMyList?: boolean;
+    onOptimisticRemove?: (id: number) => void;
 }
 
-const MoviePopupFooter = ({ movieGenres, className = '', movie, isInMyList = false }: MoviePopupFooterProps) => {
+const MoviePopupFooter = ({ movieGenres, className = '', movie, isInMyList = false, onOptimisticRemove }: MoviePopupFooterProps) => {
 
     const [addToMyList] = useAddToMyListMutation();
     const [removeFromMyList] = useRemoveFromMyListMutation();
@@ -43,6 +44,8 @@ const MoviePopupFooter = ({ movieGenres, className = '', movie, isInMyList = fal
                         })
                     );
                 } else {
+                    onOptimisticRemove?.(movie.id);
+
                     await removeFromMyList(movie);
                     dispatch(
                         moviesApiSlice.util.updateQueryData("getMyList", undefined, (draft) => {

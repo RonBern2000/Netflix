@@ -82,11 +82,9 @@ export class UserService implements IUserService{
     async login(data: AuthFormData): Promise<ILoginResponse> {
         const { email, password} = data;
         const existingUser = await this.userRepository.findUserByEmail(email);
-
         if(!existingUser){
             throw new BadRequestError("User not found");
         }
-
         const isValidPassword: boolean = await compare(password, existingUser.password);
 
         if(!isValidPassword){
