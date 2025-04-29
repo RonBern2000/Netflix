@@ -84,13 +84,13 @@ export class UserService implements IUserService{
         const existingUser = await this.userRepository.findUserByEmail(email);
 
         if(!existingUser){
-            throw new Error("User not found");
+            throw new BadRequestError("User not found");
         }
 
         const isValidPassword: boolean = await compare(password, existingUser.password);
 
         if(!isValidPassword){
-            throw new Error("Invalid password");
+            throw new BadRequestError("Invalid password");
         }
 
         const payload: IUserPayload = {

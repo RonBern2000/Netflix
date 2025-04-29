@@ -11,7 +11,8 @@
     "testEnvironment": "node",
     "setupFilesAfterEnv": [
       "./src/test/setup.ts"
-    ]
+    ],
+    "verbose": true
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "@types/bcryptjs": "^3.0.0",
     "amqplib": "^0.10.5",
     "bcryptjs": "^3.0.2",
+    "casual": "^1.6.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -31,6 +33,7 @@
     "mysql2": "^3.14.0",
     "sequelize": "^6.37.6",
     "sequelize-typescript": "^2.1.6",
+    "sqlite3": "^5.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2",
     "zod": "^3.24.2"
