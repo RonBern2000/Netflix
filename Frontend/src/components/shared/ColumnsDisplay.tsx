@@ -7,7 +7,7 @@ type ColumnsDisplayProps = {
 
 const ColumnsDisplay = ({ movies = {} }: ColumnsDisplayProps) => {
 
-    //TODO: optimistic when a user removes a movie so he wont wait for api call
+    //TODO: optimistic with transitions when a user removes a movie so he wont wait for api call for the ui change
 
     return (
         <div className="h-auto relative overflow-visible">

@@ -26,6 +26,9 @@ export const strings = {
                 { text: "Unlimited viewing on all your devices.", id: 3 },
             ],
         },
+        payment:{
+            h1: "Time to complete the Payment",
+        },
         login: {
             newToNetflix: "New to Netflix?",
             signupNow: "Sign up now.",
