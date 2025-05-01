@@ -3,7 +3,12 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./k8s/*
+      - ./k8s/Ai/*
+      - ./k8s/Client/*
+      - ./k8s/Movies/*
+      - ./k8s/Payments/*
+      - ./k8s/Proxy/*
+      - ./k8s/Users/*
 build:
   local:
     push: false
