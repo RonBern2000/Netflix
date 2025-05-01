@@ -19,8 +19,8 @@ const start = async () => {
       console.log(`Movies service listening on port ${PORT}...`);
     });
   } else {
-    app.listen(PORT, () => {
-      console.log(`Movies service listening on port ${PORT}...`);
+    app.listen(4002, () => {
+      console.log(`Movies service listening on port ${4002}...`);
     });
   }
 };

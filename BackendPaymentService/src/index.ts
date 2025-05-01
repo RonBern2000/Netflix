@@ -29,8 +29,8 @@ const start = async () => {
       console.log(`Payment service listening on port ${PORT}...`);
     });
   } else {
-    app.listen(PORT, () => {
-      console.log(`Payment service listening on port ${PORT}...`);
+    app.listen(4001, () => {
+      console.log(`Payment service listening on port ${4001}...`);
     });
   }
 };

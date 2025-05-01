@@ -30,8 +30,8 @@ const start = async () => {
       console.log(`User service listening on port ${PORT}...`);
     });
   } else {
-    app.listen(PORT, () => {
-      console.log(`User service listening on port ${PORT}...`);
+    app.listen(4000, () => {
+      console.log(`User service listening on port ${4000}...`);
     });
   }
 };

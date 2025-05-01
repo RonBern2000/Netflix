@@ -34,8 +34,8 @@ const start = async () => {
       console.log(`Proxy server listening on port ${PORT}...`);
     });
   } else {
-    app.listen(PORT, () => {
-      console.log(`Proxy server listening on port ${PORT}...`);
+    app.listen(5000, () => {
+      console.log(`Proxy server listening on port ${5000}...`);
     });
   }
 };
