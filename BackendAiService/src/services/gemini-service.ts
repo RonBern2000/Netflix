@@ -89,19 +89,3 @@ export class AI2Service implements IAIService {
     }
   }
 }
-
-// const prompt = `
-//       Tasks:
-//         1. first read and understand the Args and the Returns.
-//         2. Match the ids from the MyList to the movies ids which are in the Data. Meaning you should filter the data and find all the movies that match the ids in the MyList. Let's call the new filtered list mostLikedList.
-//         3. Take all the genre_ids arrays from the new filtered list mostLikedList and concat them. Let's call the new array: "concated genre_ids".
-//         4. Find the most frequently occurring genre_id in the given list of concated genre_ids. First, count how many times each unique word appears in the list. Then identify which number has the highest count. If multiple numbers appear the same number of times (tied for highest count), return the first one you encountered. For example, given the list [5, 3, 5, 3, 5, 1], you would return '5' because it appears 3 times, which is more than any other number. Let's call the the most frequently occurring genre_id "bestGenre"; 
-
-//       Args:
-//       - MyList: [${userMovieList.join(", ")}], MyList is an array that contains all the ids of the liked movies.
-//       - Data: [${data.join(", ")}], Data is an array that contains strings in a format of an object: '{ id: 34, genre_ids: [54,56], release_date: 25-08-2022}'
-//       Returns:
-//       - Return only the frequently occurring genre_id "bestGenre" from task number 4 as a string. with no explanation and no code.`;
-
-// 3. Inside mostLikedList you should have the liked movies with id, genre_ids[], release_date.
-        // 4. Now interate through them and find inside the genre_ids array the the number that appears the most amount across all the mostLikedList. And set it as the most common genre.
