@@ -1,4 +1,4 @@
-name: tests
+name: tests-payment
 
 on:
   pull_request
@@ -8,5 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd BackendUserService && npm install && npm run test:ci
+      - run: cd BackendPaymentService && npm install && npm run test:ci
       
