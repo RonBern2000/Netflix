@@ -9,7 +9,7 @@ import { PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API_BASE_URL, PAYPAL_PLAN_ID} f
 import { BadRequestError } from '@netflix-utils/shared'
 
 const start = async () => {
-  
+  console.log("Starting...");
   if (!PAYPAL_CLIENT_ID || !PAYPAL_SECRET || !PAYPAL_API_BASE_URL || !PAYPAL_PLAN_ID) {
     throw new BadRequestError("Missing PayPal configuration in .env file");
   }
