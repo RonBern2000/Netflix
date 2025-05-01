@@ -2,7 +2,6 @@ import { inject, injectable } from 'inversify';
 import { TOKENS } from '../tokens';
 import { IUserService } from '../interfaces/IUserService';
 import { NextFunction, Request, Response } from 'express';
-import { IUser } from '../interfaces/IUser';
 
 @injectable()
 export class UserController{
