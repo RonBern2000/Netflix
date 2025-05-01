@@ -28,6 +28,7 @@
     "inversify": "^7.5.0",
     "mysql2": "^3.14.0",
     "sequelize-typescript": "^2.1.6",
+    "sqlite3": "^5.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   },
