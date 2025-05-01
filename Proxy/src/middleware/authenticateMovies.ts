@@ -1,12 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { JWT_KEY } from '../src/config/env';
+import { JWT_KEY } from '../config/env';
 import { BadRequestError } from '@netflix-utils/shared';
 import { verify } from '@netflix-utils/shared'
 
 export const authenticateMovies = (req: Request, res: Response, next: NextFunction) => {
     const { path } = req;
 
-    console.log("first")
     if (path.startsWith('/api/v1/movies/popular')){
         return next();
     }

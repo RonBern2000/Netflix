@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai
+  template:
+    metadata:
+      labels:
+        app: ai
+    spec:
+      initContainers:
+        - name: wait-for-rabbit
+          image: busybox
+          command: ['sh', '-c', 'until nc -z rabbitmq 5672; do echo waiting for rabbitmq; sleep 2; done;']
+      containers:
+        - name: ai
+          image: ron1111000/ai:latest
+          env: 
+            - name: PORT
+              valueFrom:
+                secretKeyRef: 
+                  name: ai-secrets
+                  key: PORT
+            - name: REDIS_URI
+              valueFrom:
+                secretKeyRef:
+                  name: ai-secrets
+                  key: REDIS_URI
+            - name: REDIS_PORT
+              valueFrom:
+                secretKeyRef: 
+                  name: ai-secrets
+                  key: REDIS_PORT
+            - name: DB_URI
+              valueFrom:
+                secretKeyRef: 
+                  name: ai-secrets
+                  key: DB_URI
+            - name: GROQ_API_KEY
+              valueFrom:
+                secretKeyRef: 
+                  name: ai-secrets
+                  key: GROQ_API_KEY
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef: 
+                  name: ai-secrets
+                  key: GEMINI_API_KEY
+            - name: RABBITMQ_URL
+              valueFrom:
+                secretKeyRef: 
+                  name: ai-secrets
+                  key: RABBITMQ_URL
+            - name: PROXY_URL
+              valueFrom:
+                secretKeyRef: 
+                  name: ai-secrets
+                  key: PROXY_URL
+            - name: NODE_ENV
+              valueFrom:
+                secretKeyRef: 
+                  name: ai-secrets
+                  key: NODE_ENV
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

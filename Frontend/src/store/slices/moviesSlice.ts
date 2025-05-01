@@ -1,28 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface MoviesState{
     message: string;
-    trailerKeys: string[];
+    searchValue: string;
 }
 
 const initialState: MoviesState = {
     message: '',
-    trailerKeys: [],
+    searchValue: '',
 }
 
 const moviesSlice = createSlice({
   name: "movies",
   initialState,
   reducers: {
-    // addTrailerKey: (state, action: PayloadAction<>) => {
-    //   state.token = action.payload.token;
-    //   state.message = action.payload.message;
-    //   state.isAuthenticated = true;
-    //   state.isActive = action.payload.active
-    // },
+    searchInputChange: (state, action: PayloadAction<string>) => {
+      state.searchValue = action.payload;
+    },
+    resetSearchValue: (state) => {
+      state.searchValue = "";
+    },
   },
   extraReducers: () => {}
 });
 
-//export const { } = moviesSlice.actions;
+export const { searchInputChange, resetSearchValue } = moviesSlice.actions;
 export default moviesSlice.reducer;

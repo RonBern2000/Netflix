@@ -1,51 +1,59 @@
-import { createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import { createApi} from '@reduxjs/toolkit/query/react';
 import { IUser } from '../../dto/IUser';
 import { AuthResponse } from '../../dto/AuthResponse';
+import { baseQueryWithReauth } from '../apis';
 
 export const usersApiSlice = createApi({
     reducerPath: "authApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5000",
-        credentials: 'include'
-    }),
+    baseQuery: baseQueryWithReauth,
     endpoints: (builder) => {
         return {
             checkEmail: builder.mutation<{isExist: boolean}, {email: string}>({
                 query: (emailData) => ({
-                    url: "/users/api/v1/users/checkEmail",
+                    url: "/api/v1/users/users/checkEmail",
                     method: "POST",
                     body: emailData,
                 }),
             }),
             createUser: builder.mutation<AuthResponse, Omit<IUser, "id">>({
                 query: (newUser) => ({
-                    url: "/users/api/v1/users/signup",
+                    url: "/api/v1/users/users/signup",
                     method: "POST",
                     body: newUser,
                 }),
+            }),// TODO: Move this two to a new apiSlice paymentApiSlice
+            payAndActivateUser: builder.query<{ approvalUrl: string, subscriptionId: string }, void>({
+                query: () => "/api/v1/payments/payments/subscribe",
+                transformResponse: (response: { approvalUrl: string, subscriptionId: string }) => ({
+                    approvalUrl: response.approvalUrl,
+                    subscriptionId: response.subscriptionId
+                }),
             }),
-            payAndActivateUser: builder.mutation<void, void>({ // TODO: Actual logic interms what we send and receive
-                query: (_) => ({
-                    url: "/payments/api/v1/payments/payAndActivate",
+            paymentSuccess: builder.mutation<void, string>({
+                query: (subId) => ({
+                    url: `/api/v1/payments/payments/paymentSuccess?subscription_id=${subId}`,
                     method: "POST",
-                    body: _,
                 }),
             }),
             logoutUser: builder.mutation<void, void>({
                 query: () => ({
-                    url: "/users/api/v1/users/logout",
+                    url: "/api/v1/users/users/logout",
                     method: "POST",
                 }),
             }),
             login: builder.mutation<AuthResponse, Omit<IUser, "id">>({
                 query: (user) => ({
-                    url: "/users/api/v1/users/login",
+                    url: "/api/v1/users/users/login",
                     method: "POST",
                     body: user,
                 }),
+            }),
+            checkStatus: builder.query<boolean,void>({
+                query: () => "/api/v1/users/users/checkStatus",
+                transformResponse: (response: { active: boolean }) => response.active,
             }),
         };
     }
 });
 
-export const { useCreateUserMutation, useCheckEmailMutation , usePayAndActivateUserMutation, useLogoutUserMutation, useLoginMutation} = usersApiSlice;
+export const { useCreateUserMutation, useCheckEmailMutation , useLazyPayAndActivateUserQuery, usePaymentSuccessMutation, useLogoutUserMutation, useLoginMutation, useCheckStatusQuery} = usersApiSlice;

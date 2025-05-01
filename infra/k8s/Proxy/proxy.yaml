@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy
+  template:
+    metadata:
+      labels:
+        app: proxy
+    spec:
+      containers:
+        - name: proxy
+          image: ron1111000/proxy:latest
+          env:
+            - name: PORT
+              valueFrom:
+                secretKeyRef: 
+                  name: proxy-secrets
+                  key: PORT
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef: 
+                  name: proxy-secrets
+                  key: JWT_KEY
+            - name: USERS_URL
+              valueFrom:
+                secretKeyRef: 
+                  name: proxy-secrets
+                  key: USERS_URL
+            - name: PAYMENT_URL
+              valueFrom:
+                secretKeyRef: 
+                  name: proxy-secrets
+                  key: PAYMENT_URL
+            - name: MOVIES_URL
+              valueFrom:
+                secretKeyRef: 
+                  name: proxy-secrets
+                  key: MOVIES_URL
+            - name: AI_URL
+              valueFrom:
+                secretKeyRef: 
+                  name: proxy-secrets
+                  key: AI_URL
+            - name: CLIENT_URL
+              valueFrom:
+                secretKeyRef: 
+                  name: proxy-secrets
+                  key: CLIENT_URL
+            - name: NODE_ENV
+              valueFrom:
+                secretKeyRef: 
+                  name: proxy-secrets
+                  key: NODE_ENV
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+      

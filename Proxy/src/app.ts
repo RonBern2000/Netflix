@@ -1,15 +1,16 @@
 import { createProxyMiddleware } from "http-proxy-middleware";
 import rateLimit, { RateLimitRequestHandler } from "express-rate-limit";
 import { notFoundHandler, errorHandler } from "@netflix-utils/shared";
-import { CLIENT_URL, MOVIES_URL, PAYMENT_URL, USERS_URL } from "./config/env";
+import { CLIENT_URL, MOVIES_URL, PAYMENT_URL, AI_URL, USERS_URL } from "./config/env";
 import express from 'express';
 import { Application, urlencoded } from 'express';
 import cors from 'cors';
-import { authenticateMovies } from "../middleware/authenticateMovies";
 import cookieParser from "cookie-parser";
-import { authenticatePayment } from "../middleware/authenticatePayment";
+import { authenticate } from "./middleware/authenticate";
 
 const app: Application = express();
+
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 
 app.use(cookieParser());
 
@@ -21,6 +22,7 @@ app.use(cors({
         USERS_URL!,
         PAYMENT_URL!,
         MOVIES_URL!,
+        AI_URL!,
         CLIENT_URL!
     ]
 }));
@@ -34,7 +36,8 @@ const limiter: RateLimitRequestHandler = rateLimit({
 app.use(limiter);
 
 app.use(
-  "/users",
+  "/api/v1/users",
+  authenticate,
   createProxyMiddleware({
     target: USERS_URL,
     changeOrigin: true,
@@ -44,15 +47,12 @@ app.use(
         console.error(error);
       },
     },
-    pathRewrite: {
-      '^/users': '',
-    },
   })
 );
 
 app.use(
-  "/payments",
-  authenticatePayment,
+  "/api/v1/payments",
+  authenticate,
   createProxyMiddleware({
     target: PAYMENT_URL,
     changeOrigin: true,
@@ -62,15 +62,12 @@ app.use(
         console.error(error);
       },
     },
-    pathRewrite: {
-      '^/payment': '',
-    },
   })
 );
 
 app.use(
-  "/movies",
-  authenticateMovies,
+  "/api/v1/movies",
+  authenticate,
   createProxyMiddleware({
     target: MOVIES_URL,
     changeOrigin: true,
@@ -80,8 +77,20 @@ app.use(
         console.error(error);
       },
     },
-    pathRewrite: {
-      '^/movies': '',
+  })
+);
+
+app.use(
+  "/api/v1/ai",
+  authenticate,
+  createProxyMiddleware({
+    target: AI_URL,
+    changeOrigin: true,
+    secure: false,
+    on: {
+      error: (error, req, res, target) => {
+        console.error(error);
+      },
     },
   })
 );

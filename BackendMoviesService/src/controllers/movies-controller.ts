@@ -8,10 +8,24 @@ import { IMovie } from "../interfaces/IMovie";
 @injectable()
 export class MoviesController{
     constructor(@inject(TOKENS.IMoviesService) private moviesService: IMoviesService){}
+
+    async searchMoviesByTitle(req: Request, res: Response, next: NextFunction){
+        try {
+            const title = req.query.title as string;
+            if (!title) {
+                return res.status(400).json({ message: "Title query is required." });
+            }
+            const movies = await this.moviesService.searchByTitle(title);
+            return res.status(200).json({movies});
+        } catch (error) {
+            return next(error);
+        }
+    }
+
     async getPopularMovies(req: Request, res: Response, next: NextFunction){
         try {
             const popularMovies: IMovie[] | null = await this.moviesService.getPopularMovies();
-            res.status(200).json({popularMovies});
+            return res.status(200).json({popularMovies});
         } catch (error) {
             return next(error);
         }
@@ -20,8 +34,7 @@ export class MoviesController{
     async getAllMoviesByGenres(req: Request, res: Response, next: NextFunction) {
         try {
             const allMoviesByGenres: Record<string, IMovie[]> | null = await this.moviesService.getAllMoviesByGenres();
-            console.log("All movies sorted by genres:",allMoviesByGenres);
-            res.status(200).json({allMoviesByGenres});
+            return res.status(200).json({allMoviesByGenres});
         } catch (error) {
             return next(error);
         }
@@ -31,23 +44,24 @@ export class MoviesController{
         try {
             const genres = await this.moviesService.getGenres();
             if(!genres){
-                res.status(500).json({message: 'Error'});
+                return res.status(500).json({message: 'Error'});
             }
-            res.status(200).json({genres});
-        } catch (error) {
-            return next(error);
-        }
-    }
-
-    async getAllMovies(req: Request, res: Response, next: NextFunction){
-        try {
-            const allMovies: IMovie[] | null = await this.moviesService.getAllMovies();
-            res.status(200).json({allMovies});
+            return res.status(200).json({genres});
         } catch (error) {
             return next(error);
         }
     }
 }
+
+// async getAllMovies(req: Request, res: Response, next: NextFunction){
+//         try {
+//             const allMovies: IMovie[] | null = await this.moviesService.getAllMovies();
+//             return res.status(200).json({allMovies});
+//         } catch (error) {
+//             return next(error);
+//         }
+//     }
+
 // async getMovieTrailer(req: Request, res: Response, next: NextFunction){
 //     try {
 //         const movieId = getMovieIdParam(req);

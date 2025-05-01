@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { IMovie } from "../../dto/IMovie";
 import Container from "./Container";
-import MoviePopupFooter from "./MoviePopupFooter";
+import MoviePopupFooter from "../../features/MoviePopupFooter";
 import ReactPlayer from 'react-player';
 
 type MoviePopupProps = {
   movie: IMovie;
   className?: string;
+  isInMyList?: boolean;
+  onOptimisticRemove?: (id: number) => void;
 }
 
 // TODO: When I do the more complex pagination amount => we should not relay on 6 each page 
-const MoviePopup = ({ movie, className = '' }: MoviePopupProps) => {
+const MoviePopup = ({ movie, className = '', isInMyList = false, onOptimisticRemove }: MoviePopupProps) => {
   const [transitionEnded, setTransitionEnded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -50,7 +52,12 @@ const MoviePopup = ({ movie, className = '' }: MoviePopupProps) => {
               style={{ objectFit: 'contain' }}
             />
           </div>
-          <MoviePopupFooter movieGenres={movie.genre_ids} className="w-full h-4/10 -mt-1 flex-col" />
+          <MoviePopupFooter
+            movie={movie}
+            isInMyList={isInMyList}
+            movieGenres={movie.genre_ids}
+            className="w-full h-4/10 -mt-1 flex-col"
+            onOptimisticRemove={onOptimisticRemove} />
         </Container>
       )}
     </div>

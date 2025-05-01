@@ -1,0 +1,55 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: client-ingress
+# spec:
+#   ingressClassName: nginx
+#   tls:
+#     - hosts:
+#       - localhost.com
+#       secretName: client-ingress-tls
+#   rules:
+#     - host: localhost.com
+#       http:
+#         paths:
+#           - path: /api
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: proxy-srv
+#                 port:
+#                   number: 5000
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: client-srv
+#                 port:
+#                   number: 5173
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: client-ingress
+# spec:
+#   ingressClassName: nginx
+#   defaultBackend:
+#     service:
+#       name: client-srv
+#       port:
+#         number: 5173
+#   tls:
+#     - hosts:
+#       - localhost.com
+#       secretName: client-ingress-tls
+#   rules:
+#     - host: localhost.com
+#       http:
+#         paths: 
+#           - path: /
+#             pathType: Prefix
+#             backend: 
+#               service:
+#                 name: proxy-srv
+#                 port:
+#                   number: 5000

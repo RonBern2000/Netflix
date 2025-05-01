@@ -1,3 +1,4 @@
+
 export const TOKENS = {
     mysql: "mysql",
     UserController: "UserController",
@@ -6,4 +7,7 @@ export const TOKENS = {
     token:"token",
     tempToken: "tempToken",
     Bearer: 'Bearer',
+    UserLikeController: "UserLikeController",
+    IUserLikeRepository: "IUserLikeRepository",
+    IUserLikeService: "IUserLikeService",
 };

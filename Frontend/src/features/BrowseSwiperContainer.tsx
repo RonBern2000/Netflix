@@ -6,11 +6,11 @@ import { calcPaginationAmount } from "../utils/calculateSwiperPagination";
 
 type BrowseSwiperContainerProps = {
     movies: IMovie[];
+    myList: Record<number, IMovie>;
 }
 
-const BrowseSwiperContainer = ({ movies }: BrowseSwiperContainerProps) => {
+const BrowseSwiperContainer = ({ movies, myList = {} }: BrowseSwiperContainerProps) => {
     // const width = useWindowWidth();
-
     // if (width < 1280) itemsPerPage = 5;
     // if (width < 1024) itemsPerPage = 4;
     // if (width < 768) itemsPerPage = 3;
@@ -20,6 +20,7 @@ const BrowseSwiperContainer = ({ movies }: BrowseSwiperContainerProps) => {
     return (
         <BrowseSwiper
             movies={movies}
+            myList={myList}
             paginationAmount={paginationAmount} />
     )
 }

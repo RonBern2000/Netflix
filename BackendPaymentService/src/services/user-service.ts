@@ -26,41 +26,47 @@ export class UserService implements IUserService{
           password: PAYPAL_SECRET!,
         },
       });
+
       return response.data.access_token;
     }
 
     async createPayPalSubscription(): Promise<any> {
-        const token = await this.getPayPalAccessToken(); // Get the PayPal access token
-        if(!token){
-          throw new BadRequestError('token not found');
-        }
-        const response = await axios.post(`${process.env.PAYPAL_API_BASE_URL}/v1/billing/subscriptions`,
-          {
-            plan_id: PAYPAL_PLAN_ID,
-            application_context: {
-              brand_name: "Netflix",  
-              locale: "en-US",
-              shipping_preference: "NO_SHIPPING",
-              user_action: "SUBSCRIBE_NOW",
-              return_url: `http://localhost:4001/api/v1/payments/paymentSuccess`,
-              cancel_url: "http://localhost:3000/signup/payment"
-            }
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
+      const token = await this.getPayPalAccessToken(); // Get the PayPal access token
+      if(!token){
+        throw new BadRequestError('token not found');
+      }
+      const response = await axios.post(`${process.env.PAYPAL_API_BASE_URL}/v1/billing/subscriptions`,
+        {
+          plan_id: PAYPAL_PLAN_ID,
+          application_context: {
+            brand_name: "Netflix",
+            locale: "en-US",
+            shipping_preference: "NO_SHIPPING",
+            user_action: "SUBSCRIBE_NOW",
+            return_url: `https://localhost.com/api/v1/payments/payments/paymentSuccess`,
+            cancel_url: "https://localhost.com/signup/payment"
           }
-        );  
-              
-        const approvalUrl = response.data.links.find((link: { rel: string, href: string }) => link.rel === 'approve')?.href;
-          
-        if (!approvalUrl) {
-          throw new BadRequestError('Approval URL not found in PayPal response');
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         }
-        console.log(approvalUrl)
-        return approvalUrl;  // Return the approval URL to redirect the user to PayPal
+      );  
+            
+      const approvalUrl = response.data.links.find((link: { rel: string, href: string }) => link.rel === 'approve')?.href;
+      const subscriptionId = response.data.id;
+        
+      if (!approvalUrl) {
+        throw new BadRequestError('Approval URL not found in PayPal response');
+      }
+      if (!subscriptionId) {
+        throw new BadRequestError('Subscription ID not found in PayPal response');
+      }
+      console.log(approvalUrl)
+      console.log('Subscription ID:', subscriptionId);
+      return { approvalUrl, subscriptionId };  // Return the approval URL to redirect the user to PayPal
     }
     
     async cancelSubscription(cancelationDetails: CancelationDetails): Promise<boolean> {
@@ -90,9 +96,15 @@ export class UserService implements IUserService{
         throw new BadRequestError("User not found");
       }
     
-      user.subscriptionId = subscriptionId;
+      //user.subscriptionId = subscriptionId;
     
-      await this.userRepository.updateUser(userId,subscriptionId); // or save/update logic as per your DB setup
+      const payingUser = await this.userRepository.updateUser(userId,subscriptionId); // or save/update logic as per your DB setup
+
+      if(!payingUser){
+        throw new BadRequestError("Error updating user's status");
+      }
+
+      await rabbit.publishMessage(Exchanges.User, 'pay' ,{ id: payingUser.id, active: payingUser.active });
     }
 
     // Only for testing without Paypal

@@ -1,0 +1,150 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: proxy-ingress
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: proxy-srv
+      port:
+        number: 5000
+  tls:
+    - hosts:
+      - localhost.com
+      secretName: proxy-ingress-tls
+  rules:
+    - host: localhost.com
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: proxy-srv
+                port:
+                  number: 5000
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 5173
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: proxy-ingress
+# spec:
+#   ingressClassName: nginx
+#   defaultBackend:
+#     service:
+#       name: proxy-srv
+#       port:
+#         number: 5000
+#   tls:
+#     - hosts:
+#       - localhost.com
+#       secretName: proxy-ingress-tls
+#   rules:
+#     - host: localhost.com
+#       http:
+#         paths:
+#           - path: /api
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: proxy-srv
+#                 port:
+#                   number: 5000
+#           - path: /api/v1/users
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: users-srv
+#                 port:
+#                   number: 4000
+#           - path: /api/v1/movies
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: movies-srv
+#                 port:
+#                   number: 4002
+#           - path: /api/v1/payments
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: payments-srv
+#                 port:
+#                   number: 4001
+#           - path: /  # This will catch the root path
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: client-srv
+#                 port:
+#                   number: 5173
+#           - path: /.*  # Catch any other routes for the client app
+#             pathType: ImplementationSpecific
+#             backend:
+#               service:
+#                 name: client-srv
+#                 port:
+#                   number: 5173
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: proxy-ingress
+# spec:
+#   ingressClassName: nginx
+#   defaultBackend:
+#     service:
+#       name: proxy-srv
+#       port:
+#         number: 5000
+#   tls:
+#     - hosts:
+#       - localhost.com
+#       secretName: proxy-ingress-tls
+#   rules:
+#     - host: localhost.com
+#     - http:
+#         paths: 
+#           - path: /
+#             pathType: Prefix
+#             backend: 
+#               service:
+#                 name: proxy-srv
+#                 port:
+#                   number: 5000
+#           - path: /api/v1/users
+#             pathType: Prefix
+#             backend: 
+#               service:
+#                 name: users-srv
+#                 port:
+#                   number: 4000
+#           - path: /api/v1/movies
+#             pathType: Prefix
+#             backend: 
+#               service:
+#                 name: movies-srv
+#                 port:
+#                   number: 4002
+#           - path: /api/v1/payments
+#             pathType: Prefix
+#             backend: 
+#               service:
+#                 name: payments-srv
+#                 port:
+#                   number: 4001
+#           - path: /?(.*)
+#             pathType: ImplementationSpecific
+#             backend: 
+#               service:
+#                 name: client-srv
+#                 port:
+#                   number: 5173

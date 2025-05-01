@@ -3,18 +3,26 @@ import { IMoviesService } from "../interfaces/IMoviesService";
 import { TOKENS } from "../tokens";
 import { IMoviesRepository } from "../interfaces/IMovieRepository";
 import { IMovie } from "../interfaces/IMovie";
-import { tmdbGetAllMovies, tmdbGetGenres, tmdbGetMoviesByGenre, tmdbGetPopular, tmdbGetTrailer } from "../utils/tmdb-api";
-import redis from "../config/redis-client";
+import { mapFromArrayToRecord, tmdbGetAllMovies, tmdbGetGenres, tmdbGetPopular, tmdbSearchMovies } from "../utils/tmdb-api";
 import { orderMoviesByGenre } from "../utils/orderMoviesByGenre";
 import { MoviesByGenre } from "../DTOs/genre-movie-dto";
 import { IGenre } from "../interfaces/IGenre";
 import { setMoviesTrailer } from "../utils/setMoviesTrailer";
 import { BadRequestError } from "@netflix-utils/shared";
+//import redis from "../config/redis-client";
 
 @injectable()
 export class MoviesService implements IMoviesService{
     
     constructor(@inject(TOKENS.IMoviesRepository) private moviesRepository: IMoviesRepository) {}
+
+    async searchByTitle(title: string): Promise<Record<number, IMovie>> {
+        const movies = await tmdbSearchMovies(title);
+        if(!movies)
+            throw new BadRequestError('Failed to search movies.');
+        const moviesRecord = mapFromArrayToRecord(movies);
+        return moviesRecord;
+    }
 
     async getGenres(): Promise<IGenre[] | null> {
         const genres = await this.moviesRepository.getGeneres();
@@ -62,11 +70,12 @@ export class MoviesService implements IMoviesService{
         }
         return allMoviesByGenres;
     }
+}
 
-    async getAllMovies(): Promise<IMovie[] | null> {
-        const allMovies = await tmdbGetMoviesByGenre();
-        console.log(allMovies);
-        return allMovies;
+    // async getAllMovies(): Promise<IMovie[] | null> {
+    //     const allMovies = await tmdbGetMoviesByGenre();
+    //     console.log(allMovies);
+    //     return allMovies;
         // await redis.del(TOKENS.allMovies); // only for testing
         // let allMovies : IMovie[] | null = await this.moviesRepository.getAllMovies();
         // // console.log('Is there redis:',allMovies);
@@ -90,10 +99,10 @@ export class MoviesService implements IMoviesService{
         // }
         // console.log(allMovies?.length);
         // return allMovies;
-    }
+//     }
 
     
-}
+// }
 // async getMovieTrailer(movieId: number): Promise<string | null>{
 //     const key = await tmdbGetTrailer(movieId);
 //     return key;

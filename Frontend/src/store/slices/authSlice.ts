@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthResponse, EmailResponse } from "../../dto/AuthResponse";
 
 interface AuthState {
-    token: string;
+    accessToken: string; // can be the temp or the auth depends if the user is an active one(Paying customer)
     isAuthenticated: boolean;
     isActive: boolean,
     email: string;
@@ -11,7 +11,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-    token: "",
+    accessToken: "",
     isAuthenticated: false,
     isActive: false,
     email: "",
@@ -23,20 +23,27 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setStatus: (state, action: PayloadAction<boolean>) => {
+      state.isAuthenticated = true;
+      state.isActive = action.payload;
+    },
+    setAccessToken: (state, action: PayloadAction<string>) => {
+      state.accessToken = action.payload;
+    },
     login: (state, action: PayloadAction<AuthResponse>) => {
-      state.token = action.payload.token;
+      state.accessToken = action.payload.accessToken;
       state.message = action.payload.message;
       state.isAuthenticated = true;
       state.isActive = action.payload.active
     },
     signup: (state, action: PayloadAction<AuthResponse>) => {
-      state.token = action.payload.token;
+      state.accessToken = action.payload.accessToken;
       state.message = action.payload.message;
       state.isAuthenticated = true;
       state.isActive = false;
     },
     logout: (state) => {
-      state.token = "";
+      state.accessToken = "";
       state.email = "";
       state.message = null;
       state.error = null;
@@ -44,7 +51,7 @@ const authSlice = createSlice({
       state.isActive = false;
     },
     pay: (state) => {
-      state.token = "";
+      state.accessToken = "";
       state.message = null;
       state.isAuthenticated = false;
       state.isActive = false;
@@ -56,5 +63,5 @@ const authSlice = createSlice({
   extraReducers: () => {}
 });
 
-export const { login, signup, logout, setEmail, pay } = authSlice.actions;
+export const { login, signup, logout, setEmail, pay, setAccessToken, setStatus } = authSlice.actions;
 export default authSlice.reducer;

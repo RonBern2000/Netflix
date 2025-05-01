@@ -5,7 +5,7 @@ import Container from "../components/shared/Container";
 
 const Mylist = () => {
     return (
-        <Container className='flex-col w-full h-screen bg-black'> {/* TODO: temp bg color */}
+        <Container className='flex-col w-full h-screen bg-[#1c1c1c]'>
             <TopSection />
             <MidSection />
         </Container>
