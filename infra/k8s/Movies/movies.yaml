@@ -21,40 +21,40 @@ spec:
                 secretKeyRef: 
                   name: movies-secrets
                   key: MOVIES_PORT
-            - name: DB_URI
+            - name: REDIS_URI
               valueFrom:
                 secretKeyRef: 
-                  name: movies-secrets
+                  name: redis-uri
                   key: REDIS_URI
             - name: REDIS_PORT
               valueFrom:
                 secretKeyRef: 
-                  name: movies-secrets
+                  name: redis-port
                   key: REDIS_PORT
             - name: API_READ_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef: 
-                  name: movies-secrets
+                  name: api-read-access-token
                   key: API_READ_ACCESS_TOKEN
             - name: API_KEY
               valueFrom:
                 secretKeyRef: 
-                  name: movies-secrets
+                  name: api-key
                   key: API_KEY
             - name: RABBITMQ_URL
               valueFrom:
                 secretKeyRef: 
-                  name: movies-secrets
+                  name: rabbitmq-url
                   key: RABBITMQ_URL
             - name: PROXY_URL
               valueFrom:
                 secretKeyRef: 
-                  name: movies-secrets
+                  name: proxy-url
                   key: PROXY_URL
             - name: NODE_ENV
               valueFrom:
                 secretKeyRef: 
-                  name: movies-secrets
+                  name: node-env
                   key: NODE_ENV
           resources:
             requests:

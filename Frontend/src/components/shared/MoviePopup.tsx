@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IMovie } from "../../dto/IMovie";
 import Container from "./Container";
 import MoviePopupFooter from "../../features/MoviePopupFooter";
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/youtube';
 
 type MoviePopupProps = {
   movie: IMovie;

@@ -35,8 +35,8 @@ const start = async () => {
       console.log(`AI service listening on port ${PORT}...`);
     });
   } else {
-    app.listen(PORT, () => {
-      console.log(`AI service listening on port ${PORT}...`);
+    app.listen(4003, () => {
+      console.log(`AI service is listening on port ${4003}...`);
     });
   }
 };

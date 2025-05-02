@@ -48,6 +48,7 @@ export class MoviesService implements IMoviesService{
         if(!allMovies){
             allMovies = await tmdbGetAllMovies(5);
             await setMoviesTrailer(allMovies);
+            console.log("Movie with trailer: ", allMovies ? allMovies[0]: 'none');
             await this.moviesRepository.setAllMovies(allMovies!);
             const genres = await tmdbGetGenres();
             await this.moviesRepository.setGenres(genres!);

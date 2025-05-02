@@ -22,7 +22,7 @@ const RenderBrowseSwipers = () => {
 
   return (
     <Container className="flex-col bg-[#1c1c1c]">
-      {(isLoading && isLoadingMyList && isLoadingAi) ? (
+      {(isLoading || isLoadingMyList || isLoadingAi) ? (
         <>
           <H2 className="text-white z-1 ml-7.5">{strings.browse.loading}</H2>
         </>

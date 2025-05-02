@@ -7,6 +7,7 @@ import { rabbit } from "./config/rabbit";
 import { PaymentConsumer } from "./rabbitmq/consumers/payment-consumer";
 
 const start = async () => {
+  console.log("User service starting...");
   //TODO: Add all the evn variables to validate
   if (!DB_URI) {
     throw new Error("Missing db url");
@@ -29,8 +30,8 @@ const start = async () => {
       console.log(`User service listening on port ${PORT}...`);
     });
   } else {
-    app.listen(PORT, () => {
-      console.log(`User service listening on port ${PORT}...`);
+    app.listen(4000, () => {
+      console.log(`User service listening on port ${4000}...`);
     });
   }
 };

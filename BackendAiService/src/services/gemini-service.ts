@@ -51,7 +51,7 @@ export class AI2Service implements IAIService {
         //Step3:
         const step3 = `
         Tasks:
-            1. Filter the Data list so that it would add to an array each movie(item) that has the "mostFrequentLikedGenre" in his genre_ids array, important note maximum 10 items in the newly created array. Let's call it "reccomendedMovies".
+            1. Filter the Data list so that it would add to an array each movie(item) that has the "mostFrequentLikedGenre" in his genre_ids array, But dont add the movie if it's id matchs any of the ids in the movies in MyList list. important note: maximum 10 items in the newly created array. Let's call it "reccomendedMovies".
 
         Args:
         - MyList: [${userMovieList.join(", ")}]
@@ -68,7 +68,7 @@ export class AI2Service implements IAIService {
         //Step4:
         const step4 = `
         Tasks:
-            1. Map over recommenedMovies and return a new array of the ids only. Let's call it "recommenedMoviesIds"
+            1. Only if recommenedMovies does not have 10 items(movies) then fill up to 10 items from the Data list based on the latest release_date field in each item. Either if you made changes to recommenedMovies or not return it.
 
         Args:
         - MyList: [${userMovieList.join(", ")}]
@@ -78,10 +78,29 @@ export class AI2Service implements IAIService {
         - recommenedMovies: ${recommenedMovies} recommenedMovies is an array that contains strings in a format of an object: '{ id: 34, genre_ids: [54,56], release_date: 25-08-2022}
 
         Returns:
-        - Return only the recommenedMoviesIds that you made from task number 1 as a string. no explanation, no code block.`;
+        - Return only the recommenedMovies that you made from task number 1 as a string. no explanation, no code block.`;
         const resultStep4 = await chat.sendMessage({message: step4});
-        const recommenedMoviesIds: string = resultStep4.candidates?.[0].content?.parts?.[0].text || "";
+        const updatedrecommenedMovies: string = resultStep4.candidates?.[0].content?.parts?.[0].text || "";
+        console.log("RecommenedMoviesUpdated: ", updatedrecommenedMovies);
+
+        //Step5:
+        const step5 = `
+        Tasks:
+            1. Map over recommenedMovies and return a new array of the ids only. Let's call it "recommenedMoviesIds"
+
+        Args:
+        - MyList: [${userMovieList.join(", ")}]
+        - Data: [${data.join(", ")}] Data is an array that contains strings in a format of an object: '{ id: 34, genre_ids: [54,56], release_date: 25-08-2022}
+        - myListGenres: ${myListGenres}
+        - mostFrequentLikedGenre: ${mostFrequentLikedGenre}
+        - recommenedMovies: ${updatedrecommenedMovies} recommenedMovies is an array that contains strings in a format of an object: '{ id: 34, genre_ids: [54,56], release_date: 25-08-2022}
+
+        Returns:
+        - Return only the recommenedMoviesIds that you made from task number 1 as a string. no explanation, no code block.`;
+        const resultStep5 = await chat.sendMessage({message: step5});
+        const recommenedMoviesIds: string = resultStep5.candidates?.[0].content?.parts?.[0].text || "";
         console.log("RecommenedMoviesIds: ", recommenedMoviesIds);
+
         return recommenedMoviesIds;
     } catch (error) {
       console.error("Error calling Google GenAI API: ", error);

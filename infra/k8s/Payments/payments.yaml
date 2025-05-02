@@ -12,10 +12,6 @@ spec:
       labels:
         app: payments
     spec:
-      initContainers:
-        - name: wait-for-rabbit
-          image: busybox
-          command: ['sh', '-c', 'until nc -z rabbitmq 5672; do echo waiting for rabbitmq; sleep 2; done;']
       containers:
         - name: payments
           image: ron1111000/payments:latest
@@ -25,45 +21,45 @@ spec:
                 secretKeyRef: 
                   name: payments-secrets
                   key: PORT
-            - name: DB_URI
+            - name: PAYMENTS_DB_URI
               valueFrom:
                 secretKeyRef: 
-                  name: payments-secrets
-                  key: DB_URI
+                  name: payments-db-uri
+                  key: PAYMENTS_DB_URI
             - name: RABBITMQ_URL
               valueFrom:
                 secretKeyRef: 
-                  name: payments-secrets
+                  name: rabbitmq-url
                   key: RABBITMQ_URL
             - name: PROXY_URL
               valueFrom:
                 secretKeyRef: 
-                  name: payments-secrets
+                  name: proxy-url
                   key: PROXY_URL
             - name: NODE_ENV
               valueFrom:
                 secretKeyRef: 
-                  name: payments-secrets
+                  name: node-env
                   key: NODE_ENV
             - name: PAYPAL_CLIENT_ID
               valueFrom:
                 secretKeyRef: 
-                  name: payments-secrets
+                  name: paypal-client-id
                   key: PAYPAL_CLIENT_ID
             - name: PAYPAL_SECRET
               valueFrom:
                 secretKeyRef: 
-                  name: payments-secrets
+                  name: paypal-secret
                   key: PAYPAL_SECRET
             - name: PAYPAL_API_BASE_URL
               valueFrom:
                 secretKeyRef: 
-                  name: payments-secrets
+                  name: paypal-api-base-url
                   key: PAYPAL_API_BASE_URL
             - name: PAYPAL_PLAN_ID
               valueFrom:
                 secretKeyRef: 
-                  name: payments-secrets
+                  name: paypal-plan-id
                   key: PAYPAL_PLAN_ID
           resources:
             requests:
