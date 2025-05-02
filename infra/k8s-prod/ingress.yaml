@@ -4,17 +4,12 @@ metadata:
   name: proxy-ingress
 spec:
   ingressClassName: nginx
-  defaultBackend:
-    service:
-      name: proxy-srv
-      port:
-        number: 5000
   tls:
     - hosts:
-      - localhost.com
+        - net-flex-prod.site
       secretName: proxy-ingress-tls
   rules:
-    - host: localhost.com
+    - host: net-flex-prod.site
       http:
         paths:
           - path: /api

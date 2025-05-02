@@ -65,6 +65,8 @@ export class UserController{
                 res.cookie(TOKENS.token, `${TOKENS.Bearer} ${refreshToken}`, {
                     httpOnly: true,
                     sameSite: 'strict',
+                    secure: false,
+                    signed: false,
                 });
                 res.header('authorization', accessToken);
                 return res.status(200).json({message: "Login Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`, active: active});
@@ -72,6 +74,8 @@ export class UserController{
             res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${refreshToken}`, {
                 httpOnly: true,
                 sameSite: 'strict',
+                secure: false,
+                signed: false,
             });
             res.header('authorization', accessToken);
             return res.status(200).json({message: "Login Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`, active: active});
@@ -92,6 +96,8 @@ export class UserController{
             res.cookie(TOKENS.tempToken, `${TOKENS.Bearer} ${refreshToken}`, {
                 httpOnly: true,
                 sameSite: 'strict',
+                secure: false,
+                signed: false,
             });
             res.header('authorization', accessToken);
             return res.status(200).json({message: "Signup Successful", accessToken: `${TOKENS.Bearer} ${accessToken}`});
@@ -107,6 +113,8 @@ export class UserController{
                     path: '/',
                     httpOnly: true,
                     sameSite: 'strict',
+                    secure: false,
+                    signed: false,
                 });
             }
             return res.status(200).json({message: "Logout Successful"});
