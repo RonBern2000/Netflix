@@ -24,37 +24,37 @@ spec:
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef: 
-                  name: proxy-secrets
+                  name: jwt-key
                   key: JWT_KEY
             - name: USERS_URL
               valueFrom:
                 secretKeyRef: 
-                  name: proxy-secrets
+                  name: users-url
                   key: USERS_URL
             - name: PAYMENT_URL
               valueFrom:
                 secretKeyRef: 
-                  name: proxy-secrets
+                  name: payment-url
                   key: PAYMENT_URL
             - name: MOVIES_URL
               valueFrom:
                 secretKeyRef: 
-                  name: proxy-secrets
+                  name: movies-url
                   key: MOVIES_URL
             - name: AI_URL
               valueFrom:
                 secretKeyRef: 
-                  name: proxy-secrets
+                  name: ai-url
                   key: AI_URL
             - name: CLIENT_URL
               valueFrom:
                 secretKeyRef: 
-                  name: proxy-secrets
+                  name: client-url
                   key: CLIENT_URL
             - name: NODE_ENV
               valueFrom:
-                secretKeyRef: 
-                  name: proxy-secrets
+                secretKeyRef:
+                  name: node-env
                   key: NODE_ENV
           resources:
             requests:

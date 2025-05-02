@@ -24,42 +24,42 @@ spec:
             - name: REDIS_URI
               valueFrom:
                 secretKeyRef:
-                  name: ai-secrets
+                  name: redis-uri
                   key: REDIS_URI
             - name: REDIS_PORT
               valueFrom:
                 secretKeyRef: 
-                  name: ai-secrets
+                  name: redis-port
                   key: REDIS_PORT
-            - name: DB_URI
+            - name: AI_DB_URI
               valueFrom:
                 secretKeyRef: 
-                  name: ai-secrets
-                  key: DB_URI
+                  name: ai-db-uri
+                  key: AI_DB_URI
             - name: GROQ_API_KEY
               valueFrom:
                 secretKeyRef: 
-                  name: ai-secrets
+                  name: groq-api-key
                   key: GROQ_API_KEY
             - name: GEMINI_API_KEY
               valueFrom:
                 secretKeyRef: 
-                  name: ai-secrets
+                  name: gemini-api-key
                   key: GEMINI_API_KEY
             - name: RABBITMQ_URL
               valueFrom:
                 secretKeyRef: 
-                  name: ai-secrets
+                  name: rabbitmq-url
                   key: RABBITMQ_URL
             - name: PROXY_URL
               valueFrom:
                 secretKeyRef: 
-                  name: ai-secrets
+                  name: proxy-url
                   key: PROXY_URL
             - name: NODE_ENV
               valueFrom:
                 secretKeyRef: 
-                  name: ai-secrets
+                  name: node-env
                   key: NODE_ENV
           resources:
             requests:
