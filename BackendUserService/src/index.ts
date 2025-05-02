@@ -7,7 +7,7 @@ import { rabbit } from "./config/rabbit";
 import { PaymentConsumer } from "./rabbitmq/consumers/payment-consumer";
 
 const start = async () => {
-  console.log("User service starting...");
+  console.log("User service starting.....");
   //TODO: Add all the evn variables to validate
   if (!DB_URI) {
     throw new Error("Missing db url");
