@@ -15,4 +15,6 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save netflix-clone
-      - run: kubectl apply -f infra/k8s/**/*.yaml && kubectl apply -f infra/k8s-prod
+      - run: |
+          kubectl apply -f infra/k8s --recursive
+          kubectl apply -f infra/k8s-prod --recursive
