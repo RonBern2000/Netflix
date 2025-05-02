@@ -36,11 +36,6 @@ spec:
                 secretKeyRef: 
                   name: ai-db-uri
                   key: AI_DB_URI
-            - name: GROQ_API_KEY
-              valueFrom:
-                secretKeyRef: 
-                  name: groq-api-key
-                  key: GROQ_API_KEY
             - name: GEMINI_API_KEY
               valueFrom:
                 secretKeyRef: 
