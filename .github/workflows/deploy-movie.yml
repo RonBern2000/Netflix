@@ -1,0 +1,24 @@
+name: deploy-movie
+
+on:  
+  push:
+    branches:
+      - main
+    paths:
+      - 'BackendMoviesService/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd BackendMoviesService && docker build -t ron1111000/movies .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker push ron1111000/movies
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save netflix-clone
+      - run: kubectl rollout restart deployment movies-depl
