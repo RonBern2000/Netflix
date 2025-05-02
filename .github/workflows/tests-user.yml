@@ -1,7 +1,9 @@
-name: tests
+name: tests-user
 
 on:
-  pull_request
+  pull_request:
+      paths:
+        - 'BackendUserService/**'
 
 jobs:
   build:

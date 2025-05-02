@@ -11,7 +11,7 @@ const mutex = new Mutex();
 
 // "http://localhost:5000"
 export const baseQuery = fetchBaseQuery({
-    baseUrl: "https://localhost.com",
+    baseUrl: "http://net-flex-prod.site",
     prepareHeaders: (headers, { getState }) => {
         const token = (getState() as RootState).auth.accessToken;
         if(token){

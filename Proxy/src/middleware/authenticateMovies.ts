@@ -9,6 +9,7 @@ export const authenticateMovies = (req: Request, res: Response, next: NextFuncti
     if (path.startsWith('/api/v1/movies/popular')){
         return next();
     }
+    console.log("Hey there beutiful");
 
     try {
         const token = req.cookies.token;
