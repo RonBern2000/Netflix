@@ -24,8 +24,8 @@ spec:
             - name: USERS_DB_URI
               valueFrom:
                 secretKeyRef: 
-                  name: users-secrets
-                  key: users-db-uri
+                  name: users-db-uri
+                  key: USERS_DB_URI
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef: 
