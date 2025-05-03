@@ -35,10 +35,11 @@ export class UserController{
               path: '/',
               httpOnly: true,
               sameSite: 'strict',
+              secure: false,
+              signed: false,
           });
         }
-        // Redirect to frontend page
-        return res.redirect(`https://www.net-flex-prod.site/login`);
+        return res.status(200).json({ message: `success`});
       } catch (error) {
           return next(error);
       }

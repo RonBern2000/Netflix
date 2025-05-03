@@ -30,8 +30,8 @@ const useAuth = () => {
           .then((res) => {
             if (res?.data) {
               console.log("PayPal payment confirmed successfully");
-              dispatch(pay());
               localStorage.removeItem('pending_subscription_id');
+              dispatch(pay());
             }
           })
           .catch((err) => {

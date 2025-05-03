@@ -21,7 +21,7 @@ export const usersApiSlice = createApi({
                     method: "POST",
                     body: newUser,
                 }),
-            }),// TODO: Move this two to a new apiSlice paymentApiSlice
+            }),
             payAndActivateUser: builder.query<{ approvalUrl: string, subscriptionId: string }, void>({
                 query: () => "/api/v1/payments/payments/subscribe",
                 transformResponse: (response: { approvalUrl: string, subscriptionId: string }) => ({
