@@ -2,18 +2,18 @@ import { app } from "./app";
 import { dbConnection } from "./config/db";
 import fs from "fs";
 import https from "https";
-import { DB_URI, JWT_KEY, NODE_ENV, PORT, RABBITMQ_URL } from "./config/env";
+import { JWT_KEY, NODE_ENV, PORT, RABBITMQ_URL } from "./config/env";
 import { rabbit } from "./config/rabbit";
 import { PaymentConsumer } from "./rabbitmq/consumers/payment-consumer";
+import { InvalidEnvironmentVariablesError } from "@netflix-utils/shared";
 
 const start = async () => {
   console.log("User service starting.....");
-  //TODO: Add all the evn variables to validate
-  if (!DB_URI) {
+  if (!process.env.USERS_DB_URI) {
     throw new Error("Missing db url");
   }
-  if (!JWT_KEY || !RABBITMQ_URL) {
-    throw new Error("Missing env variables");
+  if (!JWT_KEY || !RABBITMQ_URL || !NODE_ENV) {
+    throw new InvalidEnvironmentVariablesError("Missing env variables");
   }
 
   await dbConnection();
