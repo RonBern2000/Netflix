@@ -1,4 +1,4 @@
 
 export interface IAIService{
-    getMovieRecommendationsPrompt(data: string[], userMovieList: string[]): Promise<string>;
+    getMovieRecommendationsPrompt(userMovieList: string[],data: string[]): Promise<string>;
 }

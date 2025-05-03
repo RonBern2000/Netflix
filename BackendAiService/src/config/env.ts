@@ -6,6 +6,7 @@ export const {
   DB_URI,
   GROQ_API_KEY,
   RABBITMQ_URL,
+  GEMINI_API_KEY,
   PROXY_URL,
   NODE_ENV,
   PORT

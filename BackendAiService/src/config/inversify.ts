@@ -5,14 +5,14 @@ import { IUserToMovieService } from "../interfaces/IUserToMovieService";
 import { IUserToMovieRepository } from "../interfaces/IUserToMovieRepository";
 import { UserToMovieRepository } from "../repositories/user-to-movie-repository";
 import { UserToMovieService } from "../services/user-to-movie-service";
-import { AIService } from "../utils/ai-service";
+import { AI2Service } from "../services/gemini-service";
 import { IAIService } from "../interfaces/IAIService";
 
 const container = new Container();
 
 container.bind<IUserToMovieRepository>(TOKENS.IUserToMovieRepository).to(UserToMovieRepository);
 container.bind<IUserToMovieService>(TOKENS.IUserToMovieService).to(UserToMovieService);
-container.bind<IAIService>(TOKENS.IAIService).to(AIService);
+container.bind<IAIService>(TOKENS.IAIService).to(AI2Service);
 container.bind<UserToMovieController>(TOKENS.UserToMovieController).to(UserToMovieController);
 
 export { container };

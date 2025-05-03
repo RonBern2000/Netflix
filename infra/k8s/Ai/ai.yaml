@@ -45,6 +45,11 @@ spec:
                 secretKeyRef: 
                   name: ai-secrets
                   key: GROQ_API_KEY
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef: 
+                  name: ai-secrets
+                  key: GEMINI_API_KEY
             - name: RABBITMQ_URL
               valueFrom:
                 secretKeyRef: 

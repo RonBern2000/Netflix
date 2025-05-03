@@ -46,8 +46,6 @@ const BrowseSwiper = ({ movies, myList, paginationAmount }: SwiperProps) => {
         };
     }, []);
 
-
-
     useEffect(() => {
         const updateHeight = () => {
             if (swiperRef.current) {

@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "test:ci": "jest"
   },
   "jest": {
     "preset": "ts-jest",
@@ -19,7 +20,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@netflix-utils/shared": "^1.0.19",
+    "@netflix-utils/shared": "^1.0.20",
     "@types/bcryptjs": "^3.0.0",
     "amqplib": "^0.10.5",
     "bcryptjs": "^3.0.2",

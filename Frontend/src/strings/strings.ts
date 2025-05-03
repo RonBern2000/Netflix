@@ -26,6 +26,9 @@ export const strings = {
                 { text: "Unlimited viewing on all your devices.", id: 3 },
             ],
         },
+        payment:{
+            h1: "Time to complete the Payment",
+        },
         login: {
             newToNetflix: "New to Netflix?",
             signupNow: "Sign up now.",
@@ -37,6 +40,7 @@ export const strings = {
             UseaSignInCode: "Use a Sign-In Code",
             forgotpassword: "Forgot password?",
             rememberme: "Remember me",
+            invalidCredentials: "Invalid Credentials"
         },
         registration:{
             step1of3: "STEP 1 OF 3",

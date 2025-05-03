@@ -35,15 +35,30 @@ export class UserToMovieService implements IUserToMovieService{
 
         console.log("userMyListMoviesStrings: ",userMyListMoviesStrings, "Amount: ", userMyListMoviesStrings.length);
 
-        const recommendationString: string = await this.aiService.getMovieRecommendationsPrompt(movieStrings, userMyListMoviesStrings); // strings of ids of recommend movies 45,21,2,65...  
+        const recommendationString: string = await this.aiService.getMovieRecommendationsPrompt(userMyListMoviesStrings, movieStrings); // strings of ids of recommend movies 45,21,2,65...  
 
         console.log("Recommened listString: ", recommendationString);
-        // Answer Processing
-        return null;
+        const clean = this.extractArrayFromResponse(recommendationString);
+        console.log("Cleaned: ", clean)
+        const moviesIds: number[] = this.fromStringAToNumberArray(clean);
+        console.log("Number[]: ", moviesIds);
+        const recommendedMovies = moviesDbFull.filter(movie => moviesIds.includes(movie.id));
+
+        return recommendedMovies.length > 0 ? recommendedMovies : null;
     }
 
     private fromObjectArrayToStringArray<T>(array: T[]): string[] {
         const stringArray = array.map(item => JSON.stringify(item));
         return stringArray;
+    }
+
+    private fromStringAToNumberArray(input: string): number[] {
+        return JSON.parse(input).map(Number);
+    }
+    private extractArrayFromResponse(responseString: string):string {
+        return responseString
+        .replace(/```json/g, '')
+        .replace(/```/g, '')
+        .trim();
     }
 }
