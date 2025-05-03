@@ -12,7 +12,7 @@
   "description": "",
   "dependencies": {
     "@google/genai": "^0.10.0",
-    "@netflix-utils/shared": "^1.0.20",
+    "@netflix-utils/shared": "^1.0.21",
     "amqplib": "^0.10.7",
     "axios": "^1.8.4",
     "cors": "^2.8.5",
@@ -22,11 +22,11 @@
     "inversify": "^7.5.1",
     "ioredis": "^5.6.1",
     "mongoose": "^8.13.2",
+    "nodemon": "^3.1.10",
     "redis": "^4.7.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.3",
-    "nodemon": "^3.1.10"
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
