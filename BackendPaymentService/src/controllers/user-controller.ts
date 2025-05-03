@@ -30,15 +30,17 @@ export class UserController{
         if(typeof userId === 'string')
           await this.userService.getSubscriptionIdAndSave(userId, subscriptionId);
 
-        for (const cookieName in req.cookies) {
-          res.clearCookie(cookieName, {
-              path: '/',
-              httpOnly: true,
-              sameSite: 'strict',
-              secure: false,
-              signed: false,
-          });
-        }
+        const {tempToken} = req.cookies;
+        console.log("tempToken:", tempToken);
+        console.log("all cookies:", req.cookies);
+        
+        res.clearCookie('tempToken', {
+            path: '/',
+            httpOnly: true,
+            sameSite: 'strict',
+            secure: false,
+            signed: false,
+        });
         return res.status(200).json({ message: `success`});
       } catch (error) {
           return next(error);
