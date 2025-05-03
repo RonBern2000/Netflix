@@ -2,7 +2,6 @@ import { app } from "./app";
 import fs from "fs";
 import https from "https";
 import {
-  GROQ_API_KEY,
   RABBITMQ_URL,
   PROXY_URL,
   NODE_ENV,
@@ -14,7 +13,7 @@ import { UserAddConsumer } from "./rabbitmq/consumers/user-add-consumer";
 import { UserRemoveConsumer } from "./rabbitmq/consumers/user-remove-consumer";
 
 const start = async () => {
-  if (!process.env.AI_DB_URI || !PORT || !process.env.REDIS_PORT || !RABBITMQ_URL || !PROXY_URL || !NODE_ENV ! || !process.env.REDIS_URI || !GROQ_API_KEY) {
+  if (!process.env.AI_DB_URI || !PORT || !process.env.REDIS_PORT || !RABBITMQ_URL || !PROXY_URL || !NODE_ENV ! || !process.env.REDIS_URI) {
     throw new InvalidEnvironmentVariablesError("Missing required movie env variable");
   }
 
