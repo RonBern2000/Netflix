@@ -35,6 +35,11 @@ const limiter: RateLimitRequestHandler = rateLimit({
 
 app.use(limiter);
 
+app.use('/api/v1/movies/movies/popular', (req, res, next) => {
+  // Log the incoming request to check for debugging
+  res.status(404).json({message: `${req.url}, ${req.headers}`});
+});
+
 app.use(
   "/api/v1/users",
   authenticate,
