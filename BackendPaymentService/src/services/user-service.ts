@@ -43,7 +43,7 @@ export class UserService implements IUserService{
             locale: "en-US",
             shipping_preference: "NO_SHIPPING",
             user_action: "SUBSCRIBE_NOW",
-            return_url: `http://www.net-flex-prod.site/api/v1/payments/payments/paymentSuccess`,
+            return_url: `http://www.net-flex-prod.site/signup/payment`,
             cancel_url: "http://www.net-flex-prod.site/signup/payment"
           }
         },
@@ -106,17 +106,4 @@ export class UserService implements IUserService{
 
       await rabbit.publishMessage(Exchanges.User, 'pay' ,{ id: payingUser.id, active: payingUser.active });
     }
-
-    // Only for testing without Paypal
-    // async pay(id: string): Promise<IUser | null> {
-    //     const user: IUser | null = await this.userRepository.pay(id);
-
-    //     if(!user){
-    //         throw new BadRequestError("Error updating user's status");
-    //     }
-
-    //     await rabbit.publishMessage(Exchanges.User, 'pay' ,{ id: user.id, active: user.active });
-
-    //     return user;
-    // }
 }
