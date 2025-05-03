@@ -51,7 +51,10 @@ const useAuth = () => {
   }, [location.search, dispatch, paymentSuccess, isProcessingPayment, navigate]);
 
   useEffect(() => {
-    if (isProcessingPayment || !isPaid) return;
+    console.log('2 state: ', isProcessingPayment, isPaid);
+    if (isProcessingPayment || isPaid) {
+      return;
+    }
 
     if (isSuccess) {
       dispatch(setStatus(data));
