@@ -35,7 +35,7 @@ const limiter: RateLimitRequestHandler = rateLimit({
 
 app.use(limiter);
 
-app.use('/api/v1/movies/movies/popular', (req, res, next) => {
+app.use('/api/v1/movies', (req, res, next) => {
   const headers = JSON.stringify(req.headers, null, 2);  // Format the headers for readability
   const message = `Requested URL: ${req.url}\nRequest Headers: ${headers}`;
 
