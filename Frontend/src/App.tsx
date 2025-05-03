@@ -1,20 +1,13 @@
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
-import useAuth from './hooks/useAuth';
-import AppRoutes from './routes/AppRoutes';
+import AuthWrapper from './routes/AuthWrapper';
 
 function App() {
-
-  const { isAuthenticated, isActive, email } = useAuth();
 
   return (
     <>
       <BrowserRouter>
-        <AppRoutes
-          isAuthenticated={isAuthenticated}
-          isActive={isActive}
-          email={email}
-        />
+        <AuthWrapper />
       </BrowserRouter>
     </>
   )
