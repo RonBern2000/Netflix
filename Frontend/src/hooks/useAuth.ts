@@ -14,6 +14,7 @@ const useAuth = () => {
   const { data, isSuccess, isError } = useCheckStatusQuery();
   const [paymentSuccess] = usePaymentSuccessMutation();
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [isPaid, setIsPaid] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -31,7 +32,8 @@ const useAuth = () => {
             if (res?.data) {
               console.log("PayPal payment confirmed successfully");
               localStorage.removeItem('pending_subscription_id');
-              dispatch(await pay());
+              dispatch(pay());
+              setIsPaid(true);
               navigate('/login');
             }
           })
@@ -49,12 +51,14 @@ const useAuth = () => {
   }, [location.search, dispatch, paymentSuccess, isProcessingPayment, navigate]);
 
   useEffect(() => {
+    if (isProcessingPayment || !isPaid) return;
+
     if (isSuccess) {
       dispatch(setStatus(data));
     } else if (isError) {
       dispatch(logout());
     }
-  }, [data, isSuccess, isError, dispatch]);
+  }, [data, isSuccess, isError, dispatch, isProcessingPayment, isPaid]);
 
   return { isAuthenticated, isActive, email };
 };
