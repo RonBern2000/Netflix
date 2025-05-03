@@ -12,12 +12,8 @@ const PaymentForm = () => {
             const { data } = await triggerPayment();
 
             if (data?.approvalUrl && data?.subscriptionId) {
-                console.log("Payment initiated. Subscription ID:", data.subscriptionId);
-                console.log("Approval URL:", data.approvalUrl);
-
                 // Store the subscription ID for when redirected back
                 localStorage.setItem('pending_subscription_id', data.subscriptionId);
-
                 // Redirect to PayPal
                 window.location.href = data.approvalUrl;
             } else {
@@ -47,57 +43,3 @@ const PaymentForm = () => {
 };
 
 export default PaymentForm;
-
-
-
-// useEffect(() => {
-//     const params = new URLSearchParams(location.search);
-//     const paypalReturn = params.get("paypal_return");
-
-//     console.log("Current URL params Here:", params.toString());
-
-//     if (paypalReturn === "success") {
-//         const subscriptionId = localStorage.getItem('pending_subscription_id');
-
-//         if (subscriptionId) {
-//             console.log("Processing payment confirmation for subscription:", subscriptionId);
-
-//             paymentSuccess(subscriptionId)
-//                 .then((res) => {
-//                     if (res?.data) {
-//                         console.log("Payment confirmed successfully!");
-//                         dispatch(pay());
-//                         localStorage.removeItem('pending_subscription_id');
-//                     } else {
-//                         console.error("Payment confirmation returned unexpected data:", res);
-//                     }
-//                 })
-//                 .catch((err) => {
-//                     console.error("Payment confirmation API error:", err);
-//                 });
-//         } else {
-//             console.error("No subscription ID found in storage for payment confirmation");
-//         }
-//     } else if (paypalReturn === "cancel") {
-//         console.log("Payment was cancelled by user");
-//         // Handle cancellation if needed
-//     }
-// }, [location.search, paymentSuccess, dispatch]);
-
-// const handlePay = async () => {
-//     try {
-//         const { data } = await triggerPayment();
-
-//         if (data) {
-//             const { subscriptionId } = data;
-//             const greatSuccess = await paymentSuccess(subscriptionId);
-//             if (greatSuccess) {
-//                 dispatch(pay());
-//             }
-//         } else {
-//             console.error("Approval URL not returned");
-//         }
-//     } catch (error) {
-//         console.error("Payment subscription failed", error);
-//     }
-// }

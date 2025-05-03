@@ -26,23 +26,20 @@ const useAuth = () => {
       const subscriptionId = localStorage.getItem('pending_subscription_id');
       
       if (subscriptionId) {
-        console.log("Processing PayPal payment confirmation:", subscriptionId);
-        paymentSuccess(subscriptionId)
-          .then(async (res) => {
-            if (res?.data) {
-              console.log("PayPal payment confirmed successfully");
-              localStorage.removeItem('pending_subscription_id');
-              dispatch(pay());
-              setIsPaid(true);
-              navigate('/login');
-            }
-          })
-          .catch((err) => {
-            console.error("PayPal payment confirmation failed:", err);
-          })
-          .finally(() => {
-            setIsProcessingPayment(false);
-          });
+        paymentSuccess(subscriptionId).then(async (res) => {
+          if (res?.data) {
+            localStorage.removeItem('pending_subscription_id');
+            dispatch(pay());
+            setIsPaid(true);
+            navigate('/login');
+          }
+        })
+        .catch((err) => {
+          console.error("PayPal payment confirmation failed:", err);
+        })
+        .finally(() => {
+          setIsProcessingPayment(false);
+        });
       } else {
         console.error("No subscription ID found for PayPal confirmation");
         setIsProcessingPayment(false);
@@ -51,11 +48,9 @@ const useAuth = () => {
   }, [location.search, dispatch, paymentSuccess, isProcessingPayment, navigate]);
 
   useEffect(() => {
-    console.log('2 state: ', isProcessingPayment, isPaid);
     if (isProcessingPayment || isPaid) {
       return;
     }
-
     if (isSuccess) {
       dispatch(setStatus(data));
     } else if (isError) {
