@@ -64,11 +64,11 @@ const AppRoutes = ({ isAuthenticated, isActive, email }: AppRoutesProps) => {
   }
 
   // Fallback in case none of the conditions match (shouldn't happen)
-  return (
-    <Routes>
-      <Route path="*" element={<Navigate to="/landing" />} />
-    </Routes>
-  );
+  // return (
+  //   <Routes>
+  //     <Route path="*" element={<Navigate to="/landing" />} />
+  //   </Routes>
+  // );
 };
 
 export default AppRoutes;
