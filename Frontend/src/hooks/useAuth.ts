@@ -3,8 +3,10 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import { useCheckStatusQuery, usePaymentSuccessMutation } from '../store/slices/authApiSlice';
 import { logout, pay, setStatus } from '../store/slices/authSlice';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { isAuthenticated, isActive, email } = useAppSelector((state) => state.auth);
@@ -32,6 +34,7 @@ const useAuth = () => {
               console.log("PayPal payment confirmed successfully");
               localStorage.removeItem('pending_subscription_id');
               dispatch(pay());
+              navigate('/login');
             }
           })
           .catch((err) => {
