@@ -18,7 +18,6 @@ type AppRoutesProps = {
 const AppRoutes = ({ isAuthenticated, isActive, email }: AppRoutesProps) => {
   // Unauthenticated Users
   if (!isAuthenticated && !isActive && !email) {
-    console.log("Inside login and landing:", isAuthenticated, isActive, email);
     return (
       <Routes>
         <Route path="/landing" element={<LandingPage />} />
@@ -43,7 +42,6 @@ const AppRoutes = ({ isAuthenticated, isActive, email }: AppRoutesProps) => {
 
   // Authenticated but Not Active Users
   if (isAuthenticated && isActive === false) {
-    console.log("In these routes", isAuthenticated, isActive);
     return (
       <Routes>
         <Route path="/signup/payment" element={<Payment />} />
