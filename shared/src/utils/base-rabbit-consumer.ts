@@ -8,24 +8,23 @@ interface Event{
 export abstract class BaseRabbitMQConsumer<T extends Event>{
     abstract exchange: T['exchange'];
     abstract routingKey: string;
-    abstract onMessage(data: T['data'], ack: () => void, nack: () => void): Promise<void>;
+    abstract onMessage(data: T['data']): Promise<void>;
 
     protected rabbit: RabbitMQClient;
 
     constructor(rabbit: RabbitMQClient) {
-    this.rabbit = rabbit;
-  }
+        this.rabbit = rabbit;
+    }
 
   async consume(): Promise<void> {
         await this.rabbit.comsumeMessage(
             this.exchange,
             this.routingKey,
-            async (data, ack, nack) => {
+            async (data) => {
                 try {
-                    await this.onMessage(data, ack, nack);
+                    await this.onMessage(data);
                 } catch (error) {
                     console.error(`Error processing message from ${this.exchange}:`, error);
-                    nack();
                 }
             }
         );

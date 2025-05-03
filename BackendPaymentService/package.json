@@ -20,7 +20,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@netflix-utils/shared": "^1.0.21",
+    "@netflix-utils/shared": "^1.0.22",
     "axios": "^1.8.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

@@ -42,7 +42,6 @@ const AppRoutes = ({ isAuthenticated, isActive, email }: AppRoutesProps) => {
 
   // Authenticated but Not Active Users
   if (isAuthenticated && !isActive) {
-    console.log("Here!");
     return (
       <Routes>
         <Route path="/signup/payment" element={<Payment />} />
