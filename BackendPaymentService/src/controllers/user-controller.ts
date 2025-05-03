@@ -32,7 +32,7 @@ export class UserController{
         }
         console.log("we are in the controller.")
         console.log("all cookies:", req.cookies);
-        const {tempToken} = req.cookies;
+        const tempToken = req.cookies?.tempToken;
         console.log("tempToken:", tempToken);
 
         res.clearCookie('tempToken', {
