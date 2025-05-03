@@ -18,7 +18,8 @@ export const strings = {
         signout: "Sign Out",
         next: "Next",
         signup: {
-            step2of3: "STEP 3 OF 3",
+            step2of3: "STEP 2 OF 3",
+            step3of3: "STEP 3 OF 3",
             h1: "Choose your plan",
             typos: [
                 { text: "No commitments, cancel anytime" , id: 1},

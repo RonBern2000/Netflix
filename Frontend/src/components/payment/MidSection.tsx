@@ -10,7 +10,7 @@ const MidSection = () => {
         <Container className="flex-col gap-1 justify-center items-center">
             <Container className='flex-col items-center justify-center text-center mx-auto mt-25'>
                 <img src='/Circlewithvi.png' alt='vi logo' />
-                <Typography className='text-black'>{strings.auth.signup.step2of3}</Typography>
+                <Typography className='text-black'>{strings.auth.signup.step3of3}</Typography>
                 <H1 className='text-3xl font-semibold'>{strings.auth.payment.h1}</H1>
                 <Container className="flex-col">
                     {new Array(3).fill(0).map((_, index) => (

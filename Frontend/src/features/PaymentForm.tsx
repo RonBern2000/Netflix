@@ -31,6 +31,8 @@ const PaymentForm = () => {
         const params = new URLSearchParams(location.search);
         const subscriptionId = params.get("subscription_id"); // adjust based on your PayPal config
 
+        console.log("Params:", params);
+
         if (subscriptionId) {
             paymentSuccess(subscriptionId).then((res) => {
                 if (res?.data) {
@@ -40,7 +42,8 @@ const PaymentForm = () => {
                 console.error("Payment confirmation failed", err);
             });
         }
-    }, [dispatch, paymentSuccess]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Container>
