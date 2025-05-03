@@ -1,16 +1,16 @@
-// import { useEffect } from "react";
-// import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Button from "../components/shared/Button";
 import Container from "../components/shared/Container";
-import { useLazyPayAndActivateUserQuery } from "../store/slices/authApiSlice";
-// import { pay } from "../store/slices/authSlice";
-// import { useAppDispatch } from "../store/store";
+import { useLazyPayAndActivateUserQuery, usePaymentSuccessMutation } from "../store/slices/authApiSlice";
+import { pay } from "../store/slices/authSlice";
+import { useAppDispatch } from "../store/store";
 
 const PaymentForm = () => {
-    // const dispatch = useAppDispatch();
-    // const location = useLocation();
+    const dispatch = useAppDispatch();
+    const location = useLocation();
     const [triggerPayment, { isLoading: isPaying }] = useLazyPayAndActivateUserQuery();
-    // const [paymentSuccess] = usePaymentSuccessMutation();
+    const [paymentSuccess] = usePaymentSuccessMutation();
 
     // Handle payment initiation
     const handlePay = async () => {
@@ -36,39 +36,39 @@ const PaymentForm = () => {
     };
 
     // Handle PayPal return
-    // useEffect(() => {
-    //     const params = new URLSearchParams(location.search);
-    //     const paypalReturn = params.get("paypal_return");
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const paypalReturn = params.get("paypal_return");
 
-    //     console.log("Current URL params Here:", params.toString());
+        console.log("Current URL params Here:", params.toString());
 
-    //     if (paypalReturn === "success") {
-    //         const subscriptionId = localStorage.getItem('pending_subscription_id');
+        if (paypalReturn === "success") {
+            const subscriptionId = localStorage.getItem('pending_subscription_id');
 
-    //         if (subscriptionId) {
-    //             console.log("Processing payment confirmation for subscription:", subscriptionId);
+            if (subscriptionId) {
+                console.log("Processing payment confirmation for subscription:", subscriptionId);
 
-    //             paymentSuccess(subscriptionId)
-    //                 .then((res) => {
-    //                     if (res?.data) {
-    //                         console.log("Payment confirmed successfully!");
-    //                         dispatch(pay());
-    //                         localStorage.removeItem('pending_subscription_id');
-    //                     } else {
-    //                         console.error("Payment confirmation returned unexpected data:", res);
-    //                     }
-    //                 })
-    //                 .catch((err) => {
-    //                     console.error("Payment confirmation API error:", err);
-    //                 });
-    //         } else {
-    //             console.error("No subscription ID found in storage for payment confirmation");
-    //         }
-    //     } else if (paypalReturn === "cancel") {
-    //         console.log("Payment was cancelled by user");
-    //         // Handle cancellation if needed
-    //     }
-    // }, [location.search, paymentSuccess, dispatch]);
+                paymentSuccess(subscriptionId)
+                    .then((res) => {
+                        if (res?.data) {
+                            console.log("Payment confirmed successfully!");
+                            dispatch(pay());
+                            localStorage.removeItem('pending_subscription_id');
+                        } else {
+                            console.error("Payment confirmation returned unexpected data:", res);
+                        }
+                    })
+                    .catch((err) => {
+                        console.error("Payment confirmation API error:", err);
+                    });
+            } else {
+                console.error("No subscription ID found in storage for payment confirmation");
+            }
+        } else if (paypalReturn === "cancel") {
+            console.log("Payment was cancelled by user");
+            // Handle cancellation if needed
+        }
+    }, [location.search, paymentSuccess, dispatch]);
 
     return (
         <Container>
