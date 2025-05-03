@@ -51,19 +51,14 @@ const useAuth = () => {
 
   // Regular authentication check
   useEffect(() => {
-    // Skip authentication check if we're processing a payment
-    if (isProcessingPayment) {
-      return;
-    }
-    
     if (isSuccess) {
       dispatch(setStatus(data));
     } else if (isError) {
       dispatch(logout());
     }
-  }, [data, isSuccess, isError, dispatch, isProcessingPayment]);
+  }, [data, isSuccess, isError, dispatch]);
 
-  return { isAuthenticated, isActive, email, isProcessingPayment };
+  return { isAuthenticated, isActive, email };
 };
 
 export default useAuth;

@@ -18,7 +18,7 @@ type AppRoutesProps = {
 const AppRoutes = ({ isAuthenticated, isActive, email }: AppRoutesProps) => {
   // Unauthenticated Users
   if (!isAuthenticated && !isActive && !email) {
-    console.log("Inside login and landing:", isAuthenticated, !isActive, !email);
+    console.log("Inside login and landing:", isAuthenticated, isActive, email);
     return (
       <Routes>
         <Route path="/landing" element={<LandingPage />} />
