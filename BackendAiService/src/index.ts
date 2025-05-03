@@ -2,7 +2,6 @@ import { app } from "./app";
 import fs from "fs";
 import https from "https";
 import {
-  DB_URI,
   GROQ_API_KEY,
   RABBITMQ_URL,
   PROXY_URL,
