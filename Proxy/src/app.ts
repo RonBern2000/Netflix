@@ -79,6 +79,9 @@ app.use(
     target: MOVIES_URL,
     changeOrigin: true,
     secure: false,
+    pathRewrite: {
+      "^/api/v1/movies": "",
+    },
     on: {
       error: (error, req, res, target) => {
         console.error(error);
