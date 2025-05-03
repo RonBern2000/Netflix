@@ -2,10 +2,7 @@ import { createClient } from 'redis';
 import { REDIS_PORT, REDIS_URI } from './env';
 
 const redis = createClient({
-    socket: {
-        host: REDIS_URI,
-        port: Number(REDIS_PORT),
-    },
+    url: `redis://${REDIS_URI}:${REDIS_PORT}`,
 });
 
 redis.on('connect', () => {
@@ -28,3 +25,9 @@ const connectRedis = async () => {
 connectRedis();
 
 export default redis;
+
+
+// socket: {
+//         host: REDIS_URI,
+//         port: Number(REDIS_PORT),
+//     },
