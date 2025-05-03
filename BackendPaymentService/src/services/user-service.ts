@@ -26,7 +26,6 @@ export class UserService implements IUserService{
           password: PAYPAL_SECRET!,
         },
       });
-
       return response.data.access_token;
     }
 

@@ -20,12 +20,14 @@
   "dependencies": {
     "@netflix-utils/shared": "^1.0.15",
     "axios": "^1.8.4",
+    "casual": "^1.6.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "inversify": "^7.5.0",
     "mysql2": "^3.14.0",
     "sequelize-typescript": "^2.1.6",
+    "sqlite3": "^5.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   },
@@ -35,6 +37,7 @@
     "@types/jest": "^29.5.14",
     "@types/supertest": "^6.0.3",
     "jest": "^29.7.0",
+    "nock": "^14.0.4",
     "nodemon": "^3.1.9",
     "supertest": "^7.1.0",
     "ts-jest": "^29.3.2"
