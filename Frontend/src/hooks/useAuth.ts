@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const location = useLocation();
@@ -14,25 +15,23 @@ const useAuth = () => {
   const [paymentSuccess] = usePaymentSuccessMutation();
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
-  // Handle PayPal return before authentication check
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const paypalReturn = params.get("paypal_return");
     
     if (paypalReturn === "success" && !isProcessingPayment) {
       setIsProcessingPayment(true);
-      
-      // Get the subscription ID from localStorage
+
       const subscriptionId = localStorage.getItem('pending_subscription_id');
       
       if (subscriptionId) {
         console.log("Processing PayPal payment confirmation:", subscriptionId);
         paymentSuccess(subscriptionId)
-          .then((res) => {
+          .then(async (res) => {
             if (res?.data) {
               console.log("PayPal payment confirmed successfully");
               localStorage.removeItem('pending_subscription_id');
-              dispatch(pay());
+              dispatch(await pay());
               navigate('/login');
             }
           })
@@ -49,7 +48,6 @@ const useAuth = () => {
     }
   }, [location.search, dispatch, paymentSuccess, isProcessingPayment, navigate]);
 
-  // Regular authentication check
   useEffect(() => {
     if (isSuccess) {
       dispatch(setStatus(data));
