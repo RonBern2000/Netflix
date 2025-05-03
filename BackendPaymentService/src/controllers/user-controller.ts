@@ -27,15 +27,15 @@ export class UserController{
   
       try {
         // Save the subscriptionId to the user in the database
-        if(typeof userId === 'string')
+        if(typeof userId === 'string'){
           await this.userService.getSubscriptionIdAndSave(userId, subscriptionId);
-
+        }
+        console.log("we are in the controller.")
+        console.log("all cookies:", req.cookies);
         const {tempToken} = req.cookies;
         console.log("tempToken:", tempToken);
-        console.log("all cookies:", req.cookies);
-        
+
         res.clearCookie('tempToken', {
-            path: '/',
             httpOnly: true,
             sameSite: 'strict',
             secure: false,
@@ -43,7 +43,7 @@ export class UserController{
         });
         return res.status(200).json({ message: `success`});
       } catch (error) {
-          return next(error);
+        return next(error);
       }
     }
 
