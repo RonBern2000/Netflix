@@ -16,11 +16,14 @@ const PaymentForm = () => {
         try {
             const { data } = await triggerPayment();
 
-            if (data?.approvalUrl) {
+            if (data?.approvalUrl && data?.subscriptionId) {
+                localStorage.setItem('pending_subscription_id', data.subscriptionId);
+
                 // Redirect to PayPal
+                console.log("Redirecting to PayPal:", data.approvalUrl);
                 window.location.href = data.approvalUrl;
             } else {
-                console.error("Approval URL not returned");
+                console.error("Invalid PayPal data returned:", data);
             }
         } catch (error) {
             console.error("Payment subscription failed", error);
@@ -29,21 +32,32 @@ const PaymentForm = () => {
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
-        const subscriptionId = params.get("subscription_id"); // adjust based on your PayPal config
+        const paypalReturn = params.get("paypal_return");
 
-        console.log("Params:", params);
+        console.log("URL Params:", params.toString());
 
-        if (subscriptionId) {
-            paymentSuccess(subscriptionId).then((res) => {
-                if (res?.data) {
-                    dispatch(pay());
-                }
-            }).catch((err) => {
-                console.error("Payment confirmation failed", err);
-            });
+        if (paypalReturn === "success") {
+            const subscriptionId = localStorage.getItem('pending_subscription_id');
+
+            if (subscriptionId) {
+                console.log("Processing payment confirmation for:", subscriptionId);
+
+                paymentSuccess(subscriptionId)
+                    .then((res) => {
+                        if (res?.data) {
+                            console.log("Payment confirmed successfully");
+                            dispatch(pay());
+                            localStorage.removeItem('pending_subscription_id');
+                        }
+                    })
+                    .catch((err) => {
+                        console.error("Payment confirmation failed", err);
+                    });
+            } else {
+                console.error("No subscription ID found in storage");
+            }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [dispatch, paymentSuccess]);
 
     return (
         <Container>

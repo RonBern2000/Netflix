@@ -44,8 +44,8 @@ const AppRoutes = ({ isAuthenticated, isActive, email }: AppRoutesProps) => {
   if (isAuthenticated && !isActive) {
     return (
       <Routes>
-        <Route path="/signup" element={<Signup />} />
         <Route path="/signup/payment" element={<Payment />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<Navigate to="/signup" />} />
       </Routes>
     );

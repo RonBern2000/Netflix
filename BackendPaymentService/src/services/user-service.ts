@@ -43,8 +43,8 @@ export class UserService implements IUserService{
             locale: "en-US",
             shipping_preference: "NO_SHIPPING",
             user_action: "SUBSCRIBE_NOW",
-            return_url: `http://www.net-flex-prod.site/signup/payment`,
-            cancel_url: "http://www.net-flex-prod.site/signup/payment"
+            return_url: `http://www.net-flex-prod.site/signup/payment?paypal_return=success`,
+            cancel_url: "http://www.net-flex-prod.site/signup/payment?paypal_return=cancel"
           }
         },
         {
