@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Button from "../components/shared/Button";
 import Container from "../components/shared/Container";
 import { useLazyPayAndActivateUserQuery, usePaymentSuccessMutation } from "../store/slices/authApiSlice";
@@ -15,12 +16,9 @@ const PaymentForm = () => {
         try {
             const { data } = await triggerPayment();
 
-            if (data) {
-                const { subscriptionId } = data; // TODO: Crypt it and deCrypt it in the backend
-                const greatSuccess = await paymentSuccess(subscriptionId);
-                if (greatSuccess) {
-                    dispatch(pay());
-                }
+            if (data?.approvalUrl) {
+                // Redirect to PayPal
+                window.location.href = data.approvalUrl;
             } else {
                 console.error("Approval URL not returned");
             }
@@ -28,6 +26,21 @@ const PaymentForm = () => {
             console.error("Payment subscription failed", error);
         }
     }
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const subscriptionId = params.get("subscription_id"); // adjust based on your PayPal config
+
+        if (subscriptionId) {
+            paymentSuccess(subscriptionId).then((res) => {
+                if (res?.data) {
+                    dispatch(pay());
+                }
+            }).catch((err) => {
+                console.error("Payment confirmation failed", err);
+            });
+        }
+    }, [dispatch, paymentSuccess]);
 
     return (
         <Container>
@@ -37,3 +50,21 @@ const PaymentForm = () => {
 }
 
 export default PaymentForm;
+
+// const handlePay = async () => {
+//     try {
+//         const { data } = await triggerPayment();
+
+//         if (data) {
+//             const { subscriptionId } = data;
+//             const greatSuccess = await paymentSuccess(subscriptionId);
+//             if (greatSuccess) {
+//                 dispatch(pay());
+//             }
+//         } else {
+//             console.error("Approval URL not returned");
+//         }
+//     } catch (error) {
+//         console.error("Payment subscription failed", error);
+//     }
+// }
