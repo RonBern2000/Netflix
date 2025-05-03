@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { DB_URI } from "./env";
 
 export class MongoDBConnection {
   private static instance: typeof mongoose | null = null;
@@ -9,7 +8,7 @@ export class MongoDBConnection {
   public static async getInstance(): Promise<typeof mongoose> {
     if(!MongoDBConnection.instance) {
         try {
-            MongoDBConnection.instance = await mongoose.connect(DB_URI!);
+            MongoDBConnection.instance = await mongoose.connect(process.env.AI_DB_URI!);
             console.log("MongoDb online");
         } catch (error) {
             console.error(error);
