@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import { User } from "../models/user-sql-entity";
-import { DB_URI, NODE_ENV } from './env';
+import { NODE_ENV } from './env';
 
 export class MySqlConnection{
     private static instance: Sequelize | null = null;
@@ -19,7 +19,7 @@ export class MySqlConnection{
                 });
             }
             else {
-                sequelize = new Sequelize(DB_URI as string, {
+                sequelize = new Sequelize(process.env.PAYMENTS_DB_URI as string, {
                     dialect: "mysql",
                     logging: false,
                     models: [User],

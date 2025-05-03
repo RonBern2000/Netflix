@@ -6,12 +6,12 @@ import { dbConnection } from "./config/db";
 import { rabbit } from "./config/rabbit";
 import { SignedUpConsumer } from "./rabbitmq/consumers/signup-consumer";
 import { PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API_BASE_URL, PAYPAL_PLAN_ID} from "./config/env";
-import { BadRequestError } from '@netflix-utils/shared'
+import { InvalidEnvironmentVariablesError } from '@netflix-utils/shared'
 
 const start = async () => {
   console.log("Starting....");
-  if (!PAYPAL_CLIENT_ID || !PAYPAL_SECRET || !PAYPAL_API_BASE_URL || !PAYPAL_PLAN_ID) {
-    throw new BadRequestError("Missing PayPal configuration in .env file");
+  if (!PAYPAL_CLIENT_ID || !PAYPAL_SECRET || !PAYPAL_API_BASE_URL || !PAYPAL_PLAN_ID || !process.env.PAYMENTS_DB_URI) {
+    throw new InvalidEnvironmentVariablesError("Missing required movie env variable");
   }
 
   await dbConnection();
