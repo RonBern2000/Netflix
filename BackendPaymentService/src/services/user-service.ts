@@ -96,8 +96,6 @@ export class UserService implements IUserService{
         throw new BadRequestError("User not found");
       }
     
-      //user.subscriptionId = subscriptionId;
-    
       const payingUser = await this.userRepository.updateUser(userId,subscriptionId); // or save/update logic as per your DB setup
 
       if(!payingUser){
@@ -105,6 +103,5 @@ export class UserService implements IUserService{
       }
 
       await rabbit.publishMessage(Exchanges.User, 'pay' ,{ id: payingUser.id, active: payingUser.active });
-      return;
     }
 }
