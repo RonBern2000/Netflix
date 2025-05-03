@@ -38,7 +38,7 @@ export class UserController{
           });
         }
         // Redirect to frontend page
-        return res.redirect(`http://www.net-flex-prod.site/login`);
+        return res.redirect(`https://www.net-flex-prod.site/login`);
       } catch (error) {
           return next(error);
       }
