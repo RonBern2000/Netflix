@@ -32,7 +32,7 @@ export class RabbitMQClient{
         console.log(`Message sent to queue [${exchange}]:`, message);
     }
 
-    async comsumeMessage(exchange: string, routingKey: string,onMessage: (msg: any) => void){
+    async comsumeMessage(exchange: string, routingKey: string,onMessage: (msg: any, ack: () => void, nack: () => void) => Promise<void>){
         if(!this.channel){
             console.error("RabbitMQ channek is not initialized.");
             return;
@@ -55,15 +55,23 @@ export class RabbitMQClient{
             if (msg) {
                 const content = msg.content.toString();
                 try {
-                const data = JSON.parse(content);
-                onMessage(data);
+                    const data = JSON.parse(content);
+
+                    const ack = () => this.channel.ack(msg);
+                    const nack = () => this.channel.nack(msg, false, true);
+
+                    onMessage(data, ack, nack).catch((err) => {
+                        console.error("Error processing message:", err);
+                        nack();
+                    });
                 } catch (err) {
-                console.error("Failed to parse message:", err);
+                    console.error("Failed to parse message:", err);
+                    this.channel.nack(msg, false, true);
                 }
             }
         },
         {
-            noAck: true,
+            noAck: false,
         });
     } 
 }
