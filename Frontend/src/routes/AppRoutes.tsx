@@ -42,6 +42,7 @@ const AppRoutes = ({ isAuthenticated, isActive, email }: AppRoutesProps) => {
 
   // Authenticated but Not Active Users
   if (isAuthenticated && !isActive) {
+    console.log("Here!");
     return (
       <Routes>
         <Route path="/signup/payment" element={<Payment />} />
@@ -66,6 +67,7 @@ const AppRoutes = ({ isAuthenticated, isActive, email }: AppRoutesProps) => {
   // Fallback in case none of the conditions match (shouldn't happen)
   return (
     <Routes>
+      <Route path="/signup/payment" element={<Payment />} />
       <Route path="*" element={<Navigate to="/landing" />} />
     </Routes>
   );
