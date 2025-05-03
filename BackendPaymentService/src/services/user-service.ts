@@ -105,5 +105,6 @@ export class UserService implements IUserService{
       }
 
       await rabbit.publishMessage(Exchanges.User, 'pay' ,{ id: payingUser.id, active: payingUser.active });
+      return;
     }
 }
