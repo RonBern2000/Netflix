@@ -3,4 +3,5 @@ beforeAll(async() => {
     process.env.NODE_ENV = "test";
     process.env.REDIS_URI = 'localhost';
     process.env.REDIS_PORT = '6666';
+
 });

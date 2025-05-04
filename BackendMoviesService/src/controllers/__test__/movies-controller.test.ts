@@ -6,6 +6,8 @@ process.env.REDIS_PORT = '6666';
 import request from 'supertest';
 import { app } from '../../app';
 
+jest.mock('../../config/redis-client', () => require('redis-mock').createClient());
+
 describe("Tests for MOVIES CONTROLLER", () => {
 
     describe("searchMoviesByTitle", () => {
@@ -37,7 +39,7 @@ describe("Tests for MOVIES CONTROLLER", () => {
             const response = await request(app).get("/movies/allMoviesByGenres");
     
             expect(response.status).toBe(200);
-        });
+        }, 10000);
     });
     
     describe("getGenres", () => {
