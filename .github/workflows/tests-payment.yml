@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      API_READ_ACCESS_TOKEN: ${{ secrets.API_READ_ACCESS_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - run: cd BackendPaymentService && npm install && npm run test:ci
