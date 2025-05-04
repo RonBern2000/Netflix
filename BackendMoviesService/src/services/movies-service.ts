@@ -9,8 +9,6 @@ import { MoviesByGenre } from "../DTOs/genre-movie-dto";
 import { IGenre } from "../interfaces/IGenre";
 import { setMoviesTrailer } from "../utils/setMoviesTrailer";
 import { BadRequestError } from "@netflix-utils/shared";
-import { NODE_ENV } from "../config/env";
-
 @injectable()
 export class MoviesService implements IMoviesService{
     
@@ -32,7 +30,6 @@ export class MoviesService implements IMoviesService{
     }
 
     async getPopularMovies(): Promise<IMovie[] | null> {
-        //await redis.del(TOKENS.popularMovies); // only for testing
         let popMovies : IMovie[] | null = await this.moviesRepository.getPopularMovies();
         if(!popMovies){
             popMovies = await tmdbGetPopular();
@@ -43,12 +40,10 @@ export class MoviesService implements IMoviesService{
 
 
     async getAllMoviesByGenres(): Promise<Record<string, IMovie[]> | null> {
-        // await redis.del(TOKENS.allMovies); // only for testing
         let allMovies : IMovie[] | null = await this.moviesRepository.getAllMovies();
         if(!allMovies){
             allMovies = await tmdbGetAllMovies(5);
             await setMoviesTrailer(allMovies);
-            console.log("Movie with trailer: ", allMovies ? allMovies[0]: 'none');
             await this.moviesRepository.setAllMovies(allMovies!);
             const genres = await tmdbGetGenres();
             await this.moviesRepository.setGenres(genres!);

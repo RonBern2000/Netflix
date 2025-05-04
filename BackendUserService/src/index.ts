@@ -8,8 +8,6 @@ import { PaymentConsumer } from "./rabbitmq/consumers/payment-consumer";
 import { InvalidEnvironmentVariablesError } from "@netflix-utils/shared";
 
 const start = async () => {
-  console.log("User service starting.....");
-
   if (
     !JWT_KEY || 
     !RABBITMQ_URL || 

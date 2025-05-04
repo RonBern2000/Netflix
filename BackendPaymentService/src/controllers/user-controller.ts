@@ -19,7 +19,6 @@ export class UserController{
     async paymentSuccess(req: Request, res: Response, next: NextFunction){
       const subscriptionId = req.query.subscription_id as string;
       const userId = req.headers['x-user-id'];
-      console.log(userId);
   
       if (!subscriptionId || !userId) {
         return res.status(400).send("Payment unsuccessful!");
@@ -30,11 +29,6 @@ export class UserController{
         if(typeof userId === 'string'){
           await this.userService.getSubscriptionIdAndSave(userId, subscriptionId);
         }
-        console.log("we are in the controller.")
-        console.log("all cookies:", req.cookies);
-        const tempToken = req.cookies?.tempToken;
-        console.log("tempToken:", tempToken);
-
         res.clearCookie('tempToken', {
             httpOnly: true,
             sameSite: 'strict',

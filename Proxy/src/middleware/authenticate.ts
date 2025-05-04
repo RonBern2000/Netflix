@@ -8,9 +8,7 @@ import { unauthenticatedRoutes } from "../utils/unauthenticated-routes";
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const { path } = req;
 
-    console.log("Path:", path);
     if (isAuthenticatedRoute(path, unauthenticatedRoutes)){
-        console.log("Inside");
         return next();
     }
 
@@ -26,7 +24,6 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
         const decoded = verify(accessToken!, JWT_KEY!); // if the user has accessToken => can proceed
         if(!decoded)
             throw new BadRequestError('Invalid access token'); // gets us to the catch
-        console.log('Have accessToken:', accessToken);
         req.headers['x-user-id'] = decoded.id;
         return next();
     } catch (error) { // missing accessToken

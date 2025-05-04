@@ -1,6 +1,7 @@
 import Button from "../components/shared/Button";
 import Container from "../components/shared/Container";
 import { useLazyPayAndActivateUserQuery } from "../store/slices/authApiSlice";
+import { strings } from "../strings/strings";
 
 const PaymentForm = () => {
     const [triggerPayment, { isLoading: isPaying }] = useLazyPayAndActivateUserQuery();
@@ -8,7 +9,6 @@ const PaymentForm = () => {
     // Handle payment initiation
     const handlePay = async () => {
         try {
-            console.log("Initiating payment...");
             const { data } = await triggerPayment();
 
             if (data?.approvalUrl && data?.subscriptionId) {
@@ -27,8 +27,8 @@ const PaymentForm = () => {
     return (
         <Container>
             <div className="flex flex-col items-center space-y-4">
-                <h2 className="text-2xl font-bold">Complete Your Payment</h2>
-                <p>Click the button below to proceed with PayPal payment</p>
+                <h2 className="text-2xl font-bold">{strings.auth.payment.completeYourPayment}</h2>
+                <p>{strings.auth.payment.typo}</p>
 
                 <Button
                     className="h-16 px-8 bg-red-700 text-white text-xl rounded-md hover:bg-red-800"

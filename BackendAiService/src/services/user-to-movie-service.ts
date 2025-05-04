@@ -20,28 +20,21 @@ export class UserToMovieService implements IUserToMovieService{
             throw new BadRequestError('redis is empty');
         }
         const moviesDbFull: IMovie[] = JSON.parse(moviesDbString); 
-        const moviesDb: IMovieForPrompt[] = moviesDbFull.map(movie => ({ // IMovieForPrompt { id(number), genreIds[], release_date }
+        const moviesDb: IMovieForPrompt[] = moviesDbFull.map(movie => ({
             id: movie.id,
             genre_ids: movie.genre_ids,
             release_date: movie.release_date
         }));
         const movieStrings = this.fromObjectArrayToStringArray(moviesDb);
 
-        console.log("MovieStrings: ",movieStrings, "Amount: ", movieStrings.length);
-
         const userMyListMoviesWithNotNeededProps = await this.userToMovieRepository.getUserToMovies(userId); // can be length 0 array
         const userMyListMovies: number[] = userMyListMoviesWithNotNeededProps.map(m => m.movieId); 
         const userMyListMoviesStrings = this.fromObjectArrayToStringArray(userMyListMovies);
 
-        console.log("userMyListMoviesStrings: ",userMyListMoviesStrings, "Amount: ", userMyListMoviesStrings.length);
-
         const recommendationString: string = await this.aiService.getMovieRecommendationsPrompt(userMyListMoviesStrings, movieStrings); // strings of ids of recommend movies 45,21,2,65...  
 
-        console.log("Recommened listString: ", recommendationString);
         const clean = this.extractArrayFromResponse(recommendationString);
-        console.log("Cleaned: ", clean)
         const moviesIds: number[] = this.fromStringAToNumberArray(clean);
-        console.log("Number[]: ", moviesIds);
         const recommendedMovies = moviesDbFull.filter(movie => moviesIds.includes(movie.id));
 
         return recommendedMovies.length > 0 ? recommendedMovies : null;

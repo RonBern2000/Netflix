@@ -13,7 +13,6 @@ export class UserToMovieController{
             const userId = req.headers['x-user-id'];
             let recommendedMovies: IMovie[] | null = null;
             if(typeof userId === 'string'){
-                console.log("Inside the controller before the service call and here is user's Id: ", userId);
                 recommendedMovies = await this.userToMovieService.getRecommendations(userId);
             }
             return res.status(200).json({recommendedMovies});

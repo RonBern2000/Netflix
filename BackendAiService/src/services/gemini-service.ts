@@ -30,7 +30,6 @@ export class AI2Service implements IAIService {
         
         const resultStep1 = await chat.sendMessage({message: step1});
         const myListGenres: string = resultStep1.candidates?.[0].content?.parts?.[0].text || "";
-        console.log("MyListGenres: ", myListGenres);
 
         //Step2:
         const step2 = `
@@ -46,7 +45,6 @@ export class AI2Service implements IAIService {
         - Return only the mostFrequentLikedGenre task number 1 as a string. no explanation, no code block.`;
         const resultStep2 = await chat.sendMessage({message: step2});
         const mostFrequentLikedGenre = resultStep2.candidates?.[0].content?.parts?.[0].text || "";
-        console.log("MostFrequentLikedGenre: ", mostFrequentLikedGenre);
 
         //Step3:
         const step3 = `
@@ -63,7 +61,6 @@ export class AI2Service implements IAIService {
         - Return only the reccomendedMovies that you made from task number 1 as a string. no explanation, no code block.`;
         const resultStep3 = await chat.sendMessage({message: step3});
         const recommenedMovies: string = resultStep3.candidates?.[0].content?.parts?.[0].text || "";
-        console.log("RecommenedMovies: ", recommenedMovies);
 
         //Step4:
         const step4 = `
@@ -81,7 +78,6 @@ export class AI2Service implements IAIService {
         - Return only the recommenedMovies that you made from task number 1 as a string. no explanation, no code block.`;
         const resultStep4 = await chat.sendMessage({message: step4});
         const updatedrecommenedMovies: string = resultStep4.candidates?.[0].content?.parts?.[0].text || "";
-        console.log("RecommenedMoviesUpdated: ", updatedrecommenedMovies);
 
         //Step5:
         const step5 = `
@@ -99,7 +95,6 @@ export class AI2Service implements IAIService {
         - Return only the recommenedMoviesIds that you made from task number 1 as a string. no explanation, no code block.`;
         const resultStep5 = await chat.sendMessage({message: step5});
         const recommenedMoviesIds: string = resultStep5.candidates?.[0].content?.parts?.[0].text || "";
-        console.log("RecommenedMoviesIds: ", recommenedMoviesIds);
 
         return recommenedMoviesIds;
     } catch (error) {

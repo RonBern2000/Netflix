@@ -22,7 +22,6 @@ const useAuth = () => {
     
     if (paypalReturn === "success" && !isProcessingPayment) {
       setIsProcessingPayment(true);
-
       const subscriptionId = localStorage.getItem('pending_subscription_id');
       
       if (subscriptionId) {
@@ -57,7 +56,6 @@ const useAuth = () => {
       dispatch(logout());
     }
   }, [data, isSuccess, isError, dispatch, isProcessingPayment, isPaid]);
-
   return { isAuthenticated, isActive, email };
 };
 

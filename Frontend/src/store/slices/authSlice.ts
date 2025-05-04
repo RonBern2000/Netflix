@@ -51,7 +51,6 @@ const authSlice = createSlice({
       state.isActive = false;
     },
     pay: (state) => {
-      console.log("In pay reducer");
       state.accessToken = "";
       state.message = null;
       state.isAuthenticated = false;

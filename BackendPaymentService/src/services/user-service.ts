@@ -64,8 +64,7 @@ export class UserService implements IUserService{
       if (!subscriptionId) {
         throw new BadRequestError('Subscription ID not found in PayPal response');
       }
-      console.log(approvalUrl)
-      console.log('Subscription ID:', subscriptionId);
+
       return { approvalUrl, subscriptionId };  // Return the approval URL to redirect the user to PayPal
     }
     
@@ -103,7 +102,5 @@ export class UserService implements IUserService{
       }
 
       await rabbit.publishMessage(Exchanges.User, 'pay' ,{ id: payingUser.id, active: payingUser.active });
-
-      console.log("Inside the service payment success");
     }
 }

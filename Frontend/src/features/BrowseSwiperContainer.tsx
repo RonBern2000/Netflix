@@ -21,9 +21,3 @@ const BrowseSwiperContainer = ({ movies, myList = {} }: BrowseSwiperContainerPro
 }
 
 export default BrowseSwiperContainer;
-
-// const width = useWindowWidth();
-// if (width < 1280) itemsPerPage = 5;
-// if (width < 1024) itemsPerPage = 4;
-// if (width < 768) itemsPerPage = 3;
-// if (width < 640) itemsPerPage = 2;

@@ -8,7 +8,6 @@ const router: Router = Router();
 const userToMovieController = container.get<UserToMovieController>(TOKENS.UserToMovieController);
 
 router.get("/getRecommendations", async(req: Request, res: Response, next: NextFunction) => {
-    console.log("Inside the right route");
     userToMovieController.getRecommendations(req, res, next);
 });
 

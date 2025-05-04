@@ -29,6 +29,8 @@ export const strings = {
         },
         payment:{
             h1: "Time to complete the Payment",
+            completeYourPayment: "Complete Your Payment",
+            typo: "Click the button below to proceed with PayPal payment",
         },
         login: {
             newToNetflix: "New to Netflix?",
