@@ -1,6 +1,6 @@
 import { app } from "./app";
 import fs from "fs";
-import { NODE_ENV, PORT } from "./config/env";
+import { DB_URI, NODE_ENV, PORT, PROXY_URL, RABBITMQ_URL } from "./config/env";
 import https from "https";
 import { dbConnection } from "./config/db";
 import { rabbit } from "./config/rabbit";
@@ -10,8 +10,19 @@ import { InvalidEnvironmentVariablesError } from '@netflix-utils/shared'
 
 const start = async () => {
   console.log("Starting....");
-  if (!PAYPAL_CLIENT_ID || !PAYPAL_SECRET || !PAYPAL_API_BASE_URL || !PAYPAL_PLAN_ID || !process.env.PAYMENTS_DB_URI) {
-    throw new InvalidEnvironmentVariablesError("Missing required movie env variable");
+  if (
+    !PAYPAL_CLIENT_ID || 
+    !PAYPAL_SECRET || 
+    !PAYPAL_API_BASE_URL || 
+    !PAYPAL_PLAN_ID || 
+    !process.env.PAYMENTS_DB_URI || 
+    !RABBITMQ_URL || 
+    !PROXY_URL || 
+    !NODE_ENV || 
+    !PORT || 
+    !DB_URI
+  ) {
+    throw new InvalidEnvironmentVariablesError("Missing required payment env variable");
   }
 
   await dbConnection();

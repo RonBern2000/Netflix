@@ -12,8 +12,6 @@ beforeAll(async() => {
 
 });
 
- 
-
 beforeEach(async() => {
     await sequelize.sync({ force: true });
 });

@@ -9,6 +9,7 @@ import {
   PORT,
   NODE_ENV,
   JWT_KEY,
+  AI_URL,
 } from "./config/env";
 
 const start = async () => {
@@ -19,7 +20,8 @@ const start = async () => {
     !CLIENT_URL ||
     !NODE_ENV ||
     !PORT ||
-    !JWT_KEY
+    !JWT_KEY ||
+    !AI_URL
   ) {
     throw new Error("Missing required proxy env variable");
   }
