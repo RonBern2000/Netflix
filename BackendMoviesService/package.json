@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "dev": "nodemon src/index.ts",
-    "test:ci": "jest"
+    "test": "NODE_ENV=test jest",
+    "test:ci": "NODE_ENV=test jest",
+    "dev": "nodemon src/index.ts"
   },
   "jest": {
     "preset": "ts-jest",
