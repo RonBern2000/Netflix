@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "cross-env NODE_ENV=test jest",
+    "test:ci": "cross-env NODE_ENV=test jest",
     "dev": "nodemon src/index.ts"
   },
   "jest": {
@@ -41,9 +42,12 @@
     "@types/ioredis": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/redis-mock": "^0.17.3",
     "@types/supertest": "^6.0.3",
+    "cross-env": "^7.0.3",
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
+    "redis-mock": "^0.56.3",
     "supertest": "^7.1.0",
     "ts-jest": "^29.3.2"
   }

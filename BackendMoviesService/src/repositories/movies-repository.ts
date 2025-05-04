@@ -5,7 +5,7 @@ import { IMovie } from "../interfaces/IMovie";
 import { IMoviesRepository } from "../interfaces/IMovieRepository";
 import { TOKENS } from "../tokens";
 
-const CACHE_TIME = 60 * 60 * 12;
+const CACHE_TIME = 60 * 60 * 12 * 5;
 export class MoviesRepository implements IMoviesRepository{
     async getGeneres(): Promise<IGenre[] | null> {
         const res =  await redis.get(TOKENS.genres);

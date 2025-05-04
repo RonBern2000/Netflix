@@ -3,7 +3,6 @@ import { inject, injectable } from "inversify";
 import { TOKENS } from "../tokens";
 import { IMoviesService } from "../interfaces/IMoviesService";
 import { IMovie } from "../interfaces/IMovie";
-// import { getMovieIdParam } from "../utils/getMovieIdParam";
 
 @injectable()
 export class MoviesController{
@@ -52,22 +51,3 @@ export class MoviesController{
         }
     }
 }
-
-// async getAllMovies(req: Request, res: Response, next: NextFunction){
-//         try {
-//             const allMovies: IMovie[] | null = await this.moviesService.getAllMovies();
-//             return res.status(200).json({allMovies});
-//         } catch (error) {
-//             return next(error);
-//         }
-//     }
-
-// async getMovieTrailer(req: Request, res: Response, next: NextFunction){
-//     try {
-//         const movieId = getMovieIdParam(req);
-//         const key: string | null = await this.moviesService.getMovieTrailer(movieId);
-//         res.status(200).json(key);
-//     } catch (error) {
-//         return next(error);
-//     }
-// }

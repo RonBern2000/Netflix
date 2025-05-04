@@ -4,9 +4,7 @@ import { tmdbGetTrailer } from "./tmdb-api";
 export const setMoviesTrailer = async (allMovies: IMovie[] | null) =>{
     if(allMovies){ 
         for (const movie of allMovies) {
-            console.log(movie)
             const key = await tmdbGetTrailer(movie.id);
-            console.log(key)
             movie.key = key ? key : '';
         }
     }

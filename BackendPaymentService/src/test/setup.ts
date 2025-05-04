@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import { dbConnection } from "../config/db";
+import moxios from 'moxios';
 
 let sequelize: Sequelize;
 
@@ -16,6 +17,12 @@ beforeAll(async() => {
 
 beforeEach(async() => {
     await sequelize.sync({ force: true });
+    moxios.install()
+});
+
+afterEach(async() => {
+    // import and pass your custom axios instance to this method
+    moxios.uninstall()
 });
 
 afterAll(async() => {

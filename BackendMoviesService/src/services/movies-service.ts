@@ -9,6 +9,8 @@ import { MoviesByGenre } from "../DTOs/genre-movie-dto";
 import { IGenre } from "../interfaces/IGenre";
 import { setMoviesTrailer } from "../utils/setMoviesTrailer";
 import { BadRequestError } from "@netflix-utils/shared";
+import { NODE_ENV } from "../config/env";
+
 @injectable()
 export class MoviesService implements IMoviesService{
     
@@ -23,9 +25,9 @@ export class MoviesService implements IMoviesService{
     }
 
     async getGenres(): Promise<IGenre[] | null> {
-        const genres = await this.moviesRepository.getGeneres();
+        let genres = await this.moviesRepository.getGeneres();
         if(!genres)
-            throw new BadRequestError('Failed to load genres');
+            genres = await tmdbGetGenres();
         return genres;
     }
 
@@ -56,7 +58,7 @@ export class MoviesService implements IMoviesService{
                 await this.moviesRepository.setMoviesByGenre(moviesByGenre);
             })
         }
-        
+
         const allMoviesByGenres: Record<string, IMovie[]> = {}; 
         const genres: IGenre[] | null = await this.moviesRepository.getGeneres();
         if (genres) {
