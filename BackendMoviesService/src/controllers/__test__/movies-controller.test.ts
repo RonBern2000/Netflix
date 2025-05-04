@@ -1,6 +1,10 @@
-import request from 'supertest';
-import { app } from "../../app";
+process.env.JWT_KEY = "ef85748g9wfjmrujg";
+process.env.NODE_ENV = "test";
+process.env.REDIS_URI = 'localhost';
+process.env.REDIS_PORT = '6666';
 
+import request from 'supertest';
+import { app } from '../../app';
 
 describe("Tests for MOVIES CONTROLLER", () => {
 
@@ -44,3 +48,12 @@ describe("Tests for MOVIES CONTROLLER", () => {
         });
     });
 });
+// describe("Tests for MOVIES CONTROLLER", () => {
+//     describe("getGenres", () => {
+//         it("Should return 200 if all genres arrived", async () => {
+//             const response = 1;
+
+//             expect(response).toBe(1);
+//         });
+//     });
+// });
