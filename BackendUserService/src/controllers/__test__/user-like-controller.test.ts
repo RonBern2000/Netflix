@@ -7,17 +7,6 @@ describe("Tests for USER LIKE CONTROLLER", () => {
 
     describe("add", () => {
         it("Should return 201 if movie added to my list successfully", async () => {
-            // await request(app).post("/users/signup").send({
-            //     email: 'test@test.com',
-            //     password: 'test123'
-            // });
-
-            // await request(app).post("/users/login").send({
-            //     email: 'test@test.com',
-            //     password: 'test123'
-            // });
-
-
             const user = {
                 id: casual.uuid,
                 email: casual.email,
