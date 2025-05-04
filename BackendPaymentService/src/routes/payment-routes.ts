@@ -19,8 +19,4 @@ router.post("/paymentSuccess", async(req: Request, res: Response, next: NextFunc
     userController.paymentSuccess(req, res, next);
 });
 
-// router.post("/payAndActivate",  async(req: Request, res: Response, next: NextFunction) => {
-//     userController.pay(req, res, next);
-// });
-
 export default router

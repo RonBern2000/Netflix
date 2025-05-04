@@ -26,7 +26,6 @@ export class MySqlConnection{
                 });
             }
 
-
             try {
                 await sequelize.authenticate();
                 console.log("MySql Database connected");

@@ -3,12 +3,10 @@ import { inject, injectable } from "inversify";
 import { TOKENS } from "../tokens";
 import { IUserRepository } from '../interfaces/IUserRepository'
 import { IUserService } from "../interfaces/IUserService";
-import { IUser } from "../interfaces/IUser";
 import { BadRequestError, Exchanges } from "@netflix-utils/shared";
 import { rabbit } from "../config/rabbit";
 import { PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_API_BASE_URL, PAYPAL_PLAN_ID} from "../config/env";
 import { CancelationDetails } from "../dto/cancelation-details";
-
 @injectable()
 export class UserService implements IUserService{
     constructor(@inject(TOKENS.IUserRepository) private userRepository: IUserRepository){}
