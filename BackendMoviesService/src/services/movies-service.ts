@@ -9,6 +9,7 @@ import { MoviesByGenre } from "../DTOs/genre-movie-dto";
 import { IGenre } from "../interfaces/IGenre";
 import { setMoviesTrailer } from "../utils/setMoviesTrailer";
 import { BadRequestError } from "@netflix-utils/shared";
+import { NODE_ENV } from "../config/env";
 //import redis from "../config/redis-client";
 
 @injectable()
@@ -25,7 +26,11 @@ export class MoviesService implements IMoviesService{
     }
 
     async getGenres(): Promise<IGenre[] | null> {
-        const genres = await this.moviesRepository.getGeneres();
+        let genres = null;
+        if(NODE_ENV !== 'test')
+            genres = await this.moviesRepository.getGeneres();
+        else
+            genres = await tmdbGetGenres();
         if(!genres)
             throw new BadRequestError('Failed to load genres');
         return genres;
@@ -33,10 +38,13 @@ export class MoviesService implements IMoviesService{
 
     async getPopularMovies(): Promise<IMovie[] | null> {
         //await redis.del(TOKENS.popularMovies); // only for testing
-        let popMovies : IMovie[] | null = await this.moviesRepository.getPopularMovies();
+        let popMovies : IMovie[] | null = null;
+        if(NODE_ENV !== 'test')
+            popMovies = await this.moviesRepository.getPopularMovies();
         if(!popMovies){
             popMovies = await tmdbGetPopular();
-            await this.moviesRepository.setPopularMovies(popMovies!);
+            if(NODE_ENV !== 'test')
+                await this.moviesRepository.setPopularMovies(popMovies!);
         }
         return popMovies ? popMovies.slice(0, 10) : null; // Top 10
     }
@@ -44,18 +52,25 @@ export class MoviesService implements IMoviesService{
 
     async getAllMoviesByGenres(): Promise<Record<string, IMovie[]> | null> {
         // await redis.del(TOKENS.allMovies); // only for testing
-        let allMovies : IMovie[] | null = await this.moviesRepository.getAllMovies();
+        let allMovies : IMovie[] | null = null;
+        if(NODE_ENV !== 'test')
+            allMovies = await this.moviesRepository.getAllMovies();
         if(!allMovies){
             allMovies = await tmdbGetAllMovies(5);
             await setMoviesTrailer(allMovies);
-            await this.moviesRepository.setAllMovies(allMovies!);
+            if(NODE_ENV !== 'test')
+                await this.moviesRepository.setAllMovies(allMovies!);
             const genres = await tmdbGetGenres();
-            await this.moviesRepository.setGenres(genres!);
+            if(NODE_ENV !== 'test')
+                await this.moviesRepository.setGenres(genres!);
             const orderedByGenre: Record<string, IMovie[]> = await orderMoviesByGenre(allMovies!, genres!);
-            Object.entries(orderedByGenre).forEach(async ([genre, movies]) => {
-                const moviesByGenre: MoviesByGenre = {genre, movies};
-                await this.moviesRepository.setMoviesByGenre(moviesByGenre);
-            })
+            if(NODE_ENV !== 'test')
+                Object.entries(orderedByGenre).forEach(async ([genre, movies]) => {
+                    const moviesByGenre: MoviesByGenre = {genre, movies};
+                    await this.moviesRepository.setMoviesByGenre(moviesByGenre);
+                });
+            else
+                return orderedByGenre;
         }
         
         const allMoviesByGenres: Record<string, IMovie[]> = {}; 
