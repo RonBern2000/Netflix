@@ -3,12 +3,14 @@ An online streaming platform that offers browsing and watching up-to-date
 movies, payment processing and personal recommendations.
 # Overview
 **Core Features**  
+<pre>
   • **User Authentication**: Secure user registration and login.  
   • **Payment**: Payment through Paypal api.  
   • **AI Recommendations**: Ai driven movies recommendations.  
   • **Caching**: Enhanced performance through Redis caching.  
   • **Event Streaming**: Real-time updates and communication between microservices with RabbitMQ.  
   • **State Management**: Efficient state management using Redux.  
+</pre>
 
 **Technologies Used**  
   • Frontend: React, React Query, TailwindCSS  
