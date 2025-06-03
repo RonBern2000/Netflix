@@ -2,7 +2,7 @@
 An online streaming platform that offers browsing and watching up-to-date
 movies, payment processing and personal recommendations.
 # Overview
-**Core Features**<br /><br />
+**Core Features**<br />
   • **User Authentication**: Secure user registration and login.  
   • **Payment**: Payment through Paypal api.  
   • **AI Recommendations**: Ai driven movies recommendations.  
