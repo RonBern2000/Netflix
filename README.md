@@ -1,45 +1,123 @@
-# Netflix Clone
-An online streaming platform that offers browsing and watching up-to-date
-movies, payment processing and personal recommendations.
-# Overview
-**Core Features**<br />
-  • **User Authentication**: Secure user registration and login.  
-  • **Payment**: Payment through Paypal api.  
-  • **AI Recommendations**: Ai driven movies recommendations.  
-  • **Caching**: Enhanced performance through Redis caching.  
-  • **Event Streaming**: Real-time updates and communication between microservices with RabbitMQ.  
-  • **State Management**: Efficient state management using Redux.  
+# Netflix Clone  
+An online streaming platform that offers browsing and watching up-to-date movies, payment processing, and personal recommendations.
 
-**Technologies Used**    
-  • Frontend: React, React Query, TailwindCSS  
-  • Backend: Node.js, Express  
-  • Database: MongoDB, MySQL  
-  • Authentication: JSON Web Tokens (JWT), bcrypt  
-  • State Management: Redux  
-  • Caching: Redis  
-  • Event Streaming: RabbitMQ.  
-  • Payment Processing: Payapl  
-  • Testing: Jest, Supertest  
-  • Containerization: Docker  
-  • Orchestration: Kubernetes  
-  • Continuous Development: Skaffold  
-  • CI/CD: GitHub Actions  
-  • Deployment: DigitalOcean  
+## Overview
 
-**Microservices Architecture**  
-The application is divided into several microservices, each responsible for a specific domain of the application:  
+### **Core Features**
+- **User Authentication**
+  - Secure user registration  
+  - Login functionality  
+  - JWT-based session management  
 
-User Service  
-  Handles user registration, login, and authentication using JWTs. It ensures secure access to other services.  
+- **Payment**
+  - Integration with PayPal API  
+  - Secure payment processing  
+  - Confirmation and error handling  
 
-Movies Service  
-  Manages the movies in the site, keeping the most up to date movies via TMDB api.  
+- **AI Recommendations**
+  - Behavior analysis using AI models  
+  - Personalized movie suggestions  
+  - Continuous learning from user interactions  
 
-Payments Service  
-  Integrates with payment gateways to handle transactions securely. Ensures payments are processed before completing a payment.  
+- **Caching**
+  - Data caching using Redis  
+  - Reduces response time  
+  - Handles high traffic efficiently  
 
-RabbitMQ Service  
-  Implements event streaming to ensure real-time communication between services, facilitating a responsive and cohesive system.  
+- **Event Streaming**
+  - Real-time updates  
+  - Communication between microservices  
+  - Powered by RabbitMQ  
 
-AI Recommendation Service  
-  Uses AI to analyze user behavior and recommend the best tickets for each user based on their past activity.  
+- **State Management**
+  - Centralized state using Redux  
+  - Efficient data sharing across components  
+  - Predictable state transitions  
+
+---
+
+### **Technologies Used**
+
+- **Frontend**
+  - React  
+  - React Query  
+  - TailwindCSS  
+
+- **Backend**
+  - Node.js  
+  - Express  
+
+- **Database**
+  - MongoDB  
+  - MySQL  
+
+- **Authentication**
+  - JSON Web Tokens (JWT)  
+  - bcrypt for password hashing  
+
+- **State Management**
+  - Redux  
+
+- **Caching**
+  - Redis  
+
+- **Event Streaming**
+  - RabbitMQ  
+
+- **Payment Processing**
+  - PayPal  
+
+- **Testing**
+  - Jest  
+  - Supertest  
+
+- **Containerization**
+  - Docker  
+
+- **Orchestration**
+  - Kubernetes  
+
+- **Continuous Development**
+  - Skaffold  
+
+- **CI/CD**
+  - GitHub Actions  
+
+- **Deployment**
+  - DigitalOcean  
+
+---
+
+### **Microservices Architecture**  
+The application follows a microservices architecture, where each service handles a specific domain:
+
+- **User Service**
+  - Handles:
+    - User registration  
+    - Login and authentication  
+  - Security:
+    - Uses JWT for secure token-based access  
+
+- **Movies Service**
+  - Responsibilities:
+    - Manages movie data  
+    - Syncs with TMDB API  
+    - Ensures movies are always up to date  
+
+- **Payments Service**
+  - Functions:
+    - Integrates PayPal for secure payments  
+    - Verifies payment before granting access  
+    - Tracks transaction history  
+
+- **RabbitMQ Service**
+  - Role:
+    - Facilitates inter-service communication  
+    - Publishes and consumes events in real time  
+    - Ensures service decoupling and reliability  
+
+- **AI Recommendation Service**
+  - Purpose:
+    - Analyzes viewing behavior  
+    - Learns from user interactions  
+    - Suggests personalized movie content  
